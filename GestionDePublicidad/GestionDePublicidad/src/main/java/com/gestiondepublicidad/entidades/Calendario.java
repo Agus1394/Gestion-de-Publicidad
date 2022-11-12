@@ -16,21 +16,16 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "Usuario")
-public class Usuario {
-
+@Table(name = "Calendario")
+public class Calendario {
+    
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id_usuario;
+    private String id_calendario;
     
     @Basic
-    private String nombre;
-    private String email;
-    private String contrasenia;
-
-//    Relacion: private Foto foto;
-    //Relacion: List<Proyecto> proyecto
-    //Relacion: List<Calendario>
-    //Enum PuestoEmpresa: puestoEmpresa
+    private String descripcion;
+    private String evento;
+    
 }
