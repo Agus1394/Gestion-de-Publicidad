@@ -32,7 +32,7 @@ public class Foto {
     private String nombre;
 
     @Lob
-    @Basic(FetchType.LAZY)
+    @Basic(fetch = FetchType.LAZY)
     private byte[] contenido;
 
 }

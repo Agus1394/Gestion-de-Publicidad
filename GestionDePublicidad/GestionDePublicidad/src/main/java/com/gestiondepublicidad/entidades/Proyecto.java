@@ -1,8 +1,11 @@
 package com.gestiondepublicidad.entidades;
 
+import com.gestiondepublicidad.enumeraciones.EstadoProyecto;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -37,6 +40,6 @@ public class Proyecto {
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
 
-    //Relacion Usuario: usuario
-    //Enum: EstadoProyecto
+    @Enumerated(EnumType.STRING)
+    private EstadoProyecto estadoProyecto;
 }
