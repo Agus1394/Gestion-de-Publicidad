@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,7 +29,7 @@ public class Proyecto {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id_proyecto;
+    private String id;
     
     @Basic
     private String nombre;
@@ -39,6 +40,9 @@ public class Proyecto {
     
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
+    
+    @ManyToOne
+    private Usuario usuario;
 
     @Enumerated(EnumType.STRING)
     private EstadoProyecto estadoProyecto;

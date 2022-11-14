@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProyectoServicio {
     
-    @Autowired
-    ProyectoServicio proyectoServicio;
+  //  @Autowired
+  //  ProyectoServicio proyectoServicio;
     
     
 }
