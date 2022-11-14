@@ -1,5 +1,3 @@
-
-
 package com.gestiondepublicidad.repositorios;
 
 import com.gestiondepublicidad.entidades.Proyecto;

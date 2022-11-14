@@ -1,7 +1,4 @@
-
 package com.gestiondepublicidad.enumeraciones;
-
-
 
 public enum EstadoProyecto {
     

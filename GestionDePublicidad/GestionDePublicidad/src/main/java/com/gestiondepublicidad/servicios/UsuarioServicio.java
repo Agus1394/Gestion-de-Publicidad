@@ -1,6 +1,7 @@
 package com.gestiondepublicidad.servicios;
 
 import com.gestiondepublicidad.entidades.Foto;
+import com.gestiondepublicidad.entidades.Proyecto;
 import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.enumeraciones.Rol;
 import com.gestiondepublicidad.excepciones.MiException;
@@ -25,7 +26,8 @@ public class UsuarioServicio {
 
     //CREA/REGISTRA UN NUEVO USUARIO
     @Transactional
-    public void registrar(MultipartFile archivo, String nombre, String email, String contrasenia, String contrasenia2) throws MiException {
+    public void registrar(MultipartFile archivo, String nombre, String email, String contrasenia,
+            String contrasenia2) throws MiException {
 
         validar(nombre, email, contrasenia, contrasenia2);
 
@@ -34,7 +36,8 @@ public class UsuarioServicio {
         usuario.setNombre(nombre);
         usuario.setEmail(email);
 
-        usuario.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
+        usuario.setContrasenia(new BCryptPasswordEncoder().
+                encode(contrasenia));
 
         usuario.setRol(Rol.USER);
 
@@ -45,7 +48,8 @@ public class UsuarioServicio {
 
     //MODIFICA LOS DATOS EXISTENTES DE UN USUARIO
     @Transactional
-    public void actualizar(MultipartFile archivo, String id_usuario, String nombre, String email, String password, String password2) throws MiException {
+    public void actualizar(MultipartFile archivo, String id_usuario, String nombre, String email,
+            String password, String password2) throws MiException {
 
         validar(nombre, email, password, password2);
 
@@ -63,7 +67,7 @@ public class UsuarioServicio {
 
             String idFoto = null;
 
-            if (usuario.getFoto()!= null) {
+            if (usuario.getFoto() != null) {
                 idFoto = usuario.getFoto().getId_foto();
             }
             Foto foto = fotoServicio.actualizar(archivo, idFoto);
@@ -89,9 +93,10 @@ public class UsuarioServicio {
     }
 
     //DEVUELVE LOS USUARIOS CONECTADOS AL MISMO PROYECTO
-//    public List<Usuario> usuariosPorProyecto(Proyecto proyecto){
-//        return usuarioRepositorio.buscarPorProyecto(proyecto);
-//    }
+    public List<Usuario> usuariosPorProyecto(Proyecto proyecto) {
+        return usuarioRepositorio.buscarPorProyecto(proyecto);
+    }
+
     //DEVUELVE UNA LISTA DE TODOS LOS USUARIOS
     @Transactional(readOnly = true)
     public List<Usuario> listarUsuarios() {
@@ -132,7 +137,8 @@ public class UsuarioServicio {
     }
 
     //IMPIDE QUE SE INGRESEN DATOS NULOS
-    private void validar(String nombre, String email, String contrasenia, String contrasenia2) throws MiException {
+    private void validar(String nombre, String email, String contrasenia, String contrasenia2)
+            throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("Debe ingresar un nombre");
