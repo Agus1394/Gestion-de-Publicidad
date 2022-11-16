@@ -55,5 +55,4 @@ public class Usuario {
     @Column(name = "PUESTO EN LA EMPRESA")
     @Enumerated(EnumType.STRING)
     private PuestoEmpresa puestoEmpresa;
-
 }

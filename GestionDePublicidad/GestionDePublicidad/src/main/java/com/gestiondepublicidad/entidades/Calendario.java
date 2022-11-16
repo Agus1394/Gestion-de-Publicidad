@@ -1,3 +1,7 @@
+/*
+
+*/
+
 package com.gestiondepublicidad.entidades;
 
 import javax.persistence.Basic;
