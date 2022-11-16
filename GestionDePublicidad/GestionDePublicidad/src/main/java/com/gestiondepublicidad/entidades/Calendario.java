@@ -5,6 +5,7 @@
 package com.gestiondepublicidad.entidades;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,16 +21,19 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "Calendario")
+@Table(name = "CALENDARIO")
 public class Calendario {
     
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "ID_CALENDARIO")
     private String id_calendario;
     
-    @Basic
+    @Column(name = "DESCRIPCIÓN")
     private String descripcion;
+    
+    @Column(name = "EVENTO")
     private String evento;
     
 }
