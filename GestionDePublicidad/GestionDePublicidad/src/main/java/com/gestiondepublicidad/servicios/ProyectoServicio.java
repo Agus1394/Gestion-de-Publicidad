@@ -20,7 +20,10 @@ public class ProyectoServicio {
     //quiero subir un proyecto
     @Transactional
     public void subirProyecto(String id_proyecto, String nombre, String descripcion,
-    Date fechaInicio, Date fechaFin, ){
+    Date fechaInicio, Date fechaFin, String idUsuario){
         
     }
+    
+    
+    
 }

@@ -17,5 +17,8 @@ public interface CalendarioRepositorio  extends JpaRepository <Calendario, Strin
     //quiero que traiga la descripción de ese evento
     @Query("SELECT c FROM Calendario c WHERE c.descripcion.evento = :descripcion")
     public Calendario buscarDescripcionEvento(@Param("descripcion") String descripcion);
+    
+    //fecha de inicio y fin
+//    @Query("SELECT c FROM Calendario c WHERE c.")
         
 }

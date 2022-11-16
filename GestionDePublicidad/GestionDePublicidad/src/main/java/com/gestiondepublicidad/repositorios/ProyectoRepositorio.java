@@ -16,6 +16,9 @@ public interface ProyectoRepositorio extends JpaRepository<Proyecto, String> {
     @Query("SELECT p FROM Proyecto p WHERE p.usuario.nombre = :nombre")
     public List <Proyecto> buscarPorUsuario(@Param("nombre") String nombre);
     
+    
+    
+    
 }
 
 
