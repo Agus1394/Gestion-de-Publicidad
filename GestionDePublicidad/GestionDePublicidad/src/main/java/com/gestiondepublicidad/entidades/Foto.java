@@ -20,7 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "Foto")
+@Table(name = "FOTO")
 public class Foto {
 
     @Id
