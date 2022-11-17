@@ -1,9 +1,4 @@
 package com.gestiondepublicidad.entidades;
-
-<<<<<<< agustina
-import javax.persistence.Column;
-=======
->>>>>>> developer
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
