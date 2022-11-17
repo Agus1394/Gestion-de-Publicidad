@@ -84,7 +84,10 @@ public class UsuarioServicio {
 
     //DEVUELVE LOS USUARIO CON EL MISMO NOMBRE
     public List<Usuario> usuariosPorNombre(String nombre) {
-        return usuarioRepositorio.buscarPorNombre(nombre);
+
+        List<Usuario> usuarios = new ArrayList();
+
+        return usuarios = usuarioRepositorio.buscarPorNombre(nombre);
     }
 
     //DEVUELVE UN USUARIO BUSCADO POR SU EMAIL
@@ -94,18 +97,17 @@ public class UsuarioServicio {
 
     //DEVUELVE LOS USUARIOS CONECTADOS AL MISMO PROYECTO
     public List<Usuario> usuariosPorProyecto(Proyecto proyecto) {
-        return usuarioRepositorio.buscarPorProyecto(proyecto);
+        List<Usuario> usuarios = new ArrayList();
+
+        return usuarios = usuarioRepositorio.buscarPorProyecto(proyecto);
     }
 
     //DEVUELVE UNA LISTA DE TODOS LOS USUARIOS
-    @Transactional(readOnly = true)
     public List<Usuario> listarUsuarios() {
 
         List<Usuario> usuarios = new ArrayList();
 
-        usuarios = usuarioRepositorio.findAll();
-
-        return usuarios;
+        return usuarios = usuarioRepositorio.findAll();
     }
 
     //CAMBIA ROLES ENTRE USER, CLIENTE Y ADMIN
