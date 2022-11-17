@@ -26,7 +26,7 @@ public class UsuarioServicio {
 
     //CREA/REGISTRA UN NUEVO USUARIO
     @Transactional
-    public void registrar(MultipartFile archivo, String nombre, String email, String contrasenia,
+    public Usuario registrar(MultipartFile archivo, String nombre, String email, String contrasenia,
             String contrasenia2) throws MiException {
 
         validar(nombre, email, contrasenia, contrasenia2);
@@ -43,7 +43,7 @@ public class UsuarioServicio {
 
         Foto foto = fotoServicio.guardar(archivo);
         usuario.setFoto(foto);
-        usuarioRepositorio.save(usuario);
+        return usuarioRepositorio.save(usuario);
     }
 
     //MODIFICA LOS DATOS EXISTENTES DE UN USUARIO
