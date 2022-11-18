@@ -18,6 +18,8 @@ public class CalendarioServicio {
     public Calendario subirCalendario(String idCalendario, 
             String descripcionCalendario, String eventoCalendario) throws MiException {
         
+        validarRegistro(idCalendario, descripcionCalendario, eventoCalendario);
+        
         Calendario nuevoCalendario = new Calendario();
         
         nuevoCalendario.setId_calendario(idCalendario);
@@ -32,6 +34,8 @@ public class CalendarioServicio {
             String eventoCalendario) throws MiException {
         
         Optional<Calendario> respuesta = calendarioRepositorio.findById(idCalendario);
+        
+        validarRegistro(idCalendario, descripcionCalendario, eventoCalendario);
         
         if (respuesta.isPresent()) {
             Calendario calendarioModif = new Calendario();
@@ -49,4 +53,18 @@ public class CalendarioServicio {
     }
     
     //me faltan las queris y alguna validacion !!
+    
+    private void validarRegistro(String idCalendario, String descripcionCalendario,
+            String eventoCalendario) throws MiException{
+        
+        if (idCalendario == null || idCalendario.isEmpty()) {
+            throw new MiException("El campo ID no debe quedar vacío");
+        }
+        if (descripcionCalendario == null|| descripcionCalendario.isEmpty()) {
+            throw new  MiException("La descripción del calendario no debe quedar vacía");
+        }
+        if (eventoCalendario == null || eventoCalendario.isEmpty()) {
+            throw new  MiException("El campo evento no debe quedar vacío");
+        }
+    }
 }
