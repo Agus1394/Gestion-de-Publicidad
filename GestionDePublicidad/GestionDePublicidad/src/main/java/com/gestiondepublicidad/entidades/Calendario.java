@@ -24,10 +24,10 @@ public class Calendario {
     @Column (name = "ID CALENDARIO")
     private String id_calendario;
     
-    @Column (name = "DESCRIPCION")
+//    @Column (name = "DESCRIPCION")
     private String descripcion;
     
-    @Column (name = "EVENTO")
+//    @Column (name = "EVENTO")
     private String evento;
     
 }
