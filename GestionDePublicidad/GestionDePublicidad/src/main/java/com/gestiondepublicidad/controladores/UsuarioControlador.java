@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -28,4 +29,9 @@ public class UsuarioControlador {
         return "panel.html";
     }
 
+        @GetMapping("/modificarRol/{id}")
+    public String cambiarRol(@PathVariable String id){
+        usuarioServicio.cambiarRol(id);
+        return "redirect:/admin/usuarios";
+}
 }
