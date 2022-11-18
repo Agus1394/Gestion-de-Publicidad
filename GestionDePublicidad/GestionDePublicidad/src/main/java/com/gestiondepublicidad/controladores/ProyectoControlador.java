@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,7 +26,7 @@ public class ProyectoControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
     
-    @GetMapping()
+    @GetMapping("/registroproyecto")
     public String registrar(ModelMap modelo){
         List <Proyecto> proyecto = proyectoServicio.listarUsuarios();
         List <Usuario> usuario = usuarioServicio.listarUsuarios();
@@ -36,7 +38,7 @@ public class ProyectoControlador {
     }
     
     
-    @GetMapping("/cargarproyecto")
+    @PostMapping("/cargarproyecto")
     public String registrarProyecto(@RequestParam String idProyecto,
             @RequestParam String nombreProyecto,
             @RequestParam String descripcion,
@@ -44,15 +46,46 @@ public class ProyectoControlador {
             @RequestParam(required = false) Date fechaInicio,
             @RequestParam(required = false) Date fechaFin,
             ModelMap modelo){
-        
+
         try {
-            
+                proyectoServicio.registrar(idProyecto, idUsuario, descripcion, fechaInicio, fechaFin, idUsuario);
+                modelo.put("Proyecto registrado", "!!");
         } catch (Exception e) {
+            
+            
         }
         return null;
         
     }
     
     
+    
+    @GetMapping("/buscar_por_nombre_p")
+    public String buscarProyecto(ModelMap modelo, String nombre){
+        List <Proyecto> proyecto = (List <Proyecto>) proyectoServicio.buscarPorNombre(nombre);
+        modelo.addAttribute("proyecto", proyecto);
+        return "buscar_por_nombre_proyecto.html";
+    }
+    
+    @GetMapping("/lista_usuarios_proyectos")
+    public String listarUsuarios(ModelMap modelo){
+        List <Proyecto> proyecto = proyectoServicio.listarUsuarios();
+        modelo.addAttribute("proyecto", proyecto);
+        return "lista_usuarios.html";      
+    }
+    
+    
+    @GetMapping("/modificar/{id}")
+    public String modificar(@PathVariable String id, ModelMap modelo){
+        modelo.put("Proyecto", proyectoServicio.getOne(id));
+        return "proyecto_modificado.html";
+        
+    }
+    
+    @PostMapping("eliminar_proyecto/{id}")
+    public String eliminarProyecto(@PathVariable String id, ModelMap modelo){
+         modelo.remove(id);
+         return "proyectoeliminado.html";
+    }
     
 }
