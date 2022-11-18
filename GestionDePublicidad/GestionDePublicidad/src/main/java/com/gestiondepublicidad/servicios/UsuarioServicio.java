@@ -155,6 +155,14 @@ public class UsuarioServicio {
         if (!contrasenia.equals(contrasenia2)) {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
+        //IMPIDE QUE SE INGRESEN EMAILS EXISTENTES
+        if(usuarioRepositorio.buscarEmail(email)!= null) {
+            throw new MiException("El email ingresado ya esta registrado");
+        }
+        //VERIFICA QUE SE INGRESEN EMAILS VÁLIDOS
+        if(!email.contains("@") || !email.contains(".com")){
+            throw new MiException("No se ha ingresado un email válido");
+        }
 
     }
 }
