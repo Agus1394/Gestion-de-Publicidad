@@ -29,14 +29,16 @@ public class Usuario {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "ID_USUARIO")
+//    @Column (name = "ID USUARIO")
     private String id_usuario;
 
-    @Column(name = "NOMBRE")
+//    @Column (name = "NOMBRE")
     private String nombre;
-    @Column(name= "CORREO")
+    
+//    @Column (name = "EMAIL")
     private String email;
-    @Column(name = "CONTRASEÑA")
+    
+//    @Column (name = "CONTRASEÑA")
     private String contrasenia;
 
     @OneToOne
@@ -48,12 +50,12 @@ public class Usuario {
     @OneToMany
     private List<Calendario> calendario;
 
-    @Column(name = "ROL")
+//    @Column (name = "ROL")
     @Enumerated(EnumType.STRING)
     private Rol rol;
-
-    @Column(name = "PUESTO EN LA EMPRESA")
+    
+//    @Column (name = "PUESTO EN LA EMPRESA")
     @Enumerated(EnumType.STRING)
     private PuestoEmpresa puestoEmpresa;
-
+    
 }

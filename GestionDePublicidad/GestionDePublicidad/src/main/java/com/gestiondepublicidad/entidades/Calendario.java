@@ -1,6 +1,4 @@
 package com.gestiondepublicidad.entidades;
-
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,13 +21,13 @@ public class Calendario {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "ID_CALENDARIO")
+    @Column (name = "ID CALENDARIO")
     private String id_calendario;
     
-    @Column(name = "DESCRIPCIÓN")
+    @Column (name = "DESCRIPCION")
     private String descripcion;
     
-    @Column(name = "EVENTO")
+    @Column (name = "EVENTO")
     private String evento;
     
 }

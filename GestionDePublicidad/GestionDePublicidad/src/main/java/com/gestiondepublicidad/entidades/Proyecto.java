@@ -29,26 +29,27 @@ public class Proyecto {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name= "ID_PROYECTO")
+    @Column(name = "ID PROYECTO")
     private String id_proyecto;
     
-    @Column(name= "NOMBRE PROYECTO")
+//    @Column(name = "NOMBRE")
     private String nombre;
-    @Column(name = "DESCRIPCIÓN")
+    
+//    @Column (name = "DESCRIPCION")
     private String descripcion;
 
-    @Column(name ="FECHA DE INICIO")
+//    @Column (name = "FECHA INICIO")
     @Temporal(TemporalType.DATE)
     private Date fechaInicio;
     
-    @Column(name ="FECHA FINAL")
+//    @Column(name = "FECHA FIN")
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
     
     @ManyToOne
     private Usuario usuario;
 
-    @Column(name ="ESTADO")
+//    @Column (name = "ESTADO DEL PROYECTO")
     @Enumerated(EnumType.STRING)
     private EstadoProyecto estadoProyecto;
 }
