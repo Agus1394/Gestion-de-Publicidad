@@ -10,15 +10,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CalendarioRepositorio  extends JpaRepository <Calendario, String>{
 
-    //quiero que busque el evento, el nombre o lo que fuera el evento
+    //quiero que busque el evento
     @Query("SELECT c FROM Calendario c WHERE c.evento = :evento")
     public List <Calendario> buscarEvento(@Param("evento") String evento);
     
     //(cambio) Buscar por palabras que contenga la descripción del evento
     @Query("SELECT c FROM Calendario c WHERE c.descripcion LIKE %:descripcion%")
-    public Calendario buscarDescripcionEvento(@Param("descripcion") String descripcion);
+    public List<Calendario> buscarDescripcion(@Param("descripcion") String descripcion);
     
-    //fecha de inicio y fin
-//    @Query("SELECT c FROM Calendario c WHERE c.")
         
 }
