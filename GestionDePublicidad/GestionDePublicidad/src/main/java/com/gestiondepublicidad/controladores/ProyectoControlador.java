@@ -38,7 +38,7 @@ public class ProyectoControlador {
 
     }
 
-    @PostMapping("/cargarproyecto")
+    @PostMapping("/cargarproyecto/nuevo")
     public String registrarProyecto(@RequestParam String idProyecto,
             @RequestParam String nombreProyecto,
             @RequestParam String descripcion,
