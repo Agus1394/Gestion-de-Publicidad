@@ -132,6 +132,33 @@ public class UsuarioServicio {
         }
     }
 
+    //EDICION DE ADMIN Y VER SI DE CLIENTE
+    public void adminEditar(MultipartFile archivo, String idUsuario, String nombre,
+            String email) throws MiException {
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+
+        if (respuesta.isPresent()) {
+
+            Usuario usuario = respuesta.get();
+
+            usuario.setNombre(nombre);
+            usuario.setEmail(email);
+            String idImagen = null;
+            if (usuario.getFoto()!= null) {
+
+                idImagen = usuario.getFoto().getId_foto();
+            }
+            if (null != archivo && !archivo.isEmpty()) {
+                Foto foto = fotoServicio.actualizar(archivo, idImagen);
+                usuario.setFoto(foto);
+            }
+
+            usuarioRepositorio.save(usuario);
+        }
+
+    }
+
     //ELIMINA UN USUARIO SEGÚN SU ID
     @Transactional
     public void eliminarUsuario(String id_usuario) {
