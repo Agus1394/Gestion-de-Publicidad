@@ -29,20 +29,20 @@ public class Usuario {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-//    @Column (name = "ID USUARIO")
     private String id_usuario;
 
-//    @Column (name = "NOMBRE")
     private String nombre;
-    
-//    @Column (name = "EMAIL")
+
     private String email;
-    
-//    @Column (name = "CONTRASEÑA")
+
     private String contrasenia;
 
     @OneToOne
     private Foto foto;
+    
+//    @Enumerated(EnumType.STRING)
+    @OneToOne
+    private ListaDeTarea listaDeTarea;
 
     @OneToMany
     private List<Proyecto> proyecto;
@@ -50,12 +50,10 @@ public class Usuario {
     @OneToMany
     private List<Calendario> calendario;
 
-//    @Column (name = "ROL")
     @Enumerated(EnumType.STRING)
     private Rol rol;
-    
-//    @Column (name = "PUESTO EN LA EMPRESA")
+
     @Enumerated(EnumType.STRING)
     private PuestoEmpresa puestoEmpresa;
-    
+
 }

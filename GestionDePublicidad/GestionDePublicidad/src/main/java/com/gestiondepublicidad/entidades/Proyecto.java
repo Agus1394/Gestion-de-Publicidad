@@ -31,25 +31,20 @@ public class Proyecto {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "ID PROYECTO")
     private String id_proyecto;
-    
-//    @Column(name = "NOMBRE")
+
     private String nombre;
     
-//    @Column (name = "DESCRIPCION")
     private String descripcion;
 
-//    @Column (name = "FECHA INICIO")
     @Temporal(TemporalType.DATE)
     private Date fechaInicio;
     
-//    @Column(name = "FECHA FIN")
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
     
     @ManyToOne
     private Usuario usuario;
 
-//    @Column (name = "ESTADO DEL PROYECTO")
     @Enumerated(EnumType.STRING)
     private EstadoProyecto estadoProyecto;
 }
