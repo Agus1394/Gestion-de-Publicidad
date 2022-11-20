@@ -73,7 +73,7 @@ public class ProyectoServicio {
         return proyectoRepositorio.getOne(id);
     }
 
-    public List<Proyecto> listarUsuarios() {
+    public List<Proyecto> listarTodos() {
 
         List<Proyecto> proyectos = new ArrayList<>();
 
@@ -93,7 +93,7 @@ public class ProyectoServicio {
 
     //ELIMINAR 
     public void eliminar(String id) {
-        proyectoRepositorio.deleteById(id);
+        proyectoRepositorio.deleteById(id);     
     }
 
     //VALIDACION

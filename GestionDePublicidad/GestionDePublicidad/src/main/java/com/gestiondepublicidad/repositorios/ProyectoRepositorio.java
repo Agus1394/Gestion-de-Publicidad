@@ -18,6 +18,9 @@ public interface ProyectoRepositorio extends JpaRepository<Proyecto, String> {
             + "p.usuario_id_usuario = u.id_usuario WHERE u.nombre = :nombre")
     public List<Proyecto> buscarPorUsuario(@Param("nombre") String nombre);
     
+    
+    
+    
 }
 
 
