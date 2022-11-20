@@ -46,7 +46,7 @@ public class Usuario {
 
     @OneToMany
     private List<Proyecto> proyecto;
-
+    
     @OneToMany
     private List<Calendario> calendario;
 
