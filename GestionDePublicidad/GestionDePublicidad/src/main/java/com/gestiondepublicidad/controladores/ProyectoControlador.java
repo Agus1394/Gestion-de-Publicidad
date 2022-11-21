@@ -40,11 +40,9 @@ public class ProyectoControlador {
         return "registrar_proyecto.html";
     }
 
-<<<<<<< HEAD
-    @PostMapping("/cargarproyecto/nuevo")
-=======
+
+
     @PostMapping("/cargar")
->>>>>>> 779b1040bf0fc450d535d4f2c57518c603ec5c99
     public String registrarProyecto(@RequestParam String idProyecto,
             @RequestParam String nombreProyecto,
             @RequestParam String descripcion,
