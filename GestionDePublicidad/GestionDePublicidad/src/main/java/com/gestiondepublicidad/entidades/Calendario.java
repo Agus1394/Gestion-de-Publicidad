@@ -15,7 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "CALENDARIO")
+@Table(name = "Calendario")
 public class Calendario {
     
     @Id

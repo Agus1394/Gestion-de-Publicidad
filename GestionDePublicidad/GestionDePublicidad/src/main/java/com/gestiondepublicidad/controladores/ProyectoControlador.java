@@ -80,12 +80,12 @@ public class ProyectoControlador {
         return "buscar_por_nombre_proyecto.html";
     }
 
-    @GetMapping("/lista_usuarios_p")
+    /*@GetMapping("/lista_usuarios_p")
     public String listarUsuarios(ModelMap modelo, String nombre) {
         List<Proyecto> proyecto = proyectoServicio.buscarPorUsuario(nombre);
         modelo.addAttribute("proyecto", proyecto);
         return "lista_usuarios.html";
-    }
+    }*/
 
     //MODIFICAR
     @GetMapping("/modificar/{id}")

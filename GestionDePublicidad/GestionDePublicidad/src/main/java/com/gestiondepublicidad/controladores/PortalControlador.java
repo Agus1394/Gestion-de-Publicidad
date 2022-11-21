@@ -24,7 +24,7 @@ public class PortalControlador {
 
     @GetMapping("/")
     public String index() {
-        return "pantalla_general.html";
+        return "index.html";
     }
 
     //CREAR
