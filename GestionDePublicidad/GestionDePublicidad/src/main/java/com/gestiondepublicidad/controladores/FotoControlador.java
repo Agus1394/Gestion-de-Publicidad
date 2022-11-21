@@ -21,7 +21,7 @@ public class FotoControlador {
     private UsuarioServicio usuarioServicio;
     
     @GetMapping("/perfil/{id}")
-    public ResponseEntity<byte []> fotoUsuario (@PathVariable String id){
+    public ResponseEntity<byte []> fotoUsuario(@PathVariable String id){
         
         Usuario usuario = usuarioServicio.getOne(id);
         

@@ -73,7 +73,7 @@ public class ProyectoServicio {
         return proyectoRepositorio.getOne(id);
     }
 
-    public List<Proyecto> listarUsuarios() {
+    public List<Proyecto> listarTodos() {
 
         List<Proyecto> proyectos = new ArrayList<>();
 

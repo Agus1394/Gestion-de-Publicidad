@@ -1,11 +1,15 @@
 package com.gestiondepublicidad.controladores;
 
 import com.gestiondepublicidad.entidades.Calendario;
+import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.servicios.CalendarioServicio;
+import com.gestiondepublicidad.servicios.UsuarioServicio;
 import java.util.List;
 import java.util.logging.Level;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,19 +25,26 @@ public class CalendarioControlador {
     @Autowired
     private CalendarioServicio calendarioServicio;
 
-    @GetMapping("/registro_calendario")
-    public String registrar() {
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+
+    //CONTROLAR USUARIO SESSION TESTEAR YA CON FRONT VINCULADO
+    //REGISTRO
+    @GetMapping("/registrar")
+    public String registrar(ModelMap modelo, HttpSession session) {
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        Usuario usuario = usuarioServicio.getOne(logueado.getId_usuario());
+        modelo.put("usuario", usuario);
         return "registrar_calendario.html";
     }
 
     @PostMapping("/registro")
     public String registrarCalendario(@RequestParam String id,
             @RequestParam String descripcion,
-            @RequestParam String evento,
-            ModelMap modelo) {
+            @RequestParam String evento, ModelMap modelo) {
         try {
             calendarioServicio.registrar(id, descripcion, evento);
-            modelo.put("Calendario registrado","!");
+            modelo.put("Calendario registrado", "!");
         } catch (MiException e) {
             modelo.put("error al subir el calendario", e.getMessage());
             java.util.logging.Logger.getLogger(CalendarioControlador.class.getName()).log(Level.SEVERE, null, e);
@@ -41,21 +52,43 @@ public class CalendarioControlador {
         return "registrar_calendario.html";
     }
 
-    @GetMapping("/modificar_calendario/{id}")
-    public String modificarCalendario(@PathVariable String id,
-            ModelMap modelo) {
-        modelo.put("Calendario", calendarioServicio.getOne(id));
+    //MODIFICAR
+    @GetMapping("/modificar/{id}")
+    public String modificar(@PathVariable String id, ModelMap modelo) {
+        modelo.put("calendario", calendarioServicio.getOne(id));
+        List<Usuario> usuarios = usuarioServicio.listarUsuarios();
+        modelo.addAttribute("usuarios", usuarios);
         return "calendario_modif.html";
     }
 
-    @PostMapping(value = "/eliminar_calendario{id}")
-    public String eliminarProyecto(@PathVariable String id,
-            ModelMap modelo) {
-        modelo.remove(id);
-        return "calendario_eliminado.html";
+    @PostMapping("/modificar/{id}")
+    public String modificar(@PathVariable String id, String descripcion,
+            String evento, ModelMap modelo) {
+        try {
+            calendarioServicio.modificarCalendario(id, descripcion, evento);
+            return "redirect:../lista";
+        } catch (MiException e) {
+
+            modelo.put("Error", e.getMessage());
+            return "calendario_modif.html";
+        }
     }
 
-    @GetMapping("/listar_calendarios")
+    //ELIMINAR
+    //CONTROLAR SI SE NECESITA ELIMINACION DE ADMIN U OTRO USER CON FRONT HECHO
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/eliminar{id}")
+    public String eliminar(@PathVariable String id, ModelMap modelo) {
+
+        List<Calendario> calendarios = calendarioServicio.listarTodos();
+        modelo.addAttribute("calendarios", calendarios);
+
+        calendarioServicio.eliminarCalendario(id);
+        return "redirect:/calendario/lista";
+    }
+
+    //LISTAR
+    @GetMapping("/listar")
     public String listarCalendarios(ModelMap modelo) {
         List<Calendario> calendario = calendarioServicio.listarTodos();
         modelo.put("Calendario", calendario);
