@@ -29,7 +29,6 @@ public class Proyecto {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "ID PROYECTO")
     private String id_proyecto;
     
     private String nombre;
