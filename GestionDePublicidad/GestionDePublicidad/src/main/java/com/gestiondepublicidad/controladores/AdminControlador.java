@@ -28,13 +28,50 @@ public class AdminControlador {
     }
 
     //LISTAR
-    @GetMapping("/usuarios")
-    public String listar(ModelMap modelo) {
-        List<Usuario> usuarios = usuarioServicio.listarUsuarios();
-        modelo.addAttribute("usuarios", usuarios);
-        return "usuario_list.html";
+    @GetMapping("/tablaClientes")
+    public String listarClientes(ModelMap modelo) {
+        List<Usuario> listaClientes = usuarioServicio.listarClientes();
+        modelo.addAttribute("usuarios", listaClientes);
+        return "tablaClientes.html";
     }
 
+    @GetMapping("/tablaTrabajadores")
+    public String listarTrabajadores(ModelMap modelo) {
+        List<Usuario> listaTrabajadores = usuarioServicio.listarTrabajadores();
+        modelo.addAttribute("usuarios", listaTrabajadores);
+        return "tablaTrabajadores.html";
+    }
+    
+    @PostMapping("/cliente/flitroPorNombre/{nombre}")
+    public String listarClientesPorNombre(ModelMap modelo, @PathVariable String nombre){
+        List <Usuario> listaClientes = usuarioServicio.listarClientesPorNombre(nombre);
+        modelo.addAttribute("listaClientes", listaClientes); 
+        return "tablaClientes.html";
+    }
+    
+    
+       @PostMapping("/cliente/filtroPorEmail/{email}")
+    public String listarClientesPorEmail(ModelMap modelo, @PathVariable String email){
+        List <Usuario> listaClientes = usuarioServicio.listarClientesPorEmail(email);
+        modelo.addAttribute("listaClientes", listaClientes); 
+        return "tablaClientes.html";
+    }
+    
+       @PostMapping("/trabajador/filtroPorNombre/{nombre}")
+        public String listarTrabajadoresPorNombre(ModelMap modelo, @PathVariable String nombre){
+        List <Usuario> listaTrabajadores = usuarioServicio.listarTrabajadoresPorNombre(nombre);
+        modelo.addAttribute("listaTrabajadores", listaTrabajadores); 
+        return "tablaTrabajadores.html";
+    }
+    
+        
+        @PostMapping("/trabajador/filtroPorEmail/{email}")
+        public String listarTrabajadoresPorEmail(ModelMap modelo, @PathVariable String email){
+        List <Usuario> listaClientes = usuarioServicio.listarTrabajadoresPorEmail(email);
+        modelo.addAttribute("listaClientes", listaClientes); 
+        return "tablaClientes.html";
+    }   
+    
     //MODIFICAR ROL USUARIOS
     @GetMapping("/modificarRol/{id}")
     public String cambiarRol(@PathVariable String id) {
