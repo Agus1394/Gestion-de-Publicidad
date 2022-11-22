@@ -3,7 +3,6 @@ package com.gestiondepublicidad.entidades;
 import com.gestiondepublicidad.enumeraciones.PuestoEmpresa;
 import com.gestiondepublicidad.enumeraciones.Rol;
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -23,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "USUARIOS")
+@Table(name = "Usuario")
 public class Usuario {
 
     @Id
@@ -49,6 +48,9 @@ public class Usuario {
     
     @OneToMany
     private List<Calendario> calendario;
+    
+    @OneToOne
+    private ListaDeTarea listaDeTarea;
 
 //    @Column (name = "ROL")
     @Enumerated(EnumType.STRING)

@@ -84,12 +84,12 @@ public class ProyectoServicio {
         return proyectoRepositorio.buscarPorNombreProy(nombre);
     }
 
-    public List<Proyecto> buscarPorUsuario(String nombre) {
+    /*public List<Proyecto> buscarPorUsuario(String nombre) {
 
         List<Proyecto> proyectos = new ArrayList<>();
 
         return proyectos = proyectoRepositorio.buscarPorUsuario(nombre);
-    }
+    }*/
 
     //ELIMINAR 
     public void eliminar(String id) {
