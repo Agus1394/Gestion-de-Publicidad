@@ -28,26 +28,25 @@ public class PortalControlador {
     }
 
     //CREAR
-    @GetMapping("/registrar")
+    @GetMapping("/registro")
     public String registrar() {
-        return "registro_usuario.html";
+        return "registro.html";
     }
 
-    @PostMapping("/registro")
-    public String registro(@RequestParam MultipartFile archivo, @RequestParam String nombre,
+    @PostMapping("/registrar")
+    public String registro(@RequestParam String nombre,
             @RequestParam String email, @RequestParam String password,
             @RequestParam String password2, ModelMap modelo) {
         try {
-            usuarioServicio.registrar(archivo, nombre, email, password, password2);
+            usuarioServicio.registrar(nombre, email, password, password2);
             modelo.put("éxito", "Usuario registrado correctamente!");
             return "index.html";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("email", email);
-            return "registro_usuario.html";
+            return "registro.html";
         }
-
     }
 
     //LOGIN
@@ -67,11 +66,10 @@ public class PortalControlador {
 
         if (logueado.getRol().toString().equals("ADMIN")) {
 
-            return "redirect:/admin/dashboard";
+            return "dashboard.html";
         } else if (logueado.getRol().toString().equals("CLIENTE")) {
             return "redirect:/cliente/dashboard";
         }
-
         return "index.html";
     }
 

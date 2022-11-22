@@ -24,7 +24,7 @@ public class AdminControlador {
 
     @GetMapping("/dashboard")
     public String panelAdministrativo(ModelMap modelo) {
-        return "panel_admin.html";
+        return "dashboard.html";
     }
 
     //LISTAR
@@ -41,37 +41,35 @@ public class AdminControlador {
         modelo.addAttribute("usuarios", listaTrabajadores);
         return "tablaTrabajadores.html";
     }
-    
+
     @PostMapping("/cliente/flitroPorNombre/{nombre}")
-    public String listarClientesPorNombre(ModelMap modelo, @PathVariable String nombre){
-        List <Usuario> listaClientes = usuarioServicio.listarClientesPorNombre(nombre);
-        modelo.addAttribute("listaClientes", listaClientes); 
+    public String listarClientesPorNombre(ModelMap modelo, @PathVariable String nombre) {
+        List<Usuario> listaClientes = usuarioServicio.listarClientesPorNombre(nombre);
+        modelo.addAttribute("listaClientes", listaClientes);
         return "tablaClientes.html";
     }
-    
-    
-       @PostMapping("/cliente/filtroPorEmail/{email}")
-    public String listarClientesPorEmail(ModelMap modelo, @PathVariable String email){
-        List <Usuario> listaClientes = usuarioServicio.listarClientesPorEmail(email);
-        modelo.addAttribute("listaClientes", listaClientes); 
+
+    @PostMapping("/cliente/filtroPorEmail/{email}")
+    public String listarClientesPorEmail(ModelMap modelo, @PathVariable String email) {
+        List<Usuario> listaClientes = usuarioServicio.listarClientesPorEmail(email);
+        modelo.addAttribute("listaClientes", listaClientes);
         return "tablaClientes.html";
     }
-    
-       @PostMapping("/trabajador/filtroPorNombre/{nombre}")
-        public String listarTrabajadoresPorNombre(ModelMap modelo, @PathVariable String nombre){
-        List <Usuario> listaTrabajadores = usuarioServicio.listarTrabajadoresPorNombre(nombre);
-        modelo.addAttribute("listaTrabajadores", listaTrabajadores); 
+
+    @PostMapping("/trabajador/filtroPorNombre/{nombre}")
+    public String listarTrabajadoresPorNombre(ModelMap modelo, @PathVariable String nombre) {
+        List<Usuario> listaTrabajadores = usuarioServicio.listarTrabajadoresPorNombre(nombre);
+        modelo.addAttribute("listaTrabajadores", listaTrabajadores);
         return "tablaTrabajadores.html";
     }
-    
-        
-        @PostMapping("/trabajador/filtroPorEmail/{email}")
-        public String listarTrabajadoresPorEmail(ModelMap modelo, @PathVariable String email){
-        List <Usuario> listaClientes = usuarioServicio.listarTrabajadoresPorEmail(email);
-        modelo.addAttribute("listaClientes", listaClientes); 
+
+    @PostMapping("/trabajador/filtroPorEmail/{email}")
+    public String listarTrabajadoresPorEmail(ModelMap modelo, @PathVariable String email) {
+        List<Usuario> listaClientes = usuarioServicio.listarTrabajadoresPorEmail(email);
+        modelo.addAttribute("listaClientes", listaClientes);
         return "tablaClientes.html";
-    }   
-    
+    }
+
     //MODIFICAR ROL USUARIOS
     @GetMapping("/modificarRol/{id}")
     public String cambiarRol(@PathVariable String id) {
@@ -86,18 +84,18 @@ public class AdminControlador {
     }
 
     @PostMapping("/registro")
-    public String registro(@RequestParam MultipartFile archivo, @RequestParam String nombre,
+    public String registro(@RequestParam String nombre,
             @RequestParam String email, @RequestParam String password,
             @RequestParam String password2, ModelMap modelo) {
         try {
-            usuarioServicio.registrar(archivo, nombre, email, password, password2);
+            usuarioServicio.registrar(nombre, email, password, password2);
             modelo.put("éxito", "Usuario registrado correctamente!");
             return "usuario_cargado.html";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("email", email);
-            return "registro.html";
+            return "registro_usuario.html";
         }
 
     }

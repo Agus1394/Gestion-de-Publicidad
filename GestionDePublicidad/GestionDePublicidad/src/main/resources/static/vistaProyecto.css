@@ -1,0 +1,87 @@
+/*--
+--------------------COLORES del oscuro al claro---------------------
+rgb(33, 33, 33)
+rgb(50, 50, 50)
+rgb(13, 115, 119)
+rgb(20, 255, 236)
+
+------------------FUENTES -------------------------
+font-family: 'Lora', serif;
+font-family: 'Hind Siliguri', sans-serif;
+font-family: 'Titillium Web', sans-serif;
+
+*/
+
+*{
+    background-color:rgb(33, 33, 33);
+    margin: 0 ;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1, h2, h3{
+    font-family:'Hind Siliguri', sans-serif;
+    color:rgb(255, 233, 177);
+}
+    
+p{
+    font-family: 'Hind Siliguri', sans-serif;
+    color: whitesmoke;
+}
+    
+header{
+    margin: 0%;
+}
+
+.button1{
+    color: white;
+    border-color: rgb(33, 33, 33);
+    font-family: 'Titillium Web', sans-serif;
+    background: transparent;
+}
+
+.button1:hover{
+    background-color: rgb(20, 255, 236);
+    color:rgb(33, 33, 33);
+    border-color: rgb(20, 255, 236);  
+}
+
+.listaNav{   
+    color: white !important;
+    text-decoration: none;
+    font-size: larger !important;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.listaNav:hover{
+    color:rgb(20, 255, 236) !important;
+}
+
+.MiPerfil {
+    width: 25% !important;
+    height: 25% !important;
+    background: transparent;
+}
+
+#lettering{
+    width: 100% !important;
+    height: 100% !important;    
+}
+
+footer{
+    padding-top: 1%;
+    padding-bottom: 2%;
+}
+
+#logoFooter{
+    margin-bottom: 0;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 10%;
+}
+
+.nav-link{
+    color: white !important;
+}
+

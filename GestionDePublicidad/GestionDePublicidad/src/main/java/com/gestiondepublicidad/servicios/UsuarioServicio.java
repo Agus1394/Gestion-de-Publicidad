@@ -35,7 +35,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     //CREA/REGISTRA UN NUEVO USUARIO
     @Transactional
-    public Usuario registrar(MultipartFile archivo, String nombre, String email, String contrasenia,
+    public Usuario registrar(String nombre, String email, String contrasenia,
             String contrasenia2) throws MiException {
 
         validar(nombre, email, contrasenia, contrasenia2);
@@ -50,8 +50,6 @@ public class UsuarioServicio implements UserDetailsService {
 
         usuario.setRol(Rol.USER);
 
-        Foto foto = fotoServicio.guardar(archivo);
-        usuario.setFoto(foto);
         return usuarioRepositorio.save(usuario);
     }
 
