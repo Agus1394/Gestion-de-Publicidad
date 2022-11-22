@@ -41,6 +41,7 @@ public class Proyecto {
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
     
+    //Revisar relacion
     @ManyToOne
     private Usuario usuario;
 
