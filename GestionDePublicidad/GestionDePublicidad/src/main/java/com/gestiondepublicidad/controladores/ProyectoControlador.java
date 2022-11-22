@@ -143,4 +143,11 @@ public class ProyectoControlador {
         return "tablaProyecto.html";
     }
     
+    
+    @GetMapping("/lista_proyectos")
+    public String listarProyectos(ModelMap modelo) {
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyecto.html";
+    }
 }
