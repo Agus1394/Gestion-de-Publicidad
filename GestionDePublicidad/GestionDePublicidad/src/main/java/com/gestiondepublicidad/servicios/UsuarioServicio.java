@@ -119,6 +119,39 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarios = usuarioRepositorio.findAll();
     }
 
+    //Devuelve lista de clientes
+    public List<Usuario> listarClientes() {
+
+        List<Usuario> usuarios = new ArrayList();
+
+        return usuarios = usuarioRepositorio.buscarPorRol("CLIENTE");
+    }
+
+    public List<Usuario> listarTrabajadores() {
+        List<Usuario> listaTrabajadores = new ArrayList();
+        return listaTrabajadores = usuarioRepositorio.buscarPorRol("USER");
+    }
+
+    public List<Usuario> listarTrabajadoresPorNombre(String nombre) {
+        List<Usuario> listaTrabajadores = new ArrayList();
+        return listaTrabajadores = usuarioRepositorio.buscarUsuarioPorNombre("USER", nombre);
+    }
+
+    public List<Usuario> listarClientesPorNombre(String nombre) {
+        List<Usuario> listaClientes = new ArrayList();
+        return listaClientes = usuarioRepositorio.buscarUsuarioPorNombre("CLIENTE", nombre);
+    }
+
+    public List<Usuario> listarTrabajadoresPorEmail(String email) {
+        List<Usuario> listaTrabajadores = new ArrayList();
+        return listaTrabajadores = usuarioRepositorio.buscarUsuarioPorEmail("USER", email);
+    }
+
+    public List<Usuario> listarClientesPorEmail(String email) {
+        List<Usuario> listaTrabajadores = new ArrayList();
+        return listaTrabajadores = usuarioRepositorio.buscarUsuarioPorEmail("CLIENTE", email);
+    }
+    
     //CAMBIA ROLES ENTRE USER, CLIENTE Y ADMIN
     @Transactional
     public void cambiarRol(String id_usuario) {
