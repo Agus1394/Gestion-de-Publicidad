@@ -84,6 +84,7 @@ public class ProyectoControlador {
         modelo.addAttribute("proyecto", proyectos);
         return "lista_usuarios.html";
     }*/
+    
     //MODIFICAR
     @GetMapping("/modificar/{id}")
     public String modificar(@PathVariable String id, ModelMap modelo) {

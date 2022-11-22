@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeThink-Proyecto</title>
+    <!-- CSS BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- ICONOS BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="vistaProyecto.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600&family=Titillium+Web&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<!-- INICIO NAVBAR -->
+    <div class="container-fluid">
+      <header class="d-flex flex-wrap align-items-center justify-content-md-between">
+        <a class="d-flex col-md-3">
+             <img id="lettering" src="https://see.fontimg.com/api/renderfont4/axgPE/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjRkZGRkZGIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/V2VUaGluaw/cannu-regular.png" alt="Lettering fonts">
+        </a>
+  
+        <ul class="nav">
+          <li><a href="index.html" class="nav-link listaNav">Inicio</a></li>         
+        </ul>
+  
+        <div class="col-md-3">
+          <button type="button" class="btn btn-outline-primary me-2 button1"><img class="MiPerfil" src="/botones/MiPerfil.png"/>Mi Perfil</button> 
+          <button type="button" class="btn btn-outline-primary me-2 button1"> Dia/Noche <img class="MiPerfil" src="/botones/Vision_Flat.png"/></button>
+        </div>
+      </header>
+    </div>
+    <!-- FIN NAVBAR -->
+
+  <div class="contenedorBody">
+        <h1 class="h1Tabla">Nombre del Proyecto</h1>
+        <p id="pTabla">descricpion del proyecto 
+        .................................
+        .................................
+        .................................
+        </p>
+
+    <!-- INICIO TABLA -->
+    <div class="contenedorColumnas">
+        <table id="col-1">
+            <tr id="filaTitulos" class="filas"> <!-- Titulos -->
+                 <th>Trabajador/es</th>
+            </tr>
+            <tr class="filas"><!-- fila 1 -->
+                <td class="celdas">nombre1</td>
+                <td class="celdas">nombre 2</td>
+        </table>
+        <table id="col-2">
+            <tr id="filaTitulos" class="filas"> <!-- Titulos -->
+                <th>Cliente/s</th>
+            </tr>
+            <tr class="filas"><!-- fila 1 -->
+                <td class="celdas">nombre1</td>
+                <td class="celdas">nombre2</td>
+        </table>
+    </div>
+    <!-- FIN TABLA -->
+
+  </div>
+<!-- INICIO FOOTER -->
+          <div class="container-fluid">
+            <footer class="d-flex flex-wrap align-items-center">
+              <p class="col-md-4 mb-0">&copy; Grupo 3, Egg Cooperation</p>
+          
+              <a href="index.html" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto">
+              <img id="logoFooter" src="img/diamante1.png"><!-- REEMPLAZAR POR LOGO DE LA AGENCIA -->
+              </a>
+          
+              <ul class="nav col-md-4 justify-content-end">
+                <li class="nav-item"><a href="#lettering" class="nav-link">Arriba</a></li>
+              </ul>
+            </footer>
+          </div>
+<!-- FIN FOOTER -->
+
+        <script src="dashboard.js"></script>
+
+    </body>
+</html>
