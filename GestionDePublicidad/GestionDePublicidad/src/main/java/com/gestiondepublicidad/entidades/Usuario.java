@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -37,11 +38,11 @@ public class Usuario {
     @OneToOne
     private Foto foto;
 
-    @OneToMany
-    private List<Proyecto> proyecto;
+    @ManyToMany
+    private List <Proyecto> proyecto;
 
     @OneToMany
-    private List<Calendario> calendario;
+    private List <Calendario> calendario;
     
     @OneToOne
     private ListaDeTarea listaDeTarea;
