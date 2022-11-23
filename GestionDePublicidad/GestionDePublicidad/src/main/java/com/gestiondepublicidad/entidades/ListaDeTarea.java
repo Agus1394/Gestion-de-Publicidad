@@ -37,4 +37,5 @@ public class ListaDeTarea {
     
     @OneToOne
     private Usuario usuario;
+    
 }

@@ -37,7 +37,7 @@ public class ProyectoServicio {
         proyecto.setDescripcion(descripcion);
         proyecto.setFechaInicio(fechaInicio);
         proyecto.setFechaFin(fechaFin);
-        proyecto.setUsuario(usuario);
+        proyecto.setUsuario((List<Usuario>) usuario);
 
         proyectoRepositorio.save(proyecto);
     }
@@ -63,7 +63,7 @@ public class ProyectoServicio {
             proyecto.setDescripcion(descripcion);
             proyecto.setFechaInicio(fechaInicio);
             proyecto.setFechaFin(fechaFin);
-            proyecto.setUsuario(usuario);
+            proyecto.setUsuario((List<Usuario>) usuario); 
             proyectoRepositorio.save(proyecto);
         }
     }
@@ -84,12 +84,17 @@ public class ProyectoServicio {
         return proyectoRepositorio.buscarPorNombreProy(nombre);
     }
 
-    /*public List<Proyecto> buscarPorUsuario(String nombre) {
+    
+    public List<Proyecto> buscarPorUsuario(String nombre) {
 
         List<Proyecto> proyectos = new ArrayList<>();
 
         return proyectos = proyectoRepositorio.buscarPorUsuario(nombre);
-    }*/
+    }
+    
+    // Buscar proyecto por nombre de trabajador
+    
+
 
     //ELIMINAR 
     public void eliminar(String id) {
