@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeThink-Proyectos</title>
+  <!-- CSS BOOTSTRAP -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <!-- ICONOS BOOTSTRAP -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="tablaProyectos.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600&family=Titillium+Web&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <!-- INICIO NAVBAR -->
+  <div class="container-fluid">
+    <header class="d-flex flex-wrap align-items-center justify-content-md-between">
+      <a class="d-flex col-md-3">
+        <img class="diamante"
+          src="https://see.fontimg.com/api/renderfont4/vmpKZ/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjMzNFMkRDIiwiYmdjIjoiIzAxMDEwMSIsInQiOjF9/ZGFzaGJvYXJk/ceceps-handwriting.png"
+          alt="Handwriting fonts">
+        <img id="lettering"
+          src="https://see.fontimg.com/api/renderfont4/axgPE/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjRkZGRkZGIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/V2VUaGluaw/cannu-regular.png"
+          alt="Lettering fonts">
+      </a>
+
+      <ul class="nav">
+        <li><a href="index.html" class="nav-link listaNav">Inicio</a></li>
+        <li><a href="dashboard.html" class="nav-link listaNav">Atras</a></li>
+      </ul>
+
+      <div class="col-md-3">
+        <button type="button" class="btn btn-outline-primary me-2 button1"><a href="perfil.html"><img class="MiPerfil"
+              src="/botones/MiPerfil.png" />Mi Perfil</a></button>
+        <button type="button" class="btn btn-outline-primary me-2 button1"> Dia/Noche <img class="MiPerfil"
+            src="/botones/Vision_Flat.png" /></button>
+      </div>
+    </header>
+  </div>
+  <!-- FIN NAVBAR -->
+
+  <div class="contenedorBody">
+    <section id="mensajeSuperior">
+      <h1 class="h1Tabla">Busqueda por Proyectos</h1>
+      <p id="pTabla">Una vez eliminado algo no hay retroceso, por favor lea atentamente las advertencias</p>
+    </section>
+
+    <section id="mensajeFiltros">
+      <form action="proyecto/filtro/nombre" method="post">
+        <label for="nombre">
+          <p>Filtro por nombre</p>
+        </label>
+        <input type="text" id="nombre" name="nombre" placeholder="Buscar por nombre"/>
+        <button type="submit" class="btn btn-light">Buscar</button>
+      </form>
+
+      <form action="proyecto/filtro/estado" method="post">
+        <label for="estado">
+          <p>Filtro por estado</p>
+        </label>
+        <input type="text" id="estado" name="estado" placeholder="Buscar por Estado" maxlength="100" />
+        <button type="submit" class="btn btn-light">Buscar</button>
+      </form>
+
+    <table>
+      <thead>
+        <tr id="filaTitulos" class="filas">
+          <th scope="col">Proyecto</th>
+          <th scope="col">Inicio</th>
+          <th scope="col">Fin</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="filas" th:each="proyecto:${listaProyectos}">
+          <td class="celdas" th:text="${proyecto.nombre}"></td>
+          <td class="celdas" th:text="${proyecto.fechaInicio}"></td>
+          <td class="celdas" th:text="${proyecto.fechaFin}"></td>
+          <td class="celdas" th:if="${proyecto.usuario.rol == 'CLIENTE'}" th:text="${proyecto.usuario.nombre}"></td>
+          <td class="celdas" th:text="${proyecto.estado}"></td>
+
+          <td>
+            <i id="verProyecto" class="accionesTabla"> 
+            <a th:href="@{vistaProyecto/__${proyecto.id}__}" > <!-- va a ProyectoControlador, @postMapping vistaProyecto(@PathVariable id) que llama a los metodos necesarios mas profundos, los valores del repo los pone en model.put 
+              (puede haber paso intermedio)y retorna la vista vistaProyecto.html -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+              </svg>
+            </a>
+         </i>
+
+            <button type="submit" id="eliminar" class="accionesTabla">
+              <a th:href="@{proyecto/eliminar/__${proyecto.id}__}"></a> <!-- COMPLETAR -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+                viewBox="0 0 16 16">
+                <path
+                  d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                <path fill-rule="evenodd"
+                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+              </svg>
+            </button>
+
+          </td>
+        </tr>
+    </table>
+    </tbody>
+    <!-- FIN TABLA -->
+
+  </div>
+  <!-- INICIO FOOTER -->
+  <div class="container-fluid">
+    <footer class="d-flex flex-wrap align-items-center">
+      <p class="col-md-4 mb-0">&copy; Grupo 3, Egg Cooperation</p>
+
+      <a href="index.html" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto">
+        <img id="logoFooter" src="img/logo-diamante-blanco.png"><!-- REEMPLAZAR POR LOGO DE LA AGENCIA -->
+      </a>
+
+      <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="#lettering" class="nav-link">Arriba</a></li>
+      </ul>
+    </footer>
+  </div>
+  <!-- FIN FOOTER -->
+</body>
+
+</html>

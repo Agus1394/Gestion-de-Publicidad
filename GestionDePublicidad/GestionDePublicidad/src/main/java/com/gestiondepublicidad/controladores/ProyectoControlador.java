@@ -66,25 +66,25 @@ public class ProyectoControlador {
     //LISTAR
     @GetMapping("/listar")
     public String listarUsuarios(ModelMap modelo) {
-        List<Proyecto> proyecto = proyectoServicio.listarTodos();
-        modelo.addAttribute("proyecto", proyecto);
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyecto", proyectos);
         return "listar.html";
     }
 
     @GetMapping("/buscar_por_nombre_p")
     public String buscarPorNombre(ModelMap modelo, String nombre) {
-        Proyecto proyecto = proyectoServicio.buscarPorNombre(nombre);
-        modelo.addAttribute("proyecto", proyecto);
+        Proyecto proyectos = proyectoServicio.buscarPorNombre(nombre);
+        modelo.addAttribute("proyecto", proyectos);
         return "buscar_por_nombre_proyecto.html";
     }
 
-    @GetMapping("/lista_usuarios_p")
+    /*@GetMapping("/lista_usuarios_p")
     public String listarUsuarios(ModelMap modelo, String nombre) {
-        List<Proyecto> proyecto = proyectoServicio.buscarPorUsuario(nombre);
-        modelo.addAttribute("proyecto", proyecto);
+        List<Proyecto> proyectos = proyectoServicio.buscarPorUsuario(nombre);
+        modelo.addAttribute("proyecto", proyectos);
         return "lista_usuarios.html";
-    }
-
+    }*/
+    
     //MODIFICAR
     @GetMapping("/modificar/{id}")
     public String modificar(@PathVariable String id, ModelMap modelo) {
@@ -120,9 +120,35 @@ public class ProyectoControlador {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo) {
-        List<Proyecto> proyecto = proyectoServicio.listarTodos();
-        modelo.addAttribute("proyectos", proyecto);
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyectos", proyectos);
         proyectoServicio.eliminar(id);
-        return "redirect:/proyecto/lista";
+        return "tablaProyecto.html  ";
+    }
+
+    //filtrar por nombre
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/filtro/nombre")
+    public String filtrarPorNombre(@PathVariable String nombre, ModelMap modelo) {
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyecto.html ";
+    }
+
+    //filtrar por estado del proyecto
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/filtro/estado")
+    public String filtrarPorEstadoProyecto(@PathVariable String estado, ModelMap modelo) {
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyecto.html";
+    }
+    
+    
+    @GetMapping("/lista_proyectos")
+    public String listarProyectos(ModelMap modelo) {
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyecto.html";
     }
 }

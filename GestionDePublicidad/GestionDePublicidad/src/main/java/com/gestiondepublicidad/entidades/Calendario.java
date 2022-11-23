@@ -1,33 +1,30 @@
 package com.gestiondepublicidad.entidades;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "CALENDARIO")
+@Table(name = "Calendario")
 public class Calendario {
     
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column (name = "ID CALENDARIO")
     private String id_calendario;
     
-//    @Column (name = "DESCRIPCION")
     private String descripcion;
     
-//    @Column (name = "EVENTO")
     private String evento;
+    
     
 }
