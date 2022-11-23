@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,7 +43,7 @@ public class Proyecto {
     private Date fechaFin;
     
     //Revisar relacion
-    @ManyToOne
+    @ManyToMany
     private Usuario usuario;
 
     @Enumerated(EnumType.STRING)
