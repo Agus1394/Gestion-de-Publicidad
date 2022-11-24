@@ -50,6 +50,7 @@ public class PortalControlador {
     }
 
     //LOGIN
+    
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
         if (error != null) {
