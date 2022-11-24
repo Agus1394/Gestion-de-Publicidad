@@ -28,6 +28,9 @@ public class ListaDeTarea {
     private String id;
     private String titulo;
     private String notas;
+    
+    private Long numeroCliente;
+    private Long numeroInterno;
 
     @Temporal(TemporalType.DATE)
     private Date eventoComun;
