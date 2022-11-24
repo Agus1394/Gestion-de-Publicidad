@@ -12,125 +12,94 @@ font-family: 'Titillium Web', sans-serif;
 
 */
 *{
-    background-color:rgb(33, 33, 33);
     margin: 0 ;
     padding: 0;
     box-sizing: border-box;
 }
-.titulos-form{
-    font-family:'Hind Siliguri', sans-serif;
-    color:rgb(255, 233, 177);
-}
-    
-p{
-    font-family: 'Hind Siliguri', sans-serif;
-    color: white ;
-}
-    
-header{
-    margin: 0%;
+
+body{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
 }
 
-.button1{
-    color: white;
-    border-color: rgb(33, 33, 33);
-    font-family: 'Titillium Web', sans-serif;
-    background: transparent;
-}
-
-.button1:hover{
-    background-color: rgb(20, 255, 236);
-    color:rgb(33, 33, 33);
-    border-color: rgb(20, 255, 236);  
-}
-
-.listaNav{   
-    color: white !important;
-    text-decoration: none;
-    font-size: larger !important;
+.bdn{
+    background-color: #212121;
     font-family: 'Titillium Web', sans-serif;
 }
 
-.listaNav:hover{
-    color:rgb(20, 255, 236) !important;
+.link-ul{
+    color: #fff;
+}
+.link-ul:hover{
+    color: #14FFEC;
+}
+    
+
+.boton-iniciar-sesion{
+    border-color: #14FFEC;
+    color: #fff;
 }
 
-.MiPerfil {
-    width: 25% !important;
-    height: 25% !important;
-    background: transparent;
+.boton-iniciar-sesion:hover{
+    background-color: #14FFEC;
+    color: #212121;
+    transition: 0.3s  all;
 }
 
-.diamante{
-    width: 30% !important;
-    height: 30% !important;  
+.boton-registrate{
+    background-color: #14FFEC;
+    color:#212121;
 }
 
-#lettering{
-    width: 100% !important;
-    height: 100% !important;    
+.boton-registrate:hover{
+    background-color: none;
+    border-color: #14FFEC;
+    color: #fff;
+    transition: 0.3s  all;
 }
 
-
-footer{
-    padding-top: 1%;
-    padding-bottom: 2%;
+.boton-registrarte{
+    backdrop-filter: blur(5px);
+    background-color: #14FFEC;
+    color: #212121;
 }
 
-#logoFooter{
-    margin-bottom: 0;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    width: 10%;
-}
-
-.nav-link{
-    color: white !important;
+.boton-registrarte:hover{
+    background-color:#00e3d0;
+    transition: 0.3s  all;
 }
 
 
-#mensajeSuperior{
-    padding-top: 5%;
-    padding-bottom: 0%;
-    padding-left: 20%;
-    margin: 0%;
-}
-
-#mensajeSuperior p{
-    margin: 0%;
-}
-
-#mensajeFiltros{
-    padding-top: 1%;
-    padding-bottom: 2%;
-    padding-left: 20%;
-    margin: 0%;
-}
-
-form{
-    padding: 3px;
-}
-input{
-    max-width:400px;
-    border-radius:2px;
-	padding:20px;
-    text-align: center;
-	padding: 0;
-}
 .texto{
     font-family: 'Lora', sans-serif;
-    color: rgb(33, 33, 33);
-    text-align: center;
-    background-color: rgb(255, 233, 177) !important;
-    border-radius: 3px;
-    border-color: rgb(33, 33, 33, 1);
-    padding: 5px;
+    background-color: rgb(255, 255, 255,0.30);
+    backdrop-filter: blur(5px);
+    border: 1px solid #14FFEC;
+    outline: none;
+    padding: 7px;
+    margin-bottom: 15px;
+    border-radius: 5px;
 }
+
+.texto:focus{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 300%);
+}
+
 .contenedorRegistro{ /*seccion*/
-    align-items: center;
-    justify-content: center;
-    display: flex !important;
-    padding-top: 5%;
-    padding-bottom: 5%;
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+}
+
+.form-registro{
+    width: 400px;
+    height: 350px;
+    padding: 0 35px;
+    box-shadow: 0 8px 30px 0 rgba(31,38,135,0.37);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: rgb(255, 255, 255,0.30);
+}
+
+.imagen-registro{
+    position: absolute;
+    left: 50px;
 }
