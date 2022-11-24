@@ -85,16 +85,13 @@ public class ProyectoServicio {
     }
 
     
-    public List<Proyecto> buscarPorUsuario(String nombre) {
-
-        List<Proyecto> proyectos = new ArrayList<>();
-
-        return proyectos = proyectoRepositorio.buscarPorUsuario(nombre);
-    }
+//    public List<Proyecto> buscarPorUsuario(String nombre) {
+//
+//        List<Proyecto> proyectos = new ArrayList<>();
+//
+//        return proyectos = proyectoRepositorio.buscarPorUsuario(nombre);
+//    }
     
-    // Buscar proyecto por nombre de trabajador
-    
-
 
     //ELIMINAR 
     public void eliminar(String id) {
