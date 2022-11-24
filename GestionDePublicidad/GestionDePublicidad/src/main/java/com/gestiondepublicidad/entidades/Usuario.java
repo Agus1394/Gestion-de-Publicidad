@@ -46,6 +46,9 @@ public class Usuario {
     
     @OneToOne
     private ListaDeTarea listaDeTarea;
+    
+    @OneToOne
+    private Agenda agenda;
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
