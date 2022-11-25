@@ -3,6 +3,7 @@ package com.gestiondepublicidad.entidades;
 import com.gestiondepublicidad.enumeraciones.EstadoProyecto;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
