@@ -48,7 +48,9 @@
             
             <img src="/img/World wide web_Flatline.svg" style="width: 400px" class="imagen-login">
    
-            <form action="/inicio" method="POST" class="form-login">
+            <form th:action="@{/logincheck}" method="POST" class="form-login">
+
+
                 <div class="d-flex justify-content-start flex-column  mt-3">
                     <input class="texto" name="email" type="email" placeholder="Email" required>
                     
