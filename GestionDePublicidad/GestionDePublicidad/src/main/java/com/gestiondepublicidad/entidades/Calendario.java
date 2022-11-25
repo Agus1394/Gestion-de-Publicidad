@@ -1,13 +1,14 @@
 package com.gestiondepublicidad.entidades;
-import javax.persistence.*;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -25,6 +26,5 @@ public class Calendario {
     private String descripcion;
     
     private String evento;
-    
     
 }

@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CalendarioRepositorio extends JpaRepository <Calendario, String>{
+public interface CalendarioRepositorio  extends JpaRepository <Calendario, String>{
 
     //quiero que busque el evento
     @Query("SELECT c FROM Calendario c WHERE c.evento = :evento")

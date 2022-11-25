@@ -28,6 +28,8 @@ public class ListaDeTarea {
     private String id;
     private String titulo;
     private String notas;
+    
+ 
 
     @Temporal(TemporalType.DATE)
     private Date eventoComun;
@@ -37,4 +39,5 @@ public class ListaDeTarea {
     
     @OneToOne
     private Usuario usuario;
+    
 }

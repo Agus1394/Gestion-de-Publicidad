@@ -3,13 +3,26 @@ package com.gestiondepublicidad.entidades;
 import com.gestiondepublicidad.enumeraciones.PuestoEmpresa;
 import com.gestiondepublicidad.enumeraciones.Rol;
 import java.util.List;
-import javax.persistence.*;
-
-import lombok.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 @Table(name = "Usuario")
 public class Usuario {
 
@@ -26,13 +39,16 @@ public class Usuario {
     private Foto foto;
 
     @ManyToMany
-    private List<Proyecto> proyecto;
+    private List <Proyecto> proyecto;
 
     @OneToMany
-    private List<Calendario> calendario;
+    private List <Calendario> calendario;
     
     @OneToOne
     private ListaDeTarea listaDeTarea;
+    
+    @OneToOne
+    private Agenda agenda;
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
