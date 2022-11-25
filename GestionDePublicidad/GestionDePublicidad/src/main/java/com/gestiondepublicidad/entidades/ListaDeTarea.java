@@ -45,6 +45,8 @@ public class ListaDeTarea {
     private String id;
     private String titulo;
     private String notas;
+    
+ 
 
     @Temporal(TemporalType.DATE)
     private Date eventoComun;
@@ -70,5 +72,9 @@ public class ListaDeTarea {
 =======
     @OneToOne
     private Usuario usuario;
+<<<<<<< HEAD
 >>>>>>> 77a026393b302b52e29671e406979bf8d2d434b9
+=======
+    
+>>>>>>> d10657d19c2cc5a7eaa247f713fc24eb4d45ce3b
 }

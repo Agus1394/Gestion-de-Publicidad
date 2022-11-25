@@ -2,6 +2,7 @@ package com.gestiondepublicidad.servicios;
 
 import com.gestiondepublicidad.entidades.Proyecto;
 import com.gestiondepublicidad.entidades.Usuario;
+import com.gestiondepublicidad.enumeraciones.EstadoProyecto;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.repositorios.ProyectoRepositorio;
 import com.gestiondepublicidad.repositorios.UsuarioRepositorio;
@@ -32,14 +33,41 @@ public class ProyectoServicio {
         Usuario usuario = usuarioRepositorio.findById(id_usuario).get();
         Proyecto proyecto = new Proyecto();
 
+        List<Usuario> nuevoUsuario = new ArrayList();
+
         proyecto.setId_proyecto(id_proyecto);
         proyecto.setNombre(nombre);
         proyecto.setDescripcion(descripcion);
         proyecto.setFechaInicio(fechaInicio);
         proyecto.setFechaFin(fechaFin);
-        proyecto.setUsuario(usuario);
+
+        proyecto.setUsuario(nuevoUsuario);
 
         proyectoRepositorio.save(proyecto);
+    }
+
+//    //metodo que va en ACTUALIZAR 
+//    public List<Usuario> actualizarProyectoUsuario(String nombre, Proyecto proyecto) {
+//        List<Usuario> usuario = proyecto.getUsuario();
+//        return usuario;
+//    }
+
+    //metodo que filtra el proyecto por el nombre según el cliente
+    public List<Proyecto> filtrarPorProyecto(String nombre, Usuario usuario) {
+        List<Proyecto> proyectos = usuario.getProyecto();
+        return proyectos;
+    }
+    
+    
+    //metodo que filtra al proyecto por estado
+    public Proyecto filtrarProyectoPorEstado (EstadoProyecto estadoProyecto, Proyecto proyecto)
+            throws MiException{
+        return null;
+    
+//        if () {
+//            
+//        }    
+        
     }
 
     //ACTUALIZAR
@@ -52,18 +80,24 @@ public class ProyectoServicio {
         Optional<Proyecto> respuesta = proyectoRepositorio.findById(id_proyecto);
         Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id_usuario);
         Usuario usuario = new Usuario();
+        
+        List <Proyecto> proyectoActualizado = new ArrayList();
 
         if (respuestaUsuario.isPresent()) {
             usuario = respuestaUsuario.get();
         }
+
         if (respuesta.isPresent()) {
             Proyecto proyecto = respuesta.get();
 
             proyecto.setNombre(nombre);
             proyecto.setDescripcion(descripcion);
             proyecto.setFechaInicio(fechaInicio);
-            proyecto.setFechaFin(fechaFin);
-            proyecto.setUsuario(usuario);
+            proyecto.setFechaFin(fechaFin);   
+            
+            proyectoActualizado.add(proyecto);
+            usuario.setProyecto(proyectoActualizado);
+
             proyectoRepositorio.save(proyecto);
         }
     }
@@ -83,17 +117,19 @@ public class ProyectoServicio {
     public Proyecto buscarPorNombre(String nombre) {
         return proyectoRepositorio.buscarPorNombreProy(nombre);
     }
-
-    /*public List<Proyecto> buscarPorUsuario(String nombre) {
-
-        List<Proyecto> proyectos = new ArrayList<>();
-
-        return proyectos = proyectoRepositorio.buscarPorUsuario(nombre);
-    }*/
-
+//
+//    public List<Proyecto> buscarPorUsuario(String nombre) {
+//
+//        List<Proyecto> proyectos = new ArrayList<>();
+//
+//        proyectos = proyectoRepositorio.buscarPorUsuario(nombre);
+//        return null;
+//    }
+    
+    
     //ELIMINAR 
     public void eliminar(String id) {
-        proyectoRepositorio.deleteById(id);     
+        proyectoRepositorio.deleteById(id);
     }
 
     //VALIDACION

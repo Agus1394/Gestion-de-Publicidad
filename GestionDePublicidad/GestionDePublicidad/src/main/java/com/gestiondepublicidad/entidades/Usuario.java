@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -28,35 +29,36 @@ public class Usuario {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-//    @Column (name = "ID USUARIO")
     private String id_usuario;
 
-//    @Column (name = "NOMBRE")
     private String nombre;
-    
-//    @Column (name = "EMAIL")
     private String email;
-    
-//    @Column (name = "CONTRASEÑA")
     private String contrasenia;
 
     @OneToOne
     private Foto foto;
 
+<<<<<<< HEAD
     @OneToMany
     private List<Proyecto> proyecto;
     
+=======
+    @ManyToMany
+    private List <Proyecto> proyecto;
+
+>>>>>>> d10657d19c2cc5a7eaa247f713fc24eb4d45ce3b
     @OneToMany
-    private List<Calendario> calendario;
+    private List <Calendario> calendario;
     
     @OneToOne
     private ListaDeTarea listaDeTarea;
+    
+    @OneToOne
+    private Agenda agenda;
 
-//    @Column (name = "ROL")
     @Enumerated(EnumType.STRING)
     private Rol rol;
     
-//    @Column (name = "PUESTO EN LA EMPRESA")
     @Enumerated(EnumType.STRING)
     private PuestoEmpresa puestoEmpresa;
     

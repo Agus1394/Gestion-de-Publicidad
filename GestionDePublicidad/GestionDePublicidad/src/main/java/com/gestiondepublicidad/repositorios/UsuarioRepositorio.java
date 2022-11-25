@@ -26,8 +26,9 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
 
     //buscar usuario x nombre 
     @Query("SELECT u FROM Usuario u WHERE u.rol = :rol AND u.nombre = :nombre")
-    List <Usuario> buscarUsuarioPorNombre(@Param("rol") String rol,
+    List<Usuario> buscarUsuarioPorNombre(@Param("rol") String rol,
             @Param("nombre") String nombre);
+<<<<<<< HEAD
     
 <<<<<<< HEAD
     //BUSQUEDA DE EMAIL EXISTENTE
@@ -38,9 +39,15 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
     
         @Query("SELECT u FROM Usuario u WHERE u.rol = :rol AND u.email = :email")
     List <Usuario> buscarUsuarioPorEmail(@Param("rol") String rol,
+=======
+
+    //Buscar usuario por email
+    @Query("SELECT u FROM Usuario u WHERE u.rol = :rol AND u.email = :email")
+    List<Usuario> buscarUsuarioPorEmail(@Param("rol") String rol,
+>>>>>>> d10657d19c2cc5a7eaa247f713fc24eb4d45ce3b
             @Param("email") String email);
-            
- 
+
+    //Buscar usuario por ROL
     @Query("SELECT u FROM Usuario u WHERE u.rol = :rol")
     List<Usuario> buscarPorRol(@Param("rol") String rol);
 
