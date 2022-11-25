@@ -41,17 +41,16 @@ public class ProyectoServicio {
         proyecto.setFechaInicio(fechaInicio);
         proyecto.setFechaFin(fechaFin);
 
-        nuevoUsuario.add(usuario);
         proyecto.setUsuario(nuevoUsuario);
 
         proyectoRepositorio.save(proyecto);
     }
 
-    //metodo que va en ACTUALIZAR
-    public List<Usuario> actualizarProyectoUsuario(String nombre, Proyecto proyecto) {
-        List<Usuario> usuario = proyecto.getUsuario();
-        return usuario;
-    }
+//    //metodo que va en ACTUALIZAR 
+//    public List<Usuario> actualizarProyectoUsuario(String nombre, Proyecto proyecto) {
+//        List<Usuario> usuario = proyecto.getUsuario();
+//        return usuario;
+//    }
 
     //metodo que filtra el proyecto por el nombre según el cliente
     public List<Proyecto> filtrarPorProyecto(String nombre, Usuario usuario) {
@@ -81,8 +80,9 @@ public class ProyectoServicio {
         Optional<Proyecto> respuesta = proyectoRepositorio.findById(id_proyecto);
         Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id_usuario);
         Usuario usuario = new Usuario();
+        
+        List <Proyecto> proyectoActualizado = new ArrayList();
 
-        //cambiar if x si quiere cambiar o eliminar ;
         if (respuestaUsuario.isPresent()) {
             usuario = respuestaUsuario.get();
         }
@@ -93,8 +93,11 @@ public class ProyectoServicio {
             proyecto.setNombre(nombre);
             proyecto.setDescripcion(descripcion);
             proyecto.setFechaInicio(fechaInicio);
-            proyecto.setFechaFin(fechaFin);
-            proyecto.setUsuario((List<Usuario>) usuario);
+            proyecto.setFechaFin(fechaFin);   
+            
+            proyectoActualizado.add(proyecto);
+            usuario.setProyecto(proyectoActualizado);
+
             proyectoRepositorio.save(proyecto);
         }
     }

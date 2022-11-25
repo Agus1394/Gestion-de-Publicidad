@@ -24,7 +24,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "PROYECTOS")
+@Table(name = "Proyecto")
 public class Proyecto {
 
     @Id
@@ -44,7 +44,7 @@ public class Proyecto {
     
 //   COMO SON MUCHOS A MUCHOS; TAMBIÉN USUARIO SE ANOTA COMO LIST
     @ManyToMany
-    private List <Usuario> usuario;
+    private List<Usuario> usuario;
 
     @Enumerated(EnumType.STRING)
     private EstadoProyecto estadoProyecto;
