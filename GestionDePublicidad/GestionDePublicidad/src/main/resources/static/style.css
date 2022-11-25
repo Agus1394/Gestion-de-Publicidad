@@ -26,7 +26,8 @@ h3{
 
 .boton-iniciar-sesion:hover{
     background-color: #14FFEC;
-    color: #212121
+    color: #212121;
+    transition: 0.3s  all;
 }
 
 .boton-registrate{
@@ -38,6 +39,7 @@ h3{
     background-color: none;
     border-color: #14FFEC;
     color: #fff;
+    transition: 0.3s  all;
 }
 
 .boton-enviar{
@@ -46,6 +48,7 @@ h3{
 
 .boton-enviar:hover{
     background-color: #11d3c3;
+    transition: 0.3s  all;
 }
 
 .link-ul{
@@ -169,6 +172,10 @@ h3{
     border: none;
     border-bottom: 1px solid #14FFEC;
     outline: none;
+}
+
+.form-control:focus{
+   background-image: linear-gradient(90deg,#fff 0%, #14FFEC 300%);
 }
 
 

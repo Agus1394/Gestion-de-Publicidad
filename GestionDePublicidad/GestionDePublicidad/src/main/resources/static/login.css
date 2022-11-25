@@ -82,7 +82,13 @@ body{
     background-image: linear-gradient(90deg,#fff 0%, #14FFEC 300%);
 }
 
-.contenedorLogin{ 
+
+
+
+
+
+.contenedorLogin{ /*seccion*/
+
     background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
 }
 
@@ -109,4 +115,10 @@ body{
 .contenedor-span a{
     text-decoration: none;
     color: #888;
+
 }
+
+}
+
+   
+
