@@ -38,17 +38,11 @@ public class Usuario {
     @OneToOne
     private Foto foto;
 
-<<<<<<< HEAD
     @OneToMany
     private List<Proyecto> proyecto;
-    
-=======
-    @ManyToMany
-    private List <Proyecto> proyecto;
 
->>>>>>> d10657d19c2cc5a7eaa247f713fc24eb4d45ce3b
     @OneToMany
-    private List <Calendario> calendario;
+    private List<Calendario> calendario;
     
     @OneToOne
     private ListaDeTarea listaDeTarea;
