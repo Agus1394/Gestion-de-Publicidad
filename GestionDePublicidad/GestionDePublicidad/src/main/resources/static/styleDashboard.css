@@ -12,13 +12,6 @@ font-family: 'Titillium Web', sans-serif;
 
 */
 
-*{
-    background-color:rgb(33, 33, 33);
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 h1, h2, h3{
     font-family:'Hind Siliguri', sans-serif;
     color:rgb(255, 233, 177);
@@ -29,56 +22,48 @@ p{
     color: white !important;
 }
     
-header{
-    margin: 0%;
-}
-
-.button1{
-    color: white !important;
-    text-decoration: none;
-    border-color: rgb(33, 33, 33);
-    font-family: 'Titillium Web', sans-serif;
-    background: transparent;
-}
-
-.button1:hover{
-    background-color: rgb(20, 255, 236);
-    color:rgb(33, 33, 33);
-    border-color: rgb(20, 255, 236);  
-}
-
-.listaNav{   
-    color: white !important;
-    text-decoration: none;
-    font-size: larger !important;
+.bdn {
+    background-color: #212121;
     font-family: 'Titillium Web', sans-serif;
 }
 
-.listaNav:hover{
-    color:rgb(20, 255, 236) !important;
+.boton-iniciar-sesion {
+    border-color: #14FFEC;
+    color: #fff;
 }
 
-.MiPerfil {
-    width: 15% !important;
-    height: 15% !important;
-    background: transparent;
+.boton-iniciar-sesion:hover {
+    background-color: #14FFEC;
+    color: #212121
 }
 
-a {
-    color: unset ;
-    text-decoration: none;
-    background-color: transparent;
+.boton-registrate {
+    background-color: #14FFEC;
+    color: #212121;
 }
 
-.diamante{
-    width: 30% !important;
-    height: 30% !important;  
+.boton-registrate:hover {
+    background-color: none;
+    border-color: #14FFEC;
+    color: #fff;
 }
 
-#lettering{
-    width: 100% !important;
-    height: 100% !important;    
+.boton-enviar {
+    background-color: #14FFEC;
 }
+
+.boton-enviar:hover {
+    background-color: #11d3c3;
+}
+
+.link-ul {
+    color: #fff;
+}
+
+.link-ul:hover {
+    color: #14FFEC;
+}
+
 
 
 body{
@@ -157,9 +142,10 @@ body{
     font-family: 'Titillium Web', sans-serif;
 }
 
-footer{
-    padding-top: 1%;
-    padding-bottom: 2%;
+
+
+.footer{
+     background-color: rgb(33, 33, 33);
 }
 
 #logoFooter{

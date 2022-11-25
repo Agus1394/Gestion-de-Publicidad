@@ -14,19 +14,18 @@ public interface ProyectoRepositorio extends JpaRepository<Proyecto, String> {
     @Query("SELECT p FROM Proyecto p WHERE p.nombre = :nombre")
     public Proyecto buscarPorNombreProy(@Param("nombre") String nombre);
     
-    
-    //filtra al proyecto por nombre de usuario
-    @Query("SELECT u.id_usuario, u.nombre FROM Usuario u JOIN Proyecto p ON p.nombre"
-            + "WHERE p.nombre = :nombre;")
-    public <List> Proyecto filtrarPorProyecto(@Param("nombre") String nombre);
-    
+//    
+//    //filtra al proyecto por nombre de usuario
+//    @Query("SELECT * from Proyecto WHERE p.usuario_id_usuario LIKE %:filtro%\"")
+//    public <List> Proyecto filtrarPorProyecto(@Param("nombre") String nombre);
+//    
+//    
+// 
     
     
 //    @Query("SELECT p.id_proyecto, p.descripcion, p.estado_proyecto, p.fecha_fin, p.fecha_inicio,"
-//            + " p.nombre, p.usuario_id_usuario FROM Proyecto p LEFT OUTER JOIN usuario u ON "
+//            + " p.nombre, p.usuario_id_usuario FROM Proyecto p LEFT OUTER JOIN Usuario u ON "
 //            + "p.usuario_id_usuario = u.id_usuario WHERE u.nombre = :nombre")
 //    public List<Proyecto> buscarPorUsuario(@Param("nombre") String nombre);
 
-    
-    //    public List<Proyecto> buscarPorUsuario(@Param("nombre") String nombre);
 }

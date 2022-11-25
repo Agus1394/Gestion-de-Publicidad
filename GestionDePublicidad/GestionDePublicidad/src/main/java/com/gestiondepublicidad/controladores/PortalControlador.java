@@ -33,6 +33,7 @@ public class PortalControlador {
         return "registro.html";
     }
 
+    
     @PostMapping("/registrar")
     public String registro(@RequestParam String nombre,
             @RequestParam String email, @RequestParam String password,
