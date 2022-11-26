@@ -5,6 +5,7 @@ import com.gestiondepublicidad.entidades.Proyecto;
 import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.enumeraciones.Rol;
 import com.gestiondepublicidad.excepciones.MiException;
+import com.gestiondepublicidad.repositorios.FotoRepositorio;
 import com.gestiondepublicidad.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,9 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private FotoServicio fotoServicio;
+    
+    @Autowired
+    private FotoRepositorio fotoRepositorio;
 
     //CREA/REGISTRA UN NUEVO USUARIO
     @Transactional
@@ -49,7 +53,20 @@ public class UsuarioServicio implements UserDetailsService {
                 encode(contrasenia));
 
         usuario.setRol(Rol.USER);
+/*        
+        Foto foto = new Foto();
+                        
+        foto.setMime("image/jpeg");
+                
+        foto.setNombre("ImagenPorDefecto");
+                
+        foto.setContenido(fotoRepositorio.buscarPorNombre("ImagenDefecto")
+                .getContenido());
 
+        fotoRepositorio.save(foto);
+
+        usuario.setFoto(foto);
+*/
         return usuarioRepositorio.save(usuario);
     }
 
@@ -221,6 +238,14 @@ public class UsuarioServicio implements UserDetailsService {
 
         if (!contrasenia.equals(contrasenia2)) {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
+        }
+        //IMPIDE QUE SE INGRESEN EMAILS EXISTENTES
+        if(usuarioRepositorio.buscarEmail(email)!= null) {
+            throw new MiException("El email ingresado ya esta registrado");
+        }
+        //VERIFICA QUE SE INGRESEN EMAILS VÁLIDOS
+        if(!email.contains("@") || !email.contains(".com")){
+            throw new MiException("No se ha ingresado un email válido");
         }
 
     }

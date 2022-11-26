@@ -38,11 +38,11 @@ public class Usuario {
     @OneToOne
     private Foto foto;
 
-    @ManyToMany
-    private List <Proyecto> proyecto;
+    @OneToMany
+    private List<Proyecto> proyecto;
 
     @OneToMany
-    private List <Calendario> calendario;
+    private List<Calendario> calendario;
     
     @OneToOne
     private ListaDeTarea listaDeTarea;

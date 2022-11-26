@@ -9,6 +9,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,6 +44,11 @@ public class Proyecto {
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
     
+    //Revisar relacion
+    
+    @OneToMany
+    private List<ListaDeTarea> listaDeTarea;
+
 //   COMO SON MUCHOS A MUCHOS; TAMBIÉN USUARIO SE ANOTA COMO LIST
     @ManyToMany
     private List<Usuario> usuario;

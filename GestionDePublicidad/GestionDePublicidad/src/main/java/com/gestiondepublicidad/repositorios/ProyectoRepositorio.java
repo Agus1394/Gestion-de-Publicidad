@@ -26,8 +26,8 @@ public interface ProyectoRepositorio extends JpaRepository<Proyecto, String> {
     
     //filtra al proyecto por nombre de usuario
 
-    @Query("SELECT u.id_usuario, u.nombre FROM Usuario u JOIN Proyecto p ON p.nombre WHERE p.nombre = :nombre")
-    public <List> Proyecto filtrarPorProyecto(@Param("nombre") String nombre);
+//    @Query("SELECT u.id_usuario, u.nombre FROM Usuario u JOIN Proyecto p ON p.nombre WHERE p.nombre = :nombre")
+//    public List<Proyecto> filtrarPorProyecto(@Param("nombre") String nombre);
 
 
     

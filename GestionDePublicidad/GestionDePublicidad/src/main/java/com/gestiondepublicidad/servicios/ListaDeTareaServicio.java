@@ -1,5 +1,11 @@
 package com.gestiondepublicidad.servicios;
 
+import com.gestiondepublicidad.entidades.ListaDeTarea;
+import com.gestiondepublicidad.entidades.Proyecto;
+import com.gestiondepublicidad.excepciones.MiException;
+import com.gestiondepublicidad.repositorios.ListaDeTareaRepositorio;
+import com.gestiondepublicidad.repositorios.ProyectoRepositorio;
+import java.util.Date;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.repositorios.ListaDeTareaRepositorio;
 import com.gestiondepublicidad.entidades.ListaDeTarea;
@@ -13,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+
+    
 @Service
 public class ListaDeTareaServicio {
 
