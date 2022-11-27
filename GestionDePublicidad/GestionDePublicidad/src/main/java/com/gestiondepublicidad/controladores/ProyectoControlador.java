@@ -126,7 +126,7 @@ public class ProyectoControlador {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("{id_proyecto}/agregarUsuario/{id_usuario}")
+    @PostMapping("{id_proyecto}/eliminarUsuario/{id_usuario}")
     public String eliminarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, @PathVariable("id_usuario") String id_usuario, ModelMap modelo){
         proyectoServicio.eliminarUsuarioProyecto(id_proyecto, id_usuario);
 

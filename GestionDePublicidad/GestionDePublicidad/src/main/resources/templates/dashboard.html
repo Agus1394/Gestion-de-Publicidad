@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WeThink</title>
+  <title>WeThink-Dashboard</title>
   <!-- CSS BOOTSTRAP -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <!-- ICONOS BOOTSTRAP -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
   <!-- CSS -->
-  <link rel="stylesheet" href="./styleDashboard.css">
+  <link rel="stylesheet" href="/styleDashboard.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600&family=Titillium+Web&display=swap"
@@ -23,24 +23,23 @@
   <!-- INICIO NAVBAR -->
   <div class="container-fluid bdn">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-white text-decoration-none">
+      <a href="" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-white text-decoration-none">
         <img class="diamante"
           src="https://see.fontimg.com/api/renderfont4/vmpKZ/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjMzNFMkRDIiwiYmdjIjoiIzAxMDEwMSIsInQiOjF9/ZGFzaGJvYXJk/ceceps-handwriting.png"
-          alt="Handwriting fonts">
+          alt="dashboard">
         <img id="lettering"
           src="https://see.fontimg.com/api/renderfont4/axgPE/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjRkZGRkZGIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/V2VUaGluaw/cannu-regular.png"
-          alt="Lettering fonts">
+          alt="wethink">
       </a>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="index.html" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
+        <li><a href="/index" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
         <li><a href="#Ayuda" class="nav-link px-2 link-ul">Ayuda</a></li>
       </ul>
 
       <div class="col-md-3 text-end">
-        <a href=""><button type="button" class="btn boton-registrate">Mi perfil</button></a><!-- falta vista -->
-        <a href=""><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar Sesion</button></a>
-        <!-- falta accion -->
+        <a href="/perfil"><button type="button" class="btn boton-registrate">Mi perfil</button></a><!-- falta vista -->
+        <a th:href="@{/logout}"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar Sesion</button></a>
       </div>
     </header>
   </div>
@@ -54,7 +53,7 @@
       <a href="tablaProyectos.html" class="linkTablas">
         <div class="card">
           <div class="card__image-holder">
-            <img class="card__image" src="botones/Proyectos1.png" alt="img" />
+            <img class="card__image" src="/img/botones/Proyectos1.png" alt="img" />
           </div>
           <div class="card-title">
             <h2> Filtro por Proyecto</h2>
@@ -65,10 +64,10 @@
         </div>
       </a>
 
-      <a href="tablaTrabajadores.html" class="linkTablas">
+      <a th:href="@{/admin/tablaTrabajadores}" class="linkTablas">
         <div class="card">
           <div class="card__image-holder">
-            <img class="card__image" src="botones/Trabajadores.png" alt="img" />
+            <img class="card__image" src="/img/botones/Trabajadores.png" alt="img" />
           </div>
           <div class="card-title">
             <h2> Filtro por Trabajador <small></small></h2>
@@ -79,10 +78,10 @@
         </div>
       </a>
 
-      <a href="tablaClientes.html" class="linkTablas">
+      <a th:href="@{/admin/tablaClientes}" class="linkTablas">
         <div class="card">
           <div class="card__image-holder">
-            <img class="card__image" src="botones/User Avatar_Isometric.png" alt="img" />
+            <img class="card__image" src="/img/botones/User Avatar_Isometric.png" alt="img" />
           </div>
           <div class="card-title">
             <h2> Filtro por Usuario <small></small></h2>
@@ -96,7 +95,7 @@
 
       <div class="card">
         <div class="card__image-holder">
-          <img class="card__image" src="botones/help.png" alt="img" />
+          <img class="card__image" src="/img/botones/help.png" alt="img" />
         </div>
         <div class="card-title">
           <h2 id="Ayuda"> Atencion Tecnica <small></small></h2>
@@ -107,7 +106,7 @@
       </div>
       <div class="card">
         <div class="card__image-holder">
-          <img class="card__image" src="botones/Video Editor_Flat.png" alt="img" />
+          <img class="card__image" src="/img/botones/Video Editor_Flat.png" alt="img" />
         </div>
         <div class="card-title">
           <h2> Tutorial de uso <small></small></h2>
@@ -118,7 +117,7 @@
       </div>
       <div class="card">
         <div class="card__image-holder">
-            <img class="card__image" src="botones/Unlock_Flat.png" alt="img" />
+            <img class="card__image" src="/img/botones/Unlock_Flat.png" alt="img" />
         </div>
         <div class="card-title">
           <h2> Advertencias <small></small></h2>
@@ -138,20 +137,15 @@
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3">
       <p class="col-md-4 mb-0" style="font-size: 15px;">&copy; Grupo 3, Egg Cooperation</p>
 
-      <a href="/"
-        class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto text-decoration-none">
-        <img src="/img/logo-diamante-blanco.png"
+       <img src="/img/logo-diamante-blanco.png"
           style="width: 45px; height: 40px; padding-right: 10px;" alt="">
-      </a>
-
+      
       <ul class="nav col-md-4 justify-content-end">
         <li class="nav-item"><a href="#inicio" class="nav-link px-2 text-white">Arriba</a></li>
       </ul>
     </footer>
   </div>
   <!-- FIN FOOTER -->
-
-  <script src="dashboard.js"></script>
 
 </body>
 

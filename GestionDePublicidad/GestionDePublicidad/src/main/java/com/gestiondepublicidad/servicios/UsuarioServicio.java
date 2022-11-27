@@ -52,7 +52,7 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setContrasenia(new BCryptPasswordEncoder().
                 encode(contrasenia));
 
-        usuario.setRol(Rol.USER);
+        usuario.setRol(Rol.CLIENTE);
 /*        
         Foto foto = new Foto();
                         
@@ -112,6 +112,11 @@ public class UsuarioServicio implements UserDetailsService {
         return  usuarioRepositorio.buscarPorNombre(nombre);
     }
 
+    public List<Usuario> usuariosPorNombreYRol(String nombre, String rol) {
+
+        return  usuarioRepositorio.buscarPorNombreYRol(nombre, rol);
+    }
+
     //DEVUELVE UN USUARIO BUSCADO POR SU EMAIL
     public Usuario usuariosPorEmail(String email) {
         return usuarioRepositorio.buscarPorEmail(email);
@@ -127,11 +132,6 @@ public class UsuarioServicio implements UserDetailsService {
     public List<Usuario> listarUsuarios() {
 
         return usuarioRepositorio.findAll();
-    }
-
-    public List<Usuario> listarClientesPorNombre(String nombre) {
-        List<Usuario> listaClientes = new ArrayList();
-        return listaClientes = usuarioRepositorio.buscarPorNombre(nombre);
     }
     
     //CAMBIA ROLES ENTRE USER, CLIENTE Y ADMIN
