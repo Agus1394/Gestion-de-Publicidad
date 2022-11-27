@@ -60,7 +60,7 @@ public class UsuarioServicio implements UserDetailsService {
                 
         foto.setNombre("ImagenPorDefecto");
                 
-        foto.setContenido(fotoRepositorio.buscarPorNombre("ImagenDefecto")
+        foto.setContenido(fotoRepositorio.buscarPorNombre("ImagenPorDefecto1")
                 .getContenido());
 
         fotoRepositorio.save(foto);
