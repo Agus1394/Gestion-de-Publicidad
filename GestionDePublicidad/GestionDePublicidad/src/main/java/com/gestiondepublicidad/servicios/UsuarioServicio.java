@@ -109,9 +109,7 @@ public class UsuarioServicio implements UserDetailsService {
     //DEVUELVE LOS USUARIO CON EL MISMO NOMBRE
     public List<Usuario> usuariosPorNombre(String nombre) {
 
-        List<Usuario> usuarios = new ArrayList();
-
-        return usuarios = usuarioRepositorio.buscarPorNombre(nombre);
+        return  usuarioRepositorio.buscarPorNombre(nombre);
     }
 
     //DEVUELVE UN USUARIO BUSCADO POR SU EMAIL
@@ -121,99 +119,32 @@ public class UsuarioServicio implements UserDetailsService {
 
     //DEVUELVE LOS USUARIOS CONECTADOS AL MISMO PROYECTO
     public List<Usuario> usuariosPorProyecto(Proyecto proyecto) {
-        List<Usuario> usuarios = new ArrayList();
 
-        return usuarios = usuarioRepositorio.buscarPorProyecto(proyecto);
+        return usuarioRepositorio.buscarPorProyecto(proyecto);
     }
 
     //DEVUELVE UNA LISTA DE TODOS LOS USUARIOS
     public List<Usuario> listarUsuarios() {
 
-        List<Usuario> usuarios = new ArrayList();
-
-        return usuarios = usuarioRepositorio.findAll();
-    }
-
-    //Devuelve lista de clientes
-    public List<Usuario> listarClientes() {
-
-        List<Usuario> usuarios = new ArrayList();
-
-        return usuarios = usuarioRepositorio.buscarPorRol("CLIENTE");
-    }
-
-    public List<Usuario> listarTrabajadores() {
-        List<Usuario> listaTrabajadores = new ArrayList();
-        return listaTrabajadores = usuarioRepositorio.buscarPorRol("USER");
-    }
-
-    public List<Usuario> listarTrabajadoresPorNombre(String nombre) {
-        List<Usuario> listaTrabajadores = new ArrayList();
-        return listaTrabajadores = usuarioRepositorio.buscarUsuarioPorNombre("USER", nombre);
+        return usuarioRepositorio.findAll();
     }
 
     public List<Usuario> listarClientesPorNombre(String nombre) {
         List<Usuario> listaClientes = new ArrayList();
-        return listaClientes = usuarioRepositorio.buscarUsuarioPorNombre("CLIENTE", nombre);
-    }
-
-    public List<Usuario> listarTrabajadoresPorEmail(String email) {
-        List<Usuario> listaTrabajadores = new ArrayList();
-        return listaTrabajadores = usuarioRepositorio.buscarUsuarioPorEmail("USER", email);
-    }
-
-    public List<Usuario> listarClientesPorEmail(String email) {
-        List<Usuario> listaTrabajadores = new ArrayList();
-        return listaTrabajadores = usuarioRepositorio.buscarUsuarioPorEmail("CLIENTE", email);
+        return listaClientes = usuarioRepositorio.buscarPorNombre(nombre);
     }
     
     //CAMBIA ROLES ENTRE USER, CLIENTE Y ADMIN
     @Transactional
-    public void cambiarRol(String id_usuario) {
+    public void cambiarRol(String id_usuario, Rol rol) {
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id_usuario);
 
         if (respuesta.isPresent()) {
 
             Usuario usuario = respuesta.get();
-
-            if (usuario.getRol().equals(Rol.CLIENTE)) {
-
-                usuario.setRol(Rol.USER);
-
-            } else if (usuario.getRol().equals(Rol.USER)) {
-                usuario.setRol(Rol.ADMIN);
-
-            } else if (usuario.getRol().equals(Rol.ADMIN)) {
-                usuario.setRol(Rol.CLIENTE);
-            }
-        }
-    }
-
-    //EDICION DE ADMIN Y VER SI DE CLIENTE
-    public void adminEditar(MultipartFile archivo, String idUsuario, String nombre,
-            String email) throws MiException {
-
-        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
-
-        if (respuesta.isPresent()) {
-
-            Usuario usuario = respuesta.get();
-
-            usuario.setNombre(nombre);
-            usuario.setEmail(email);
-            String idImagen = null;
-            if (usuario.getFoto() != null) {
-
-                idImagen = usuario.getFoto().getId_foto();
-            }
-            if (null != archivo && !archivo.isEmpty()) {
-                Foto foto = fotoServicio.actualizar(archivo, idImagen);
-                usuario.setFoto(foto);
-            }
-
+            usuario.setRol(rol);
             usuarioRepositorio.save(usuario);
         }
-
     }
 
     //ELIMINA UN USUARIO SEGÚN SU ID
@@ -240,7 +171,7 @@ public class UsuarioServicio implements UserDetailsService {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
         //IMPIDE QUE SE INGRESEN EMAILS EXISTENTES
-        if(usuarioRepositorio.buscarEmail(email)!= null) {
+        if(usuarioRepositorio.buscarPorEmail(email)!= null) {
             throw new MiException("El email ingresado ya esta registrado");
         }
         //VERIFICA QUE SE INGRESEN EMAILS VÁLIDOS
@@ -248,6 +179,10 @@ public class UsuarioServicio implements UserDetailsService {
             throw new MiException("No se ha ingresado un email válido");
         }
 
+    }
+
+    public List<Usuario> buscarPorRol(String rol){
+        return usuarioRepositorio.buscarPorRol(rol);
     }
 
     @Override

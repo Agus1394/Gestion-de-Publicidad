@@ -11,8 +11,8 @@ import com.gestiondepublicidad.entidades.Usuario;
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
 
-    // BUSQUEDA DE USUARIO POR SU NOMBRE, SI ESTA REPETIDO MUESTRA LISTA
-    @Query("SELECT u FROM Usuario u WHERE u.nombre = :nombre")
+    // BUSQUEDA DE USUARIO POR SU NOMBRE
+    @Query("SELECT u FROM Usuario u WHERE u.nombre LIKE %:nombre%")
     List<Usuario> buscarPorNombre(@Param("nombre") String nombre);
 
     //BUSQUEDA DE USUARIO POR EMAIL
@@ -24,24 +24,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
     @Query("SELECT u FROM Usuario u WHERE u.proyecto = :proyecto")
     List<Usuario> buscarPorProyecto(@Param("proyecto") Proyecto proyecto);
 
-    //buscar usuario x nombre 
-    @Query("SELECT u FROM Usuario u WHERE u.rol = :rol AND u.nombre = :nombre")
-    List<Usuario> buscarUsuarioPorNombre(@Param("rol") String rol,
-            @Param("nombre") String nombre);
-
-    
-
-    //BUSQUEDA DE EMAIL EXISTENTE
-    @Query("SELECT u.email FROM Usuario u WHERE u.email = :email")
-    String buscarEmail (@Param("email") String email);
-    
-    //Buscar usuario por email
-    @Query("SELECT u FROM Usuario u WHERE u.rol = :rol AND u.email = :email")
-    List<Usuario> buscarUsuarioPorEmail(@Param("rol") String rol,
-            @Param("email") String email);
-
     //Buscar usuario por ROL
     @Query("SELECT u FROM Usuario u WHERE u.rol = :rol")
     List<Usuario> buscarPorRol(@Param("rol") String rol);
-
 }
