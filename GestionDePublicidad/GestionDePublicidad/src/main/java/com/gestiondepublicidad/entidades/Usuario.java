@@ -38,7 +38,7 @@ public class Usuario {
     @OneToOne
     private Foto foto;
 
-    @OneToMany
+    @ManyToMany
     private List<Proyecto> proyecto;
 
     @OneToMany
@@ -46,9 +46,6 @@ public class Usuario {
     
     @OneToOne
     private ListaDeTarea listaDeTarea;
-    
-    @OneToOne
-    private Agenda agenda;
 
     @Enumerated(EnumType.STRING)
     private Rol rol;

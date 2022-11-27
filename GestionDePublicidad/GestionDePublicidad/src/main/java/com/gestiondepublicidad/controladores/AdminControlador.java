@@ -1,6 +1,7 @@
 package com.gestiondepublicidad.controladores;
 
 import com.gestiondepublicidad.entidades.Usuario;
+import com.gestiondepublicidad.enumeraciones.Rol;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.servicios.UsuarioServicio;
 import java.util.List;
@@ -27,54 +28,32 @@ public class AdminControlador {
         return "dashboard.html";
     }
 
+    @GetMapping("/tablaUsuarios")
+    public String listarUsuarios(ModelMap modelo) {
+        List<Usuario> listaUsuarios = usuarioServicio.listarUsuarios();
+        modelo.addAttribute("usuarios", listaUsuarios);
+        return "tablaUsuarios.html";
+    }
+
     //LISTAR
-    @GetMapping("/tablaClientes")
-    public String listarClientes(ModelMap modelo) {
-        List<Usuario> listaClientes = usuarioServicio.listarClientes();
-        modelo.addAttribute("usuarios", listaClientes);
-        return "tablaClientes.html";
+    @GetMapping("/tablaUsuarios/{rol}")
+    public String listarUsuariosRol(@PathVariable("rol") String rol, ModelMap modelo) {
+        List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol(rol);
+        modelo.addAttribute("usuarios", listaUsuarios);
+        return "tablaUsuarios.html";
     }
 
-    @GetMapping("/tablaTrabajadores")
-    public String listarTrabajadores(ModelMap modelo) {
-        List<Usuario> listaTrabajadores = usuarioServicio.listarTrabajadores();
-        modelo.addAttribute("usuarios", listaTrabajadores);
-        return "tablaTrabajadores.html";
-    }
-
-    @PostMapping("/cliente/flitroPorNombre/{nombre}")
+    @PostMapping("/tablaUsuarios/{nombre}")
     public String listarClientesPorNombre(ModelMap modelo, @PathVariable String nombre) {
-        List<Usuario> listaClientes = usuarioServicio.listarClientesPorNombre(nombre);
-        modelo.addAttribute("listaClientes", listaClientes);
-        return "tablaClientes.html";
-    }
+        try{
+            List<Usuario> listaClientes = usuarioServicio.listarClientesPorNombre(nombre);
+            modelo.addAttribute("listaClientes", listaClientes);
+        }catch(Exception e){
+            modelo.put("error", e.getMessage());
 
-    @PostMapping("/cliente/filtroPorEmail/{email}")
-    public String listarClientesPorEmail(ModelMap modelo, @PathVariable String email) {
-        List<Usuario> listaClientes = usuarioServicio.listarClientesPorEmail(email);
-        modelo.addAttribute("listaClientes", listaClientes);
-        return "tablaClientes.html";
-    }
-
-    @PostMapping("/trabajador/filtroPorNombre/{nombre}")
-    public String listarTrabajadoresPorNombre(ModelMap modelo, @PathVariable String nombre) {
-        List<Usuario> listaTrabajadores = usuarioServicio.listarTrabajadoresPorNombre(nombre);
-        modelo.addAttribute("listaTrabajadores", listaTrabajadores);
-        return "tablaTrabajadores.html";
-    }
-
-    @PostMapping("/trabajador/filtroPorEmail/{email}")
-    public String listarTrabajadoresPorEmail(ModelMap modelo, @PathVariable String email) {
-        List<Usuario> listaClientes = usuarioServicio.listarTrabajadoresPorEmail(email);
-        modelo.addAttribute("listaClientes", listaClientes);
-        return "tablaClientes.html";
-    }
-
-    //MODIFICAR ROL USUARIOS
-    @GetMapping("/modificarRol/{id}")
-    public String cambiarRol(@PathVariable String id) {
-        usuarioServicio.cambiarRol(id);
-        return "redirect:/admin/usuarios";
+        }finally {
+            return "tablaClientes.html";
+        }
     }
 
     //REGISTRAR USUARIO/CLIENTE DESDE ADMIN
@@ -90,39 +69,46 @@ public class AdminControlador {
         try {
             usuarioServicio.registrar(nombre, email, password, password2);
             modelo.put("éxito", "Usuario registrado correctamente!");
-            return "usuario_cargado.html";
+            return "redirect:/admin/usuarios";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("email", email);
-            return "registro_usuario.html";
+            return "listarUsuarios";
         }
 
     }
 
-    //MODIFICAR USUARIO
-    @GetMapping("/modificar/{id}")
-    public String modificar(ModelMap modelo, @PathVariable String id) {
+    //MODIFICAR ROL USUARIO
+    @GetMapping("/modificarRol/{id}")
+    public String modificarRol(ModelMap modelo, @PathVariable String id) {
         Usuario usuario = usuarioServicio.getOne(id);
         modelo.put("usuario", usuario);
         return "editar_usuario.html";
     }
 
-    @PostMapping("/modificar/{id}")
-    public String actualizar(@RequestParam MultipartFile archivo, @PathVariable String id, @RequestParam String nombre, @RequestParam String email,
-            ModelMap modelo) throws MiException {
+    @PostMapping("/modificarRol/{id}")
+    public String modificarRol(@RequestParam String id, String rol, ModelMap modelo) throws MiException {
 
         Usuario usuario = usuarioServicio.getOne(id);
         modelo.put("usuario", usuario);
 
         try {
-            usuarioServicio.adminEditar(archivo, id, nombre, email);
+            if (usuario.getRol().toString().equals(rol)){
+                throw new MiException("El usuario ya tiene este rol");
+            }else if (rol.equals("CLIENTE")){
+                usuarioServicio.cambiarRol(id, Rol.CLIENTE);
+            } else if (rol.equals("USER")) {
+                usuarioServicio.cambiarRol(id, Rol.USER);
+            }else if (rol.equals("ADMIN")) {
+                usuarioServicio.cambiarRol(id, Rol.ADMIN);
+            }
+
             modelo.put("exito", "Usuario actualizado correctamente!");
             return "editar_usuario.html";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
-            modelo.put("nombre", nombre);
-            modelo.put("email", email);
+            modelo.put("usuario", usuario);
             return "editar_usuario.html";
         }
     }
