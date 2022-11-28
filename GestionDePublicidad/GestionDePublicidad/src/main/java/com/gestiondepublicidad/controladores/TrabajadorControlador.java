@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/cliente")
-public class ClienteControlador {
+@RequestMapping("/trabajador")
+public class TrabajadorControlador {
     
     @Autowired
     UsuarioServicio usuarioServicio;
 
     @GetMapping("/dashboard")
     public String panelAdministrativoCliente(ModelMap modelo) {
-        return "panel_cliente.html";
+        return "panel_trabajador.html";
     }
 
     //LISTAR
@@ -40,10 +40,10 @@ public class ClienteControlador {
     @GetMapping("/modificarRol/{id}")
     public String cambiarRol(@PathVariable String id) {
         usuarioServicio.cambiarRol(id);
-        return "redirect:/cliente/usuarios";
+        return "redirect:/trabajador/usuarios";
     }
 
-    //REGISTRAR USUARIO DESDE CLIENTE
+    //REGISTRAR USUARIO DESDE Trabajador
     @GetMapping("/registrar")
     public String registrar() {
         return "registro_usuario.html";
@@ -95,11 +95,11 @@ public class ClienteControlador {
     }
 
     //ELIMINAR USUARIO
-    @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
     @PostMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo) {
         usuarioServicio.eliminarUsuario(id);
-        return "redirect:/cliente/usuarios";
+        return "redirect:/trabajador/usuarios";
 
     }
 }

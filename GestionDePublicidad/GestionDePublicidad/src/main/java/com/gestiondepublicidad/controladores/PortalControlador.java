@@ -69,13 +69,13 @@ public class PortalControlador {
         if (logueado.getRol().toString().equals("ADMIN")) {
 
             return "dashboard.html";
-        } else if (logueado.getRol().toString().equals("CLIENTE")) {
-            return "redirect:/cliente/dashboard";
+        } else if (logueado.getRol().toString().equals("TRABAJADOR")) {
+            return "redirect:/trabajador/dashboard";
         }
         return "index.html";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_CLIENTE', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
@@ -84,7 +84,7 @@ public class PortalControlador {
     }
 
     //ACTUALIZAR
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_CLIENTE', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @PostMapping("/perfil/{id}")
     public String actualizar(@RequestParam MultipartFile archivo, @PathVariable String id,
             @RequestParam String nombre, @RequestParam String email,
