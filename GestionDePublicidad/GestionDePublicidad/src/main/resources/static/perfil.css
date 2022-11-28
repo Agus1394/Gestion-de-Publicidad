@@ -1,0 +1,97 @@
+h1{
+    font-family: 'Lora', serif;
+    font-size: 30px;
+}
+
+p{
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 18px;
+}
+
+h3{
+    font-family: 'Titillium Web', sans-serif;
+}
+
+body{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+}
+
+.bdn{
+    background-color: #212121;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+
+.link-ul{
+    color: #fff;
+    text-decoration: none;
+}
+.link-ul:hover{
+    color: #14FFEC;
+}
+
+
+.dropdown-menu{
+    background-color: #212121;
+}
+
+.dropdown-item{
+    color: #fff;
+}
+
+.dropdown-toggle{
+    color: #fff;
+}
+
+.dropdown-toggle:hover{
+    color: #14FFEC;
+}
+
+.dropdown-item:active, .dropdown-item:focus, .dropdown-item:hover{
+    background-color: #14FFEC;
+    color: #212121;
+}
+
+
+.boton-registrarte{
+    backdrop-filter: blur(5px);
+    background-color: #14FFEC;
+    color: #212121;
+}
+
+.boton-registrarte:hover{
+    background-color:#00e3d0;
+    transition: 0.3s  all;
+}
+
+
+.texto{
+    font-family: 'Lora', sans-serif;
+    background-color: rgb(255, 255, 255,0.30);
+    backdrop-filter: blur(5px);
+    border: 1px solid #14FFEC;
+    outline: none;
+    padding: 7px;
+    margin-bottom: 12px;
+    border-radius: 5px;
+}
+
+.texto:focus{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 300%);
+}
+
+
+.contenedorRegistro{ 
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+}
+
+.form-registro{
+    width: 400px;
+    height: 450px;
+    padding: 0 35px;
+    box-shadow: 0 8px 30px 0 rgba(31,38,135,0.37);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: rgb(255, 255, 255,0.30);
+}

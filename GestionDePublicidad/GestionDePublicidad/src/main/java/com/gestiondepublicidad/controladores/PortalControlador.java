@@ -81,8 +81,10 @@ public class PortalControlador {
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-        modelo.put("usuario", usuario);
-        return "usuario_modificar.html";
+
+        Usuario usuario1 = usuarioServicio.usuariosPorEmail(usuario.getEmail());
+        modelo.put("usuario", usuario1);
+        return "perfil.html";
     }
 
     //ACTUALIZAR
@@ -102,7 +104,7 @@ public class PortalControlador {
             modelo.put("nombre", nombre);
             modelo.put("email", email);
 
-            return "usuario_modificar.html";
+            return "perfil.html";
         }
 
     }
