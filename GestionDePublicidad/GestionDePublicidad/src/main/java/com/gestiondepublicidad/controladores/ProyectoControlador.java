@@ -5,6 +5,8 @@ import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.servicios.ProyectoServicio;
 import com.gestiondepublicidad.servicios.UsuarioServicio;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -63,21 +65,6 @@ public class ProyectoControlador {
         return "proyecto_cargado.html";
     }
 
-    //LISTAR
-    @GetMapping("/listar")
-    public String listarUsuarios(ModelMap modelo) {
-        List<Proyecto> proyectos = proyectoServicio.listarTodos();
-        modelo.addAttribute("proyecto", proyectos);
-        return "listar.html";
-    }
-
-    @GetMapping("/buscar_por_nombre_p")
-    public String buscarPorNombre(ModelMap modelo, String nombre) {
-        Proyecto proyectos = proyectoServicio.buscarPorNombre(nombre);
-        modelo.addAttribute("proyecto", proyectos);
-        return "buscar_por_nombre_proyecto.html";
-    }
-
     //MODIFICAR
     @GetMapping("/modificar/{id}")
     public String modificar(@PathVariable String id, ModelMap modelo) {
@@ -97,8 +84,8 @@ public class ProyectoControlador {
             @RequestParam(required = false) Date fechaFin,
             ModelMap modelo) {
         try {
-            proyectoServicio.actualizar(idProyecto, idUsuario,
-                    descripcion, fechaInicio, fechaFin, idUsuario);
+            proyectoServicio.actualizar(idProyecto, nombreProyecto,descripcion, fechaFin,
+                    fechaInicio, idUsuario);
 
             return "redirect:../listar";
         } catch (MiException ex) {
@@ -113,7 +100,7 @@ public class ProyectoControlador {
     public String agregarEliminarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, ModelMap modelo){
         modelo.addAttribute("usuarios", usuarioServicio.listarUsuarios());
         modelo.put("proyecto", proyectoServicio.getOne(id_proyecto));
-        return "agregarEliminarUsuariosProyecto.html";//no existe vista
+        return "agregarEliminarUsuariosProyecto.html";//agregar botones de agregar y eliminar usuario a la vista particular del proyecto
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -122,7 +109,7 @@ public class ProyectoControlador {
         proyectoServicio.agregarUsuarioProyecto(id_proyecto, id_usuario);
 
         modelo.addAttribute("proyectos", proyectoServicio.listarTodos());
-        return "tablaProyecto.html";
+        return "tablaProyectos.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -131,7 +118,7 @@ public class ProyectoControlador {
         proyectoServicio.eliminarUsuarioProyecto(id_proyecto, id_usuario);
 
         modelo.addAttribute("proyectos", proyectoServicio.listarTodos());
-        return "tablaProyecto.html";
+        return "tablaProyectos.html";
     }
 
     //ELIMINAR
@@ -142,46 +129,85 @@ public class ProyectoControlador {
         List<Proyecto> proyectos = proyectoServicio.listarTodos();
         modelo.addAttribute("proyectos", proyectos);
         proyectoServicio.eliminar(id);
-        return "tablaProyecto.html";
+        return "tablaProyectos.html";
     }
 
     //filtrar por nombre
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/filtro/nombre")
-    public String filtrarPorNombre(@PathVariable String nombre, ModelMap modelo) {
-        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/tablaProyectos/nombre")
+    public String filtrarPorNombre(@RequestParam String nombre, ModelMap modelo) {
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+        System.out.println(nombre);
+        if (nombre.isEmpty() || nombre == null){
+            proyectos = proyectoServicio.listarTodos();
+        }else{
+            proyectos = proyectoServicio.buscarPorNombre(nombre.toUpperCase());
+        }
         modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyecto.html ";
+        return "tablaProyectos.html ";
     }
 
     //filtrar por estado del proyecto
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/filtro/estado")
-    public String filtrarPorEstadoProyecto(@PathVariable String estado, ModelMap modelo) {
-        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/tablaProyectos/estado")
+    public String filtrarPorEstadoProyecto(@RequestParam String estado, ModelMap modelo) throws MiException {
+
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+
+        if (estado.isEmpty() || estado == null){
+            proyectos = proyectoServicio.listarTodos();
+        }else{
+            proyectos = proyectoServicio.filtrarProyectoPorEstado(estado);
+        }
         modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyecto.html";
+        return "tablaProyectos.html";
     }
     
-    
-    @GetMapping("/lista_proyectos")
+    //Listar TODOS
+    @GetMapping("/tablaProyectos")
     public String listarProyectos(ModelMap modelo) {
         List<Proyecto> proyectos = proyectoServicio.listarTodos();
         modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyecto.html";
+        return "tablaProyectos.html";
     }
 
     //Filtrar Por Usuario
     @PreAuthorize("hasAnyRole('ROLE_USER, ROLE_CLIENTE')")
-    @GetMapping("/usuario/{nombre}")
-    public String listarProyectosPorUsuario(@PathVariable("nombre") String nombre, ModelMap modelo, HttpSession httpSession){
+    @GetMapping("/usuario")
+    public String listarProyectosPorUsuario(ModelMap modelo, HttpSession httpSession){
         Usuario logueado = (Usuario) httpSession.getAttribute("usuariosession");
         Usuario usuario = usuarioServicio.getOne(logueado.getId_usuario());
 
         proyectoServicio.buscarPorUsuario(usuario);
         modelo.addAttribute("proyectos", proyectoServicio.buscarPorUsuario(usuario));
 
-        return "tablaProyecto.html";
+        return "tablaProyectos.html";
     }
 
+    @GetMapping("/tablaProyectos/fechaInicio")
+    public String ordenarProyectosPorFechaInicio(@RequestParam String fechaInicio, ModelMap modelo){
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+
+        if (fechaInicio.isEmpty() || fechaInicio == null){
+            proyectos = proyectoServicio.listarTodos();
+        }else{
+            proyectos = proyectoServicio.ordenarProyectosPorFechaInicio(fechaInicio);
+        }
+
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html";
+    }
+    @GetMapping("/tablaProyectos/fechaFin")
+    public String ordenarProyectosPorFechaFin(@RequestParam String fechaFin, ModelMap modelo){
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+
+        if (fechaFin.isEmpty() || fechaFin == null){
+            proyectos = proyectoServicio.listarTodos();
+        }else{
+            proyectos = proyectoServicio.ordenarProyectosPorFechaFin(fechaFin);
+        }
+
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html";
+    }
 }

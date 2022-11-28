@@ -40,7 +40,7 @@
 
       <div class="col-md-3 text-end">
         <a href="/perfil"><button type="button" class="btn boton-registrate">Mi perfil</button></a><!-- falta vista -->
-        <a href="/cerrarSesion"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar Sesion</button></a>
+        <a th:href="@{/logout}"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar Sesion</button></a>
         <!-- falta accion -->
       </div>
     </header>
@@ -61,7 +61,7 @@
       
       <!-- INICIO FILTROS -->
     <section id="mensajeFiltros">
-      <form th:action="/filtroPorNombre" method="post"> <!-- VER -->
+      <form th:action="@{/proyecto/tablaProyectos/nombre}" > <!-- VER -->
         <label for="nombre">
           <p>Filtro por nombre</p>
         </label>
@@ -69,27 +69,32 @@
         <button type="submit" class="btn btn-light">Buscar</button>
       </form>
 
-      <form th:action="/filtroPorFechaInicio" method="post"> <!-- HAY QUE MODIFICAR -->
+      <form th:action="@{/proyecto/tablaProyectos/fechaInicio}"> <!-- HAY QUE MODIFICAR -->
         <label for="inicio">
           <p>Filtro por fecha de inicio</p>
         </label>
-        <input type="text" id="inicio" name="fechaInicio" placeholder="" />
+        <input type="date" id="inicio" name="fechaInicio" placeholder="" />
         <button type="submit" class="btn btn-light">Buscar</button>
       </form> 
 
-      <form th:action="/filtroPorFechaFin" method="post"> <!-- HAY QUE MODIFICAR -->
+      <form th:action="@{/proyecto/tablaProyectos/fechaFin}" > <!-- HAY QUE MODIFICAR -->
         <label for="fin">
           <p>Filtro por fecha de fin</p>
         </label>
-        <input type="text" id="fin" name="fechaFin" placeholder="" />
+        <input type="date" id="fin" name="fechaFin" placeholder="" />
         <button type="submit" class="btn btn-light">Buscar</button>
       </form> 
 
-      <form th:action="/filtroPorEstado" method="post"> <!-- HAY QUE MODIFICAR -->
+      <form th:action="@{/proyecto/tablaProyectos/estado}" > <!-- HAY QUE MODIFICAR -->
         <label for="estado">
           <p>Filtro por estado</p>
         </label>
-        <input type="text" id="estado" name="estado" placeholder="" />
+        <select id="estado" name="estado">
+          <option></option>
+          <option value="FINALIZADO">Finalizado</option>
+          <option value="ENPROCESO">En Proceso</option>
+          <option value="INICIADO"> Iniciado</option>
+        </select>
         <button type="submit" class="btn btn-light">Buscar</button>
       </form> 
 
@@ -108,12 +113,12 @@
             <th scope="col">Estado</th>
           </tr>
         </thead>
-        <tbody th:each="proyecto:${listaProyecto}">
+        <tbody th:each="proyecto:${proyectos}">
           <tr>
             <td th:text="${proyecto.nombre}"> NOMBRE PRUEBA</td>
             <td th:text="${proyecto.fechaInicio}"> EMAIL PRUEBA</td>
-            <td th:text="${proyecto.fechaFin"> ROL PRUEBA</td>
-            <td th:text="${proyecto.estado"> ROL PRUEBA</td>
+            <td th:text="${proyecto.fechaFin}"> ROL PRUEBA</td>
+            <td th:text="${proyecto.estadoProyecto}"> ROL PRUEBA</td>
           </tr>
         </tbody>
       </table>
@@ -135,7 +140,8 @@
     </ul>
   </footer>
 </div>
-<!-- FIN FOOTER -->
+  </div>
+  <!-- FIN FOOTER -->
 </body>
 
 </html>

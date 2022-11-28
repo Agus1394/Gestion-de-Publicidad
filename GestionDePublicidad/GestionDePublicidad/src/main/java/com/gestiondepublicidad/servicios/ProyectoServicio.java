@@ -46,12 +46,6 @@ public class ProyectoServicio {
         proyectoRepositorio.save(proyecto);
     }
 
-//    //metodo que va en ACTUALIZAR 
-//    public List<Usuario> actualizarProyectoUsuario(String nombre, Proyecto proyecto) {
-//        List<Usuario> usuario = proyecto.getUsuario();
-//        return usuario;
-//    }
-
     //buscar Proyectos por Usuario
     public List<Proyecto> buscarPorUsuario(Usuario usuario) {
         List<Proyecto> proyectos = usuario.getProyecto();
@@ -60,13 +54,8 @@ public class ProyectoServicio {
     
     
     //metodo que filtra al proyecto por estado
-    public Proyecto filtrarProyectoPorEstado (EstadoProyecto estadoProyecto, Proyecto proyecto)
-            throws MiException{
-        return null;
-    
-//        if () {
-//            
-//        }    
+    public List<Proyecto> filtrarProyectoPorEstado (String estadoProyecto) throws MiException{
+        return proyectoRepositorio.buscarPorEstado(estadoProyecto);
         
     }
 
@@ -137,6 +126,12 @@ public class ProyectoServicio {
         usuarioRepositorio.save(usuario);
         proyectoRepositorio.save(proyecto);
     }
+
+    //ELIMINAR
+    public void eliminar(String id) {
+        proyectoRepositorio.deleteById(id);
+    }
+
     //LISTAR-QUERYS
     public Proyecto getOne(String id) {
         return proyectoRepositorio.getOne(id);
@@ -146,25 +141,19 @@ public class ProyectoServicio {
 
         List<Proyecto> proyectos = new ArrayList<>();
 
-        return proyectos = proyectoRepositorio.findAll();
+        return proyectoRepositorio.findAll();
     }
 
-    public Proyecto buscarPorNombre(String nombre) {
+    public List<Proyecto> buscarPorNombre(String nombre) {
         return proyectoRepositorio.buscarPorNombreProy(nombre);
     }
-//
-//    public List<Proyecto> buscarPorUsuario(String nombre) {
-//
-//        List<Proyecto> proyectos = new ArrayList<>();
-//
-//        proyectos = proyectoRepositorio.buscarPorUsuario(nombre);
-//        return null;
-//    }
-    
-    
-    //ELIMINAR 
-    public void eliminar(String id) {
-        proyectoRepositorio.deleteById(id);
+
+    public List<Proyecto> ordenarProyectosPorFechaInicio(String fechaInicio){
+        return proyectoRepositorio.proyectosOrdenadosPorFechaInicio(fechaInicio);
+    }
+
+    public List<Proyecto> ordenarProyectosPorFechaFin(String fechaFin){
+        return proyectoRepositorio.proyectosOrdenadosPorFechaFin(fechaFin);
     }
 
     //VALIDACION

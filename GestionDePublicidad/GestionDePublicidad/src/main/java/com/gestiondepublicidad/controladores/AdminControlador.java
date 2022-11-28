@@ -26,8 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/admin")
 public class AdminControlador {
 
-    private final Logger log = LoggerFactory.getLogger(AdminControlador.class);
-
     @Autowired
     UsuarioServicio usuarioServicio;
 
