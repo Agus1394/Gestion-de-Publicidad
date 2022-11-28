@@ -40,7 +40,6 @@ public class AgendaServicio {
         registrar.setId_agenda(id_agenda);
         registrar.setNumeroCliente(numeroCliente);
         registrar.setNumeroInterno(numeroInterno);
-        usuario.setAgenda(agenda);
 
         agendaRepositorio.save(registrar);
     }
@@ -66,7 +65,6 @@ public class AgendaServicio {
             actualizarAgenda.setId_agenda(id_agenda);
             actualizarAgenda.setNumeroCliente(numeroCliente);
             actualizarAgenda.setNumeroInterno(numeroInterno);
-            usuario.setAgenda(agenda);
 
             agendaRepositorio.save(actualizarAgenda);
         }

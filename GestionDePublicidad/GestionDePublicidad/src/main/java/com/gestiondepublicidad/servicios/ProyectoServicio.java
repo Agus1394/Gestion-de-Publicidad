@@ -52,8 +52,8 @@ public class ProyectoServicio {
 //        return usuario;
 //    }
 
-    //metodo que filtra el proyecto por el nombre según el cliente
-    public List<Proyecto> filtrarPorProyecto(String nombre, Usuario usuario) {
+    //buscar Proyectos por Usuario
+    public List<Proyecto> buscarPorUsuario(Usuario usuario) {
         List<Proyecto> proyectos = usuario.getProyecto();
         return proyectos;
     }
@@ -102,6 +102,41 @@ public class ProyectoServicio {
         }
     }
 
+    @Transactional
+    public void agregarUsuarioProyecto(String id_proyecto, String id_usuario){
+        Proyecto proyecto = proyectoRepositorio.getOne(id_proyecto);
+        Usuario usuario = usuarioRepositorio.getOne(id_usuario);
+
+        List<Usuario> usuarios = proyecto.getUsuario();
+        List<Proyecto> proyectos = usuario.getProyecto();
+
+        usuarios.add(usuario);
+        proyecto.setUsuario(usuarios);
+
+        proyectos.add(proyecto);
+        usuario.setProyecto(proyectos);
+
+        usuarioRepositorio.save(usuario);
+        proyectoRepositorio.save(proyecto);
+    }
+
+    @Transactional
+    public void eliminarUsuarioProyecto(String id_proyecto, String id_usuario){
+        Proyecto proyecto = proyectoRepositorio.getOne(id_proyecto);
+        Usuario usuario = usuarioRepositorio.getOne(id_usuario);
+
+        List<Usuario> usuarios = proyecto.getUsuario();
+        List<Proyecto> proyectos = usuario.getProyecto();
+
+        usuarios.remove(usuario);
+        proyecto.setUsuario(usuarios);
+
+        proyectos.remove(proyecto);
+        usuario.setProyecto(proyectos);
+
+        usuarioRepositorio.save(usuario);
+        proyectoRepositorio.save(proyecto);
+    }
     //LISTAR-QUERYS
     public Proyecto getOne(String id) {
         return proyectoRepositorio.getOne(id);

@@ -71,8 +71,10 @@ public class PortalControlador {
             return "dashboard.html";
         } else if (logueado.getRol().toString().equals("TRABAJADOR")) {
             return "redirect:/trabajador/dashboard";
+        } else if (logueado.getRol().toString().equals("USER")){
+            return "indexCliente.html";
         }
-        return "index.html";
+            return "index.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
