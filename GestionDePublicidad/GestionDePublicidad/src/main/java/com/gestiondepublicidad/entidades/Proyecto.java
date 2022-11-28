@@ -42,12 +42,7 @@ public class Proyecto {
     private Date fechaInicio;
     
     @Temporal(TemporalType.DATE)
-    private Date fechaFin;
-    
-    //Revisar relacion
-    
-    @OneToMany
-    private List<ListaDeTarea> listaDeTarea;
+    private Date fechaFin;   
 
 //   COMO SON MUCHOS A MUCHOS; TAMBIÉN USUARIO SE ANOTA COMO LIST
     @ManyToMany
