@@ -33,7 +33,7 @@
       </a>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="/index" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
+        <li><a th:href="@{/inicio}" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
         <li><a href="#Ayuda" class="nav-link px-2 link-ul">Ayuda</a></li>
       </ul>
 
@@ -50,7 +50,7 @@
   <div class="container-fluid" id="cuerpo">
     <section id="cards">
 
-      <a href="tablaProyectos.html" class="linkTablas">
+      <a th:href="@{/proyecto/tablaProyectos}" class="linkTablas">
         <div class="card">
           <div class="card__image-holder">
             <img class="card__image" src="/img/botones/Proyectos1.png" alt="img" />

@@ -14,11 +14,11 @@ import com.gestiondepublicidad.entidades.Usuario;
 public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
 
     // BUSQUEDA DE USUARIO POR SU NOMBRE
-    @Query("SELECT u FROM Usuario u WHERE u.nombre LIKE %:nombre%")
+    @Query("SELECT u FROM Usuario u WHERE UPPER(u.nombre) LIKE %:nombre%")
     List<Usuario> buscarPorNombre(@Param("nombre") String nombre);
 
     // BUSQUEDA DE USUARIO POR SU NOMBRE y SU ROL
-    @Query(value = "SELECT * FROM Usuario WHERE nombre LIKE %:nombre% AND rol = :rol",
+    @Query(value = "SELECT * FROM Usuario WHERE UPPER(nombre) LIKE %:nombre% AND rol = :rol",
     nativeQuery = true)
     List<Usuario> buscarPorNombreYRol(@Param("nombre") String nombre, @Param("rol") String rol);
 

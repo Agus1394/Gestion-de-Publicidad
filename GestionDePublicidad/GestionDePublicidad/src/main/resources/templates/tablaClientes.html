@@ -34,7 +34,7 @@
       </a>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="/index" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
+        <li><a th:href="@{/inicio}" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
         <li><a href="/dashboard" class="nav-link px-2 link-ul"></a></li>
         <li><a href="/dashboard" class="nav-link px-2 link-ul">Atras</a></li>
 
@@ -73,7 +73,7 @@
       
       <!-- INICIO FILTROS -->
     <section id="mensajeFiltros">
-      <form th:action="@{/admin/tablaUsuarios/search}" method="post"> <!-- VER -->
+      <form th:action="@{/admin/tablaClientes/search}" method="post"> <!-- VER -->
         <label for="nombre">
           <p>Filtro por nombre</p>
         </label>
