@@ -1,13 +1,14 @@
 package com.gestiondepublicidad.controladores;
 
 import com.gestiondepublicidad.entidades.Agenda;
-import com.gestiondepublicidad.excepciones.MiException;
+import com.gestiondepublicidad.enumeraciones.PuestoEmpresa;
 import com.gestiondepublicidad.servicios.AgendaServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,37 +21,38 @@ public class AgendaControlador {
     private AgendaServicio agendaServicio;
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @PostMapping("/filtro/agenda/contactosInternos")
-    public String traerContactosInternos(@PathVariable Long contactoInterno,
-            ModelMap modelo) {
-        List<Agenda> contactosInternos = agendaServicio.traerNumeroInterno(contactoInterno);
-        modelo.addAttribute("contactosInternos", contactosInternos);
+    @GetMapping("/filtro/agenda/nombreTrabajador")
+    public String traerNombreUser(@PathVariable String nombre, ModelMap modelo) {
+        List<Agenda> nombresUser = agendaServicio.traerNombreUser(nombre);
+        modelo.addAttribute("nombresUser", nombresUser);
         return null;
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @PostMapping("/filtro/agenda/numeroCliente")
-    public String traerContactosDeClientes(@PathVariable Long contactoCliente,
+    @GetMapping("/filtro/agenda/emailTrabajador")
+    public String traerUserPorEmail(@PathVariable String email,
             ModelMap modelo) {
-        List<Agenda> contactosClientes = agendaServicio.traerNumeroCliente(contactoCliente);
-        modelo.addAttribute("contactosClientes", contactosClientes);
+        Agenda buscarEmails = agendaServicio.traerUserPorEmail(email);
+        modelo.addAttribute("buscarEmails", buscarEmails);
         return null;
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')") //cambiar 
-    @PostMapping("/filtro/agenda/eliminarContactos/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/filtro/agenda/eliminar/{id}")
     public String eliminarContactos(@PathVariable String idAgenda,
             ModelMap modelo) {
-        agendaServicio.eliminarContacto(idAgenda);
+        agendaServicio.eliminar(idAgenda);
+        modelo.put("Contacto eliminado", "!");
         return null;
     }
 
 //    @PreAuthorize("hasAnyRole('ROLE_USER')")
-//    @PostMapping("/filtro/agenda/actuall")
-//    public String actualizarAgenda(@PathVariable String id,
-//            ModelMap modelo) throws MiException{
-//
-//        
-//    }
+//    @GetMapping("/filtro/agenda/puestoEmpresa")
+//    public String buscarPorPuestoEnEmpresa(@PathVariable String puestoEmpresa,
+//            ModelMap modelo){
+//        Agenda buscarPorPuestos = agendaServicio.traerUserPorPuestoEmp();
+        
+        
+        
+    }
 
-}

@@ -5,6 +5,8 @@ import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.repositorios.AgendaRepositorio;
 import com.gestiondepublicidad.repositorios.UsuarioRepositorio;
+import com.gestiondepublicidad.enumeraciones.PuestoEmpresa;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,26 +29,25 @@ public class AgendaServicio {
     @Transactional
     public void registrarAgenda(Agenda agenda,
             String id_agenda,
-            Long numeroCliente,
-            Long numeroInterno,
-            String id_usuario) throws MiException {
-
-        validarCambios(id_agenda, numeroCliente, numeroInterno);
-
-        Usuario usuario = usuarioRepositorio.findById(id_usuario).get();
+            String nombre,
+            String email,
+            String puestoEnLaEmpresa) throws MiException {
+        
         Agenda registrar = new Agenda();
 
         registrar.setId_agenda(id_agenda);
-        registrar.setNumeroCliente(numeroCliente);
-        registrar.setNumeroInterno(numeroInterno);
-
+        registrar.setNombre(nombre);
+        registrar.setEmail(email);
+        registrar.setPuestoEnLaEmpresa(puestoEnLaEmpresa);
+               
         agendaRepositorio.save(registrar);
     }
 
     @Transactional
     public void actualizarAgenda(String id_agenda,
-            Long numeroCliente,
-            Long numeroInterno,
+            String nombre,
+            String email,
+            String puestoEnLaEmpresa,
             String id_usuario,
             Agenda agenda) throws MiException {
 
@@ -54,49 +55,57 @@ public class AgendaServicio {
         Optional<Usuario> actualizarAgendaUsuario = usuarioRepositorio.findById(id_usuario);
         Usuario usuario = new Usuario();
 
-        validarCambios(id_agenda, numeroCliente, numeroInterno);
-
         if (actualizarAgendaUsuario.isPresent()) {
             usuario = actualizarAgendaUsuario.get();
         } else if (actualizar.isPresent()) {
             Agenda actualizarAgenda = actualizar.get();
 
             actualizarAgenda.setId_agenda(id_agenda);
-            actualizarAgenda.setNumeroCliente(numeroCliente);
-            actualizarAgenda.setNumeroInterno(numeroInterno);
+            actualizarAgenda.setNombre(nombre);
+            actualizarAgenda.setEmail(email);
+            actualizarAgenda.setPuestoEnLaEmpresa(puestoEnLaEmpresa);
 
             agendaRepositorio.save(actualizarAgenda);
         }
-
     }
 
-    public void eliminarContacto(String id_agenda) {
+    @Transactional
+    public void eliminar(String id_agenda) {
         agendaRepositorio.deleteById(id_agenda);
     }
 
-    private void validarCambios(String id_agenda,
-            Long numeroCliente,
-            Long numeroInterno) throws MiException {
+    private void validar(String id_agenda,
+            String nombre,
+            String email) throws MiException {
 
         if (id_agenda.isEmpty() || id_agenda == null) {
-            throw new MiException("Campo obliagatorio!");
+            throw new MiException("Campo a rellenar!");
+        } 
+        if (nombre.isEmpty() || nombre == null) {
+             throw new MiException("Campo a rellenar!");
         }
-        if (numeroCliente == null) {
-            throw new MiException("Campo obliagatorio!");
+        if (email.isEmpty() || email == null) {
+             throw new MiException("Campo a rellenar!");
         }
-        if (numeroInterno == null) {
-            throw new MiException("Campo obliagatorio!");
+        if (email.contains("@") || email.contains(".com")) {
+             throw new MiException("El email ingresado es inválido");
         }
     }
 
-    public List<Agenda> traerNumeroCliente(Long numero_ciente) {
-        List<Agenda> agenda = agendaRepositorio.buscarNumeroCliente(numero_ciente);
-        return agenda;
+    public List<Agenda> traerNombreUser(String nombre) {
+        return agendaRepositorio.buscarPorNombre(nombre);  
     }
+
+    public Agenda traerUserPorEmail(String email){
+        return agendaRepositorio.buscarPorEmail(email);
+    }
+//    
+//    public Agenda traerUserPorPuestoEmp(String puestoEmpresa, PuestoEmpresa puestoEmp){
+//        return agendaRepositorio.buscarUserPorPuesto(puestoEmpresa);      
+//    }
     
-    public List<Agenda> traerNumeroInterno(Long numero_interno){
-        List<Agenda> agenda = agendaRepositorio.buscarNumeroInterno(numero_interno);       
-        return agenda;
+    public List<Agenda> listarContactosTrabajadores(){
+        List<Agenda> agenda = new ArrayList();
+        return agenda = agendaRepositorio.findAll();
     }
-
 }
