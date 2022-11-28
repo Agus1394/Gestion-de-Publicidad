@@ -1,9 +1,10 @@
+
 package com.gestiondepublicidad.controladores;
 
+import java.util.List;
 import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.servicios.UsuarioServicio;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,95 +17,89 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/")
-public class PortalControlador {
-
+@RequestMapping("/trabajador")
+public class TrabajadorControlador {
+    
     @Autowired
     UsuarioServicio usuarioServicio;
 
-    @GetMapping("/")
-    public String index() {
-        return "index.html";
+    @GetMapping("/dashboard")
+    public String panelAdministrativoCliente(ModelMap modelo) {
+        return "panel_trabajador.html";
     }
 
-    //CREAR
-    @GetMapping("/registro")
+    //LISTAR
+    @GetMapping("/usuarios")
+    public String listar(ModelMap modelo) {
+        List<Usuario> usuarios = usuarioServicio.listarUsuarios();
+        modelo.addAttribute("usuarios", usuarios);
+        return "usuario_list.html";
+    }
+
+    //MODIFICAR ROL USUARIOS
+    @GetMapping("/modificarRol/{id}")
+    public String cambiarRol(@PathVariable String id) {
+        usuarioServicio.cambiarRol(id);
+        return "redirect:/trabajador/usuarios";
+    }
+
+    //REGISTRAR USUARIO DESDE Trabajador
+    @GetMapping("/registrar")
     public String registrar() {
-        return "registro.html";
+        return "registro_usuario.html";
     }
 
-    
-    @PostMapping("/registrar")
-    public String registro(@RequestParam String nombre,
+    @PostMapping("/registro")
+    public String registro( @RequestParam String nombre,
             @RequestParam String email, @RequestParam String password,
             @RequestParam String password2, ModelMap modelo) {
         try {
             usuarioServicio.registrar(nombre, email, password, password2);
             modelo.put("éxito", "Usuario registrado correctamente!");
-            return "index.html";
+            return "usuario_cargado.html";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("email", email);
             return "registro.html";
         }
+
     }
 
-    //LOGIN
-    
-    @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, ModelMap modelo) {
-        if (error != null) {
-            modelo.put("error", "Usuario o contraseña invalidos");
-        }
-        return "login.html";
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_CLIENTE', 'ROLE_ADMIN')")
-    @GetMapping("/inicio")
-    public String inicio(ModelMap modelo, HttpSession session) {
-
-        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-
-        if (logueado.getRol().toString().equals("ADMIN")) {
-
-            return "dashboard.html";
-        } else if (logueado.getRol().toString().equals("TRABAJADOR")) {
-            return "redirect:/trabajador/dashboard";
-        } else if (logueado.getRol().toString().equals("USER")){
-            return "indexCliente.html";
-        }
-            return "index.html";
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
-    @GetMapping("/perfil")
-    public String perfil(ModelMap modelo, HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+    //MODIFICAR USUARIO
+    @GetMapping("/modificar/{id}")
+    public String modificar(ModelMap modelo, @PathVariable String id) {
+        Usuario usuario = usuarioServicio.getOne(id);
         modelo.put("usuario", usuario);
-        return "usuario_modificar.html";
+        return "editar_usuario.html";
     }
 
-    //ACTUALIZAR
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
-    @PostMapping("/perfil/{id}")
+    @PostMapping("/modificar/{id}")
     public String actualizar(@RequestParam MultipartFile archivo, @PathVariable String id,
             @RequestParam String nombre, @RequestParam String email,
-            @RequestParam String password, @RequestParam String password2,
             ModelMap modelo) throws MiException {
 
+        Usuario usuario = usuarioServicio.getOne(id);
+        modelo.put("usuario", usuario);
+
         try {
-            usuarioServicio.actualizar(archivo, id, nombre, email, password, password2);
+            usuarioServicio.adminEditar(archivo, id, nombre, email);
             modelo.put("exito", "Usuario actualizado correctamente!");
-            return "index.html";
+            return "editar_usuario.html";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("email", email);
-
-            return "usuario_modificar.html";
+            return "editar_usuario.html";
         }
-
     }
 
+    //ELIMINAR USUARIO
+    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
+    @PostMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable String id, ModelMap modelo) {
+        usuarioServicio.eliminarUsuario(id);
+        return "redirect:/trabajador/usuarios";
+
+    }
 }

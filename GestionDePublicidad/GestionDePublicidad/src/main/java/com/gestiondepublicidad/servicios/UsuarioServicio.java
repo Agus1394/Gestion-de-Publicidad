@@ -52,7 +52,7 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setContrasenia(new BCryptPasswordEncoder().
                 encode(contrasenia));
 
-        usuario.setRol(Rol.CLIENTE);
+        usuario.setRol(Rol.USER);
 /*        
         Foto foto = new Foto();
                         
@@ -60,7 +60,7 @@ public class UsuarioServicio implements UserDetailsService {
                 
         foto.setNombre("ImagenPorDefecto");
                 
-        foto.setContenido(fotoRepositorio.buscarPorNombre("ImagenPorDefecto1")
+        foto.setContenido(fotoRepositorio.buscarPorNombre("ImagenDefecto")
                 .getContenido());
 
         fotoRepositorio.save(foto);
@@ -109,12 +109,9 @@ public class UsuarioServicio implements UserDetailsService {
     //DEVUELVE LOS USUARIO CON EL MISMO NOMBRE
     public List<Usuario> usuariosPorNombre(String nombre) {
 
-        return  usuarioRepositorio.buscarPorNombre(nombre);
-    }
+        List<Usuario> usuarios = new ArrayList();
 
-    public List<Usuario> usuariosPorNombreYRol(String nombre, String rol) {
-
-        return  usuarioRepositorio.buscarPorNombreYRol(nombre, rol);
+        return usuarios = usuarioRepositorio.buscarPorNombre(nombre);
     }
 
     //DEVUELVE UN USUARIO BUSCADO POR SU EMAIL
@@ -124,27 +121,102 @@ public class UsuarioServicio implements UserDetailsService {
 
     //DEVUELVE LOS USUARIOS CONECTADOS AL MISMO PROYECTO
     public List<Usuario> usuariosPorProyecto(Proyecto proyecto) {
+        List<Usuario> usuarios = new ArrayList();
 
-        return usuarioRepositorio.buscarPorProyecto(proyecto);
+        return usuarios = usuarioRepositorio.buscarPorProyecto(proyecto);
     }
 
     //DEVUELVE UNA LISTA DE TODOS LOS USUARIOS
     public List<Usuario> listarUsuarios() {
 
-        return usuarioRepositorio.findAll();
+        List<Usuario> usuarios = new ArrayList();
+
+        return usuarios = usuarioRepositorio.findAll();
+    }
+
+    //Devuelve lista de clientes
+    public List<Usuario> listarClientes() {
+
+        List<Usuario> usuarios = new ArrayList();
+
+        return usuarios = usuarioRepositorio.buscarPorRol("USER");
+    }
+
+    public List<Usuario> listarTrabajadores() {
+        List<Usuario> listaTrabajadores = new ArrayList();
+        return listaTrabajadores = usuarioRepositorio.buscarPorRol("TRABAJADOR");
+    }
+
+    public List<Usuario> listarTrabajadoresPorNombre(String nombre) {
+        List<Usuario> listaTrabajadores = new ArrayList();
+        return listaTrabajadores = usuarioRepositorio.buscarUsuarioPorNombre("TRABAJADOR", nombre);
+    }
+
+    public List<Usuario> listarClientesPorNombre(String nombre) {
+        List<Usuario> listaClientes = new ArrayList();
+        return listaClientes = usuarioRepositorio.buscarUsuarioPorNombre("USER", nombre);
+    }
+
+    public List<Usuario> listarTrabajadoresPorEmail(String email) {
+        List<Usuario> listaTrabajadores = new ArrayList();
+        return listaTrabajadores = usuarioRepositorio.buscarUsuarioPorEmail("TRABAJADOR", email);
+    }
+
+    public List<Usuario> listarClientesPorEmail(String email) {
+        List<Usuario> listaTrabajadores = new ArrayList();
+        return listaTrabajadores = usuarioRepositorio.buscarUsuarioPorEmail("USER", email);
     }
     
     //CAMBIA ROLES ENTRE USER, CLIENTE Y ADMIN
     @Transactional
-    public void cambiarRol(String id_usuario, Rol rol) {
+    public void cambiarRol(String id_usuario) {
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id_usuario);
 
         if (respuesta.isPresent()) {
 
             Usuario usuario = respuesta.get();
-            usuario.setRol(rol);
+
+            switch (usuario.getRol()) {
+                case TRABAJADOR:
+                    usuario.setRol(Rol.USER);
+                    break;
+                case USER:
+                    usuario.setRol(Rol.ADMIN);
+                    break;
+                case ADMIN:
+                    usuario.setRol(Rol.TRABAJADOR);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    //EDICION DE ADMIN Y VER SI DE CLIENTE
+    public void adminEditar(MultipartFile archivo, String idUsuario, String nombre,
+            String email) throws MiException {
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+
+        if (respuesta.isPresent()) {
+
+            Usuario usuario = respuesta.get();
+
+            usuario.setNombre(nombre);
+            usuario.setEmail(email);
+            String idImagen = null;
+            if (usuario.getFoto() != null) {
+
+                idImagen = usuario.getFoto().getId_foto();
+            }
+            if (null != archivo && !archivo.isEmpty()) {
+                Foto foto = fotoServicio.actualizar(archivo, idImagen);
+                usuario.setFoto(foto);
+            }
+
             usuarioRepositorio.save(usuario);
         }
+
     }
 
     //ELIMINA UN USUARIO SEGÚN SU ID
@@ -171,7 +243,7 @@ public class UsuarioServicio implements UserDetailsService {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
         //IMPIDE QUE SE INGRESEN EMAILS EXISTENTES
-        if(usuarioRepositorio.buscarPorEmail(email)!= null) {
+        if(usuarioRepositorio.buscarEmail(email)!= null) {
             throw new MiException("El email ingresado ya esta registrado");
         }
         //VERIFICA QUE SE INGRESEN EMAILS VÁLIDOS
@@ -179,10 +251,6 @@ public class UsuarioServicio implements UserDetailsService {
             throw new MiException("No se ha ingresado un email válido");
         }
 
-    }
-
-    public List<Usuario> buscarPorRol(String rol){
-        return usuarioRepositorio.buscarPorRol(rol);
     }
 
     @Override
