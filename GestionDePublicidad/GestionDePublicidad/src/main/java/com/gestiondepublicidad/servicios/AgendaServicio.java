@@ -22,7 +22,6 @@ public class AgendaServicio {
 
     public Agenda getOne(String id) {
         return agendaRepositorio.getOne(id);
-
     }
 
     @Transactional
@@ -73,7 +72,7 @@ public class AgendaServicio {
 
     }
 
-    public void eliminarAgenda(String id_agenda) {
+    public void eliminarContacto(String id_agenda) {
         agendaRepositorio.deleteById(id_agenda);
     }
 
@@ -92,14 +91,14 @@ public class AgendaServicio {
         }
     }
 
-//    public List<Agenda> traerNumeroCliente(Long numero_ciente) {
-//        List <Agenda> agenda = agendaRepositorio.buscarNumeroCliente(numero_ciente);
-//        return agenda;
-//    }
-//    
-//    public List<Agenda> traerNumeroInterno(Long numero_interno){
-//        List <Agenda> agenda = agendaRepositorio.buscarNumeroInterno(numero_interno);       
-//        return agenda;
-//    }
+    public List<Agenda> traerNumeroCliente(Long numero_ciente) {
+        List<Agenda> agenda = agendaRepositorio.buscarNumeroCliente(numero_ciente);
+        return agenda;
+    }
+    
+    public List<Agenda> traerNumeroInterno(Long numero_interno){
+        List<Agenda> agenda = agendaRepositorio.buscarNumeroInterno(numero_interno);       
+        return agenda;
+    }
 
 }
