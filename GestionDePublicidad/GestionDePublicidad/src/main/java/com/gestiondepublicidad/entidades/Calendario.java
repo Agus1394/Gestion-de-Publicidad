@@ -15,15 +15,16 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "CALENDARIO")
+@Table(name = "Calendario")
 public class Calendario {
     
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id_calendario;  
+    private String id_calendario;
     
     private String descripcion;
+    
     private String evento;
     
 }

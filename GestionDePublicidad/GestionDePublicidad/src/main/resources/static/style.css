@@ -1,0 +1,196 @@
+h1{
+    font-family: 'Lora', serif;
+    font-size: 30px;
+}
+
+p{
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 18px;
+}
+
+h3{
+    font-family: 'Titillium Web', sans-serif;
+}
+
+
+.bdn{
+    background-color: #212121;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+
+.boton-iniciar-sesion{
+    border-color: #14FFEC;
+    color: #fff;
+}
+
+.boton-iniciar-sesion:hover{
+    background-color: #14FFEC;
+    color: #212121;
+    transition: 0.3s  all;
+}
+
+.boton-registrate{
+    background-color: #14FFEC;
+    color:#212121;
+}
+
+.boton-registrate:hover{
+    background-color: none;
+    border-color: #14FFEC;
+    color: #fff;
+    transition: 0.3s  all;
+}
+
+.boton-enviar{
+    background-color: #14FFEC;
+}
+
+.boton-enviar:hover{
+    background-color: #11d3c3;
+    transition: 0.3s  all;
+}
+
+.link-ul{
+    color: #fff;
+}
+.link-ul:hover{
+    color: #14FFEC;
+}
+
+
+.seccion-servicio{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+    color: #212121;
+    padding: 40px 0;
+}
+
+.container-seccion-principal{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);    
+    height: 90vh;
+}
+
+.contenedor-texto-principal{
+    background-color: rgb(255, 255, 255,0.30);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 20px 0 rgba(31,38,135,0.37);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+}
+
+.contenedor-imagen-principal img{
+    width: 190px;
+    height: 320px;
+}
+
+
+.seccion-servicio .card{
+    position: relative;
+    min-width: 250px;
+    height: 340px;
+    box-shadow: 0 8px 30px 0 rgba(31,38,135,0.37);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    margin: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: rgb(255, 255, 255,0.30);
+    cursor: pointer;
+}
+
+.seccion-servicio .card .box{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    background: #90FFF6;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+}
+
+.seccion-servicio .card:hover .box{
+    transform: translateY(-50px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    background-image: linear-gradient(90deg,#4cd0d4 0%, #14FFEC 100%);
+}
+
+.seccion-servicio .card .box .content{
+    padding: 20px;
+    text-align: center;
+}
+
+.seccion-servicio .card .box .content h3{
+    font-size: 1.8em;
+    color: #212121;
+    z-index: 1;
+    transition: 0.5s;
+}
+
+.seccion-servicio .card .box .content p{
+    font-size: 1em;
+    font-weight: 300;
+    color: #777;
+    z-index: 1;
+    transition: 0.5s;
+}
+
+.seccion-servicio .card:hover .box .content p{
+    font-size: 1em;
+    font-weight: 300;
+    color: #212121;
+    z-index: 1;
+    transition: 0.5s;
+}
+
+.seccion-servicio .card:hover .box .content h3{
+    font-size: 1.8em;
+    color: #212121;
+    z-index: 1;
+    transition: 0.5s;
+}
+
+
+.seccion-contacto{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+}
+
+.seccion-contacto-formulario{
+    border: 1px solid #14FFEC;
+    background-color: rgb(255, 255, 255,0.30);
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+}
+
+.form-control{
+    background-color: rgb(255, 255, 255,0.30);
+    backdrop-filter: blur(5px);
+    border: none;
+    border-bottom: 1px solid #14FFEC;
+    outline: none;
+}
+
+.form-control:focus{
+   background-image: linear-gradient(90deg,#fff 0%, #14FFEC 300%);
+}
+
+
+.seccion-clientes{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+    color: #212121;
+}
+
+.footer{
+    background-color: #212121;
+    color: #fff;
+}
+
+.contenedor-logos img{
+    width: 120px;
+    height: 100px;
+}
+

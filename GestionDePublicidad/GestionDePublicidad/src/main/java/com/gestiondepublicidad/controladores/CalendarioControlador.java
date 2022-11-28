@@ -68,6 +68,7 @@ public class CalendarioControlador {
             calendarioServicio.modificarCalendario(id, descripcion, evento);
             return "redirect:../lista";
         } catch (MiException e) {
+
             modelo.put("Error", e.getMessage());
             return "calendario_modif.html";
         }
@@ -78,8 +79,10 @@ public class CalendarioControlador {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/eliminar{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo) {
+
         List<Calendario> calendarios = calendarioServicio.listarTodos();
         modelo.addAttribute("calendarios", calendarios);
+
         calendarioServicio.eliminarCalendario(id);
         return "redirect:/calendario/lista";
     }

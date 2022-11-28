@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeThink-Busqueda</title>
+  <!-- CSS BOOTSTRAP -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <!-- ICONOS BOOTSTRAP -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="/tablaProyectos.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600&family=Titillium+Web&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <!-- INICIO NAVBAR -->
+  <div class="container-fluid bdn">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
+      <a href="" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-white text-decoration-none">
+        <img class="diamante"
+          src="https://see.fontimg.com/api/renderfont4/vmpKZ/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjMzNFMkRDIiwiYmdjIjoiIzAxMDEwMSIsInQiOjF9/ZGFzaGJvYXJk/ceceps-handwriting.png"
+          alt="dashboars">
+        <img id="lettering"
+          src="https://see.fontimg.com/api/renderfont4/axgPE/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjRkZGRkZGIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/V2VUaGluaw/cannu-regular.png"
+          alt="wethink">
+      </a>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="/index" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
+        <li><a href="/dashboard" class="nav-link px-2 link-ul">Atras</a></li>
+      </ul>
+
+      <div class="col-md-3 text-end">
+        <a href="/perfil"><button type="button" class="btn boton-registrate">Mi perfil</button></a><!-- falta vista -->
+        <a th:href="@{/logout}"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar Sesion</button></a>
+        <!-- falta accion -->
+      </div>
+    </header>
+  </div>
+  <!-- FIN NAVBAR -->
+
+  <div class="contenedorBody">
+
+     <!--INICIO/BIENVENIDA-->
+  <div id="body">
+      <section id="mensajeSuperior">
+          <div id="burbuja">
+              <h1>TRABAJADORES</h1>
+              <p>A continuacion se listaran los empleados existentes en la base de datos, puede filtrarlos o no. Para modificar o eliminar debe acceder al mismo. </p>
+          </div>
+      </section>
+      <!-- FIN INICIO/BIENVENIDA-->
+      
+      <!-- INICIO FILTROS -->
+    <section id="mensajeFiltros">
+      <form th:action="@{/admin/tablaTrabajadores/search}" method="post"> <!-- VER -->
+        <label for="nombre">
+          <p>Filtro por nombre</p>
+        </label>
+        <input type="text" id="nombre" name="nombre" placeholder="nombre"/>
+        <button type="submit" class="btn btn-light">Buscar</button>
+      </form>
+
+<!--      <form th:action="/filtroPorEmail" method="post"> &lt;!&ndash; VER &ndash;&gt;
+        <label for="mail">
+          <p>Filtro por E-mail</p>
+        </label>
+        <input type="text" id="mail" name="email" placeholder="mail" />
+        <button type="submit" class="btn btn-light">Buscar</button>
+      </form>
+
+      <form th:action="/filtroPorPuestoEmpresa" method="post"> &lt;!&ndash; VER &ndash;&gt;
+        <label for="puesto">
+          <p>Filtro por puesto en la empresa</p>
+        </label>
+        <input type="text" id="puesto" name="puestoEmpresa" placeholder="" />
+        <button type="submit" class="btn btn-light">Buscar</button>
+      </form>-->
+
+
+    </section>
+<!-- FIN FILTROS -->
+
+<!-- INICIO TABLA -->
+    <section class="contenedorTabla">
+      <table>
+        <thead>
+          <tr id="filaTitulos">
+            <th scope="col">Usuario</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">ROL</th>
+          <!--  <th scope="col">Proyecto</th> -->
+            <th scope="col">Puesto</th>
+          </tr>
+        </thead>
+        <tbody th:each="usuario:${usuarios}">
+          <tr>
+            <td th:text="${usuario.nombre}"> NOMBRE PRUEBA</td>
+            <td th:text="${usuario.email}"> EMAIL PRUEBA</td>
+            <td th:text="${usuario.rol}"> ROL PRUEBA</td>
+            <td th:text="${usuario.puestoEmpresa}"> ROL PRUEBA</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <!-- FIN TABLA -->
+
+  </div>
+
+
+  
+ <!-- INICIO FOOTER -->
+ <div class="container-fluid footer">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3">
+    <p class="col-md-4 mb-0" style="font-size: 15px;">&copy; Grupo 3, Egg Cooperation</p>
+    <img src="/img/logo-diamante-blanco.png"
+        style="width: 45px; height: 40px; padding-right: 10px;" alt="">
+    <ul class="nav col-md-4 justify-content-end">
+      <li class="nav-item"><a href="#inicio" class="nav-link px-2 text-white">Arriba</a></li>
+    </ul>
+  </footer>
+</div>
+<!-- FIN FOOTER -->
+</body>
+
+</html>

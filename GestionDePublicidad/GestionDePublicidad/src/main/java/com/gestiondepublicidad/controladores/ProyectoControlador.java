@@ -66,23 +66,16 @@ public class ProyectoControlador {
     //LISTAR
     @GetMapping("/listar")
     public String listarUsuarios(ModelMap modelo) {
-        List<Proyecto> proyecto = proyectoServicio.listarTodos();
-        modelo.addAttribute("proyecto", proyecto);
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyecto", proyectos);
         return "listar.html";
     }
 
     @GetMapping("/buscar_por_nombre_p")
     public String buscarPorNombre(ModelMap modelo, String nombre) {
-        Proyecto proyecto = proyectoServicio.buscarPorNombre(nombre);
-        modelo.addAttribute("proyecto", proyecto);
+        Proyecto proyectos = proyectoServicio.buscarPorNombre(nombre);
+        modelo.addAttribute("proyecto", proyectos);
         return "buscar_por_nombre_proyecto.html";
-    }
-
-    @GetMapping("/lista_usuarios_p")
-    public String listarUsuarios(ModelMap modelo, String nombre) {
-        List<Proyecto> proyecto = proyectoServicio.buscarPorUsuario(nombre);
-        modelo.addAttribute("proyecto", proyecto);
-        return "lista_usuarios.html";
     }
 
     //MODIFICAR
@@ -114,15 +107,81 @@ public class ProyectoControlador {
         }
 
     }
+    //agregar usuario al proyecto
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/modificar/{id_proyecto}/agregarEliminarUsuario")
+    public String agregarEliminarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, ModelMap modelo){
+        modelo.addAttribute("usuarios", usuarioServicio.listarUsuarios());
+        modelo.put("proyecto", proyectoServicio.getOne(id_proyecto));
+        return "agregarEliminarUsuariosProyecto.html";//no existe vista
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("{id_proyecto}/agregarUsuario/{id_usuario}")
+    public String agregarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, @PathVariable("id_usuario") String id_usuario, ModelMap modelo){
+        proyectoServicio.agregarUsuarioProyecto(id_proyecto, id_usuario);
+
+        modelo.addAttribute("proyectos", proyectoServicio.listarTodos());
+        return "tablaProyecto.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("{id_proyecto}/eliminarUsuario/{id_usuario}")
+    public String eliminarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, @PathVariable("id_usuario") String id_usuario, ModelMap modelo){
+        proyectoServicio.eliminarUsuarioProyecto(id_proyecto, id_usuario);
+
+        modelo.addAttribute("proyectos", proyectoServicio.listarTodos());
+        return "tablaProyecto.html";
+    }
 
     //ELIMINAR
     // VER LOS ROLES REQUERIDOS PARA ELIMINAR
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo) {
-        List<Proyecto> proyecto = proyectoServicio.listarTodos();
-        modelo.addAttribute("proyectos", proyecto);
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyectos", proyectos);
         proyectoServicio.eliminar(id);
-        return "redirect:/proyecto/lista";
+        return "tablaProyecto.html";
     }
+
+    //filtrar por nombre
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/filtro/nombre")
+    public String filtrarPorNombre(@PathVariable String nombre, ModelMap modelo) {
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyecto.html ";
+    }
+
+    //filtrar por estado del proyecto
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/filtro/estado")
+    public String filtrarPorEstadoProyecto(@PathVariable String estado, ModelMap modelo) {
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyecto.html";
+    }
+    
+    
+    @GetMapping("/lista_proyectos")
+    public String listarProyectos(ModelMap modelo) {
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyecto.html";
+    }
+
+    //Filtrar Por Usuario
+    @PreAuthorize("hasAnyRole('ROLE_USER, ROLE_CLIENTE')")
+    @GetMapping("/usuario/{nombre}")
+    public String listarProyectosPorUsuario(@PathVariable("nombre") String nombre, ModelMap modelo, HttpSession httpSession){
+        Usuario logueado = (Usuario) httpSession.getAttribute("usuariosession");
+        Usuario usuario = usuarioServicio.getOne(logueado.getId_usuario());
+
+        proyectoServicio.buscarPorUsuario(usuario);
+        modelo.addAttribute("proyectos", proyectoServicio.buscarPorUsuario(usuario));
+
+        return "tablaProyecto.html";
+    }
+
 }

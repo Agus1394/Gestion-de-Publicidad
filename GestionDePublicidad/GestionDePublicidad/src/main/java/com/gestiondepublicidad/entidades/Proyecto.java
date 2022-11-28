@@ -2,6 +2,7 @@ package com.gestiondepublicidad.entidades;
 
 import com.gestiondepublicidad.enumeraciones.EstadoProyecto;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,6 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,15 +26,14 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "PROYECTOS")
+@Table(name = "Proyecto")
 public class Proyecto {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "ID PROYECTO")
     private String id_proyecto;
-
+    
     private String nombre;
     
     private String descripcion;
@@ -42,8 +44,14 @@ public class Proyecto {
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
     
-    @ManyToOne
-    private Usuario usuario;
+    //Revisar relacion
+    
+    @OneToMany
+    private List<ListaDeTarea> listaDeTarea;
+
+//   COMO SON MUCHOS A MUCHOS; TAMBIÉN USUARIO SE ANOTA COMO LIST
+    @ManyToMany
+    private List<Usuario> usuario;
 
     @Enumerated(EnumType.STRING)
     private EstadoProyecto estadoProyecto;

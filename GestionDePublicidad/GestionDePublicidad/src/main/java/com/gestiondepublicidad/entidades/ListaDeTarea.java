@@ -1,12 +1,17 @@
 package com.gestiondepublicidad.entidades;
 
 import com.gestiondepublicidad.enumeraciones.EstadoProyecto;
-import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,30 +21,31 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "TO DO LIST")
+@Table(name = "ListaDeTarea")
 public class ListaDeTarea {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id_lista;
+    private String id;
     
-    private Long contactosInternos;
-    private Long contactosClientes;
+    private String titulo;
+    
     private String notas;
     
     @Temporal(TemporalType.DATE)
-    private Calendar eventoComun;
+    private Date eventoComun;
     
     @Temporal(TemporalType.DATE)
-    private Calendar eventoPrivado;
+    private Date eventoPrivado;
     
-    @Enumerated(EnumType.STRING)
-    private EstadoProyecto estadoProyecto;
+    @OneToOne
+    private Usuario usuario;
 
 }
