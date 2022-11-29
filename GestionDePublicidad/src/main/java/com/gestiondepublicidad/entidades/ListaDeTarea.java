@@ -1,17 +1,17 @@
 package com.gestiondepublicidad.entidades;
 
 import com.gestiondepublicidad.enumeraciones.EstadoProyecto;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToMany;
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,33 +21,31 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "Proyecto")
-public class Proyecto {
+@Table(name = "ListaDeTarea")
+public class ListaDeTarea {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id_proyecto;
+    private String id;
     
-    private String nombre;
+    private String titulo;
     
-    private String descripcion;
-
-    @Temporal(TemporalType.DATE)
-    private Date fechaInicio;
+    private String notas;
     
     @Temporal(TemporalType.DATE)
-    private Date fechaFin;   
+    private Date eventoComun;
+    
+    @Temporal(TemporalType.DATE)
+    private Date eventoPrivado;
+    
+    @OneToOne
+    private Usuario usuario;
 
-//   COMO SON MUCHOS A MUCHOS; TAMBIÉN USUARIO SE ANOTA COMO LIST
-    @ManyToMany
-    private List<Usuario> usuario;
-
-    @Enumerated(EnumType.STRING)
-    private EstadoProyecto estadoProyecto;
 }

@@ -76,16 +76,17 @@ public class PortalControlador {
         Usuario usuario = usuarioServicio.usuariosPorEmail(logueado.getEmail());
         if (logueado.getRol().toString().equals("ADMIN")) {
             return "dashboard.html";
-        } else if (logueado.getRol().toString().equals("TRABAJADOR")) {
-            return "redirect:/trabajador/dashboard";
-        } else if (logueado.getRol().toString().equals("USER")){
+        } else if (logueado.getRol().toString().equals("CLIENTE")) {
+            modelo.addAttribute("proyectos", usuario.getProyecto());
             return "indexCliente.html";
-
+        } else if (logueado.getRol().toString().equals("USER")){
+            modelo.addAttribute("proyectos", usuario.getProyecto());
+            return "indexTrabajador.html";
         }
             return "index.html";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_CLIENTE', 'ROLE_ADMIN')")
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
@@ -96,7 +97,7 @@ public class PortalControlador {
     }
 
     //ACTUALIZAR
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_CLIENTE', 'ROLE_ADMIN')")
     @PostMapping("/perfil/{id}")
     public String actualizar(@RequestParam MultipartFile archivo, @PathVariable String id,
             @RequestParam String nombre, @RequestParam String email,

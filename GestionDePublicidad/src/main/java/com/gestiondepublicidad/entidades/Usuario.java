@@ -43,14 +43,14 @@ public class Usuario {
 
     @OneToMany
     private List<Calendario> calendario;
+    
+    @OneToOne
+    private ListaDeTarea listaDeTarea;
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
-
+    
     @Enumerated(EnumType.STRING)
     private PuestoEmpresa puestoEmpresa;
-
-    @OneToOne
-    private List<Agenda> agenda;
-
+    
 }
