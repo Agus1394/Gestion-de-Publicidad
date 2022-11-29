@@ -8,6 +8,7 @@ import com.gestiondepublicidad.servicios.UsuarioServicio;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,7 +67,7 @@ public class PortalControlador {
         return "login.html";
     }
 
-    @Secured({"ROLE_USER","ROLE_ADMIN","ROLE_TRABAJADOR"})
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo, HttpSession session) {
 
@@ -84,7 +85,7 @@ public class PortalControlador {
             return "index.html";
     }
 
-    @Secured({"ROLE_USER","ROLE_ADMIN","ROLE_TRABAJADOR"})
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
@@ -95,7 +96,7 @@ public class PortalControlador {
     }
 
     //ACTUALIZAR
-    @Secured({"ROLE_USER","ROLE_ADMIN","ROLE_TRABAJADOR"})
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @PostMapping("/perfil/{id}")
     public String actualizar(@RequestParam MultipartFile archivo, @PathVariable String id,
             @RequestParam String nombre, @RequestParam String email,
