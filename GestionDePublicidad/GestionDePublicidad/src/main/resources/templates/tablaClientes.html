@@ -34,22 +34,11 @@
       </a>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="/index" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
-        <li><a href="/dashboard" class="nav-link px-2 link-ul"></a></li>
+        <li><a th:href="@{/inicio}" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
         <li><a href="/dashboard" class="nav-link px-2 link-ul">Atras</a></li>
 
       </ul>
 
-        <div class="dropdown">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Filtros
-            </a>
-
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" th:href="@{/admin/tablaUsuarios/CLIENTE}">Filtrar Por Clientes</a></li>
-                <li><a class="dropdown-item" href="#">Filtrar Por Tranajadores</a></li>
-            </ul>
-        </div>
       <div class="col-md-3 text-end">
         <a href="/perfil"><button type="button" class="btn boton-registrate">Mi perfil</button></a><!-- falta vista -->
         <a th:href="@{/logout}"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar Sesion</button></a>
@@ -73,7 +62,7 @@
       
       <!-- INICIO FILTROS -->
     <section id="mensajeFiltros">
-      <form th:action="@{/admin/tablaUsuarios/search}" method="post"> <!-- VER -->
+      <form th:action="@{/admin/tablaClientes/search}" method="post"> <!-- VER -->
         <label for="nombre">
           <p>Filtro por nombre</p>
         </label>
@@ -112,20 +101,5 @@
 
   </div>
 
-
-  
- <!-- INICIO FOOTER -->
- <div class="container-fluid footer">
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3">
-    <p class="col-md-4 mb-0" style="font-size: 15px;">&copy; Grupo 3, Egg Cooperation</p>
-    <img src="/img/logo-diamante-blanco.png"
-        style="width: 45px; height: 40px; padding-right: 10px;" alt="">
-    <ul class="nav col-md-4 justify-content-end">
-      <li class="nav-item"><a href="#inicio" class="nav-link px-2 text-white">Arriba</a></li>
-    </ul>
-  </footer>
-</div>
-<!-- FIN FOOTER -->
 </body>
-
 </html>

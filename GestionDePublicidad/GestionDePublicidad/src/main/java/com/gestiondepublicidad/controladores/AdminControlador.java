@@ -4,6 +4,8 @@ import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.enumeraciones.Rol;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.servicios.UsuarioServicio;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,13 +53,18 @@ public class AdminControlador {
     @PostMapping("/tablaClientes/search")
     public String buscarClientePorNombre(@RequestParam String nombre, ModelMap modelo) throws Exception {
         try{
-            List<Usuario> usuarios = usuarioServicio.usuariosPorNombreYRol(nombre, "CLIENTE");
+            List<Usuario> usuarios = new ArrayList<Usuario>();
+            if(nombre.isEmpty() || nombre == null){
+                usuarios = usuarioServicio.buscarPorRol("CLIENTE");
+            }else{
+                usuarios = usuarioServicio.usuariosPorNombreYRol(nombre.toUpperCase(), "CLIENTE");
+            }
             modelo.addAttribute("usuarios", usuarios);
         }catch(Exception e){
             modelo.put("error", e.getMessage());
 
         }finally {
-            return "tablaTrabajadores.html";
+            return "tablaClientes.html";
         }
     }
     @GetMapping("/tablaTrabajadores")
@@ -69,13 +76,18 @@ public class AdminControlador {
     @PostMapping("/tablaTrabajadores/search")
     public String buscarTrabajadorPorNombre(@RequestParam String nombre, ModelMap modelo) throws Exception {
         try{
-            List<Usuario> usuarios = usuarioServicio.usuariosPorNombreYRol(nombre, "USER");
+            List<Usuario> usuarios = new ArrayList<Usuario>();
+            if(nombre.isEmpty() || nombre == null){
+                usuarios = usuarioServicio.buscarPorRol("USER");
+            }else{
+                usuarios = usuarioServicio.usuariosPorNombreYRol(nombre.toUpperCase(), "USER");
+            }
             modelo.addAttribute("usuarios", usuarios);
         }catch(Exception e){
             modelo.put("error", e.getMessage());
 
         }finally {
-            return "tablaClientes.html";
+            return "tablaTrabajadores.html";
         }
     }
 
