@@ -28,4 +28,9 @@ public interface ProyectoRepositorio extends JpaRepository<Proyecto, String> {
     @Query(value = "SELECT * FROM Proyecto WHERE fecha_Fin = :fechaFin",
             nativeQuery = true)
     public List<Proyecto> proyectosOrdenadosPorFechaFin(String fechaFin);
+
+    @Query(value = "SELECT p.* FROM Proyecto p LEFT JOIN proyecto_usuario pu ON p.id_proyecto = pu.proyecto_id_proyecto WHERE pu.usuario_id_usuario = :id_usuario",
+    nativeQuery = true)
+    public List<Proyecto> proyectosDelUsuario(@Param("id_usuario") String id_usuario);
+
 }

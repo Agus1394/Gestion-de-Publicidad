@@ -178,8 +178,8 @@ public class ProyectoControlador {
         Usuario logueado = (Usuario) httpSession.getAttribute("usuariosession");
         Usuario usuario = usuarioServicio.getOne(logueado.getId_usuario());
 
-        proyectoServicio.buscarPorUsuario(usuario);
-        modelo.addAttribute("proyectos", proyectoServicio.buscarPorUsuario(usuario));
+        proyectoServicio.buscarPorUsuario(usuario.getId_usuario());
+        modelo.addAttribute("proyectos", proyectoServicio.buscarPorUsuario(usuario.getId_usuario()));
 
         return "tablaProyectos.html";
     }
