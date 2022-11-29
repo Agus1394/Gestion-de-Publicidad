@@ -47,8 +47,8 @@ public class ProyectoServicio {
     }
 
     //buscar Proyectos por Usuario
-    public List<Proyecto> buscarPorUsuario(Usuario usuario) {
-        List<Proyecto> proyectos = usuario.getProyecto();
+    public List<Proyecto> buscarPorUsuario(String id_usuario) {
+        List<Proyecto> proyectos = proyectoRepositorio.proyectosDelUsuario(id_usuario);
         return proyectos;
     }
     
