@@ -2,6 +2,8 @@ package com.gestiondepublicidad.controladores;
 
 import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.excepciones.MiException;
+import com.gestiondepublicidad.repositorios.UsuarioRepositorio;
+import com.gestiondepublicidad.servicios.ProyectoServicio;
 import com.gestiondepublicidad.servicios.UsuarioServicio;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,12 @@ public class PortalControlador {
 
     @Autowired
     UsuarioServicio usuarioServicio;
+
+    @Autowired
+    ProyectoServicio proyectoServicio;
+
+    @Autowired
+    UsuarioRepositorio usuarioRepositorio;
 
     @GetMapping("/")
     public String index() {
@@ -65,14 +73,14 @@ public class PortalControlador {
     public String inicio(ModelMap modelo, HttpSession session) {
 
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-
+        Usuario usuario = usuarioServicio.usuariosPorEmail(logueado.getEmail());
         if (logueado.getRol().toString().equals("ADMIN")) {
-
             return "dashboard.html";
         } else if (logueado.getRol().toString().equals("TRABAJADOR")) {
             return "redirect:/trabajador/dashboard";
         } else if (logueado.getRol().toString().equals("USER")){
             return "indexCliente.html";
+
         }
             return "index.html";
     }
