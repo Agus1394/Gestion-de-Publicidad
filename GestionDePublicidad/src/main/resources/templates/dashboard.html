@@ -9,10 +9,9 @@
   <!-- CSS BOOTSTRAP -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <!-- ICONOS BOOTSTRAP -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
   <!-- CSS -->
-  <link rel="stylesheet" href="/styleDashboard.css">
+  <link rel="stylesheet" href="styleDashboard.css">
+  <!--FONTS-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600&family=Titillium+Web&display=swap"
@@ -24,7 +23,7 @@
   <div class="container-fluid bdn">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
       <a href="" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-white text-decoration-none">
-        <img class="diamante"
+        <img class="dashboard"
           src="https://see.fontimg.com/api/renderfont4/vmpKZ/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjMzNFMkRDIiwiYmdjIjoiIzAxMDEwMSIsInQiOjF9/ZGFzaGJvYXJk/ceceps-handwriting.png"
           alt="dashboard">
         <img id="lettering"
@@ -32,14 +31,19 @@
           alt="wethink">
       </a>
 
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a th:href="@{/inicio}" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
-        <li><a href="#Ayuda" class="nav-link px-2 link-ul">Ayuda</a></li>
-      </ul>
-
-      <div class="col-md-3 text-end">
-        <a th:href="@{/perfil}"><button type="button" class="btn boton-registrate">Mi perfil</button></a><!-- falta vista -->
-        <a th:href="@{/logout}"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar Sesion</button></a>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser2"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="" alt="" width="32" height="32" class="rounded-circle me-2">
+          <span>Nombre Apellido</span>
+        </a>
+        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+          <li><a class="dropdown-item" href="#">Perfil</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+        </ul>
       </div>
     </header>
   </div>
@@ -48,105 +52,106 @@
 
   <!-- INICIO CARDS -->
   <div class="container-fluid" id="cuerpo">
-    <section id="cards">
+    <div class="col-12">
+      <section class="cards">
+        <a th:href="@{/proyecto/tablaProyectos}">
+          <div class="card">
+            <div class="card__image-holder">
+              <img class="card__image" src="/img/botones/Proyectos1.png"
+                alt="img" />
+            </div>
+            <div class="card-title">
+              <h2> Filtro por Proyecto</h2>
+            </div>
+            <div class="card-description">
+              Se listaran todos los proyectos y podra filtrarlos por sus atributos. <br><br />
+            </div>
+          </div>
+        </a>
 
-      <a th:href="@{/proyecto/tablaProyectos}" class="linkTablas">
+        <a th:href="@{/admin/tablaTrabajadores}">
+          <div class="card">
+            <div class="card__image-holder">
+              <img class="card__image" src="/img/botones/Trabajadores.png"
+                alt="img" />
+            </div>
+            <div class="card-title">
+              <h2> Filtro por Trabajador</h2>
+            </div>
+            <div class="card-description">
+              Podra ver la lista de trabajadores y filtrarlos por sus atributos.<br><br />
+            </div>
+          </div>
+        </a>
+
+        <a th:href="@{/admin/tablaClientes}">
+          <div class="card">
+            <div class="card__image-holder">
+              <img class="card__image"
+                src="/img/botones/User Avatar_Isometric.png" alt="img" />
+            </div>
+            <div class="card-title">
+              <h2> Filtro por Usuario </h2>
+            </div>
+            <div class="card-description">
+              Se listaran todos los usuarios de la pagina que sean clientes de la empresa y podra filtrarlos por sus
+              atributos.
+            </div>
+          </div>
+        </a>
+      </section>
+    </div>
+
+    <div class="col-12">
+      <section class="cards">
         <div class="card">
           <div class="card__image-holder">
-            <img class="card__image" src="/img/botones/Proyectos1.png" alt="img" />
+            <img class="card__image" src="/img/botones/help.png"
+              alt="img" />
           </div>
           <div class="card-title">
-            <h2> Filtro por Proyecto</h2>
+            <h2 id="Ayuda"> Atencion Tecnica </h2>
           </div>
           <div class="card-description">
-            Se listaran todos los proyectos y podra filtrarlos por sus atributos. <br><br />
+            En caso de necesitar ayuda tecnica, debera comunicarse al email serTecGrupo3EGG@gmail.com <br><br />
           </div>
         </div>
-      </a>
-
-      <a th:href="@{/admin/tablaTrabajadores}" class="linkTablas">
         <div class="card">
           <div class="card__image-holder">
-            <img class="card__image" src="/img/botones/Trabajadores.png" alt="img" />
+            <img class="card__image"
+              src="/img/botones/Video Editor_Flat.png" alt="img" />
           </div>
           <div class="card-title">
-            <h2> Filtro por Trabajador <small></small></h2>
+            <h2> Tutorial de uso</h2>
+            <!--LINK VIDEO -->
           </div>
           <div class="card-description">
-            Podra ver la lista de trabajadores y filtrarlos por sus atributos.<br><br />
+            Ante cualquier consulta de como usar la pagina, por favor, mire este tutorial. <br><br /><br>
           </div>
         </div>
-      </a>
-
-      <a th:href="@{/admin/tablaClientes}" class="linkTablas">
         <div class="card">
           <div class="card__image-holder">
-            <img class="card__image" src="/img/botones/User Avatar_Isometric.png" alt="img" />
+            <img class="card__image" src="/img/botones/Unlock_Flat.png"
+              alt="img" />
           </div>
           <div class="card-title">
-            <h2> Filtro por Usuario <small></small></h2>
+            <h2> Advertencias</h2>
           </div>
           <div class="card-description">
-            Se listaran todos los usuarios de la pagina que sean clientes de la empresa y podra filtrarlos por sus
-            atributos.
+            Por favor, no se olvide que cada cambio y/o eliminacion que realice no podra ser salvada. Esté seguro de las
+            acciones y lea los mensajes de atencion con pausa.
           </div>
         </div>
-      </a>
-
-      <div class="card">
-        <div class="card__image-holder">
-          <img class="card__image" src="/img/botones/help.png" alt="img" />
-        </div>
-        <div class="card-title">
-          <h2 id="Ayuda"> Atencion Tecnica <small></small></h2>
-        </div>
-        <div class="card-description">
-          En caso de necesitar ayuda tecnica, debera comunicarse al email serTecGrupo3EGG@gmail.com <br><br />
-        </div>
-      </div>
-      <div class="card">
-        <div class="card__image-holder">
-          <img class="card__image" src="/img/botones/Video Editor_Flat.png" alt="img" />
-        </div>
-        <div class="card-title">
-          <h2> Tutorial de uso <small></small></h2>
-        </div>
-        <div class="card-description">
-          Ante cualquier consulta de como usar la pagina, por favor, mire este tutorial. <br><br /><br>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card__image-holder">
-            <img class="card__image" src="/img/botones/Unlock_Flat.png" alt="img" />
-        </div>
-        <div class="card-title">
-          <h2> Advertencias <small></small></h2>
-        </div>
-        <div class="card-description">
-          Por favor, no se olvide que cada cambio y/o eliminacion que realice no podra ser salvada. Esté seguro de las
-          acciones y lea los mensajes de atencion con pausa.
-        </div>
-      </div>
-
+    </div>
     </section>
   </div>
   <!-- FIN CARDS -->
 
-  <!-- INICIO FOOTER -->
-  <div class="container-fluid footer">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3">
-      <p class="col-md-4 mb-0" style="font-size: 15px;">&copy; Grupo 3, Egg Cooperation</p>
-
-       <img src="/img/logo-diamante-blanco.png"
-          style="width: 45px; height: 40px; padding-right: 10px;" alt="">
-      
-      <ul class="nav col-md-4 justify-content-end">
-        <li class="nav-item"><a href="#inicio" class="nav-link px-2 text-white">Arriba</a></li>
-      </ul>
-    </footer>
-  </div>
-  <!-- FIN FOOTER -->
-
+  <!-- JAVASCRIPT BOOTSTRAP -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+  <!-- JAVASCRIPT -->
 </body>
 
 </html>
