@@ -1,0 +1,134 @@
+/*--
+--------------------COLORES del oscuro al claro---------------------
+rgb(33, 33, 33)
+rgb(50, 50, 50)
+rgb(13, 115, 119)
+rgb(20, 255, 236)
+
+------------------FUENTES -------------------------
+font-family: 'Lora', serif;
+font-family: 'Hind Siliguri', sans-serif;
+font-family: 'Titillium Web', sans-serif;
+
+*/
+
+h1, h2, h3{
+    font-family:'Hind Siliguri', sans-serif;
+    color:rgb(255, 233, 177);
+}
+    
+p{
+    font-family: 'Hind Siliguri', sans-serif !important;
+    color: white !important;
+}
+    
+.bdn {
+    background-color: #212121;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.dashboard{
+    width: 80px;
+}
+
+.dropdown-menu{
+    background-color: #212121;
+}
+
+.dropdown-item{
+    color: #fff;
+}
+
+.dropdown-toggle{
+    color: #fff;
+}
+
+.dropdown-toggle:hover{
+    color: #14FFEC;
+}
+
+.dropdown-item:active, .dropdown-item:focus, .dropdown-item:hover{
+    background-color: #14FFEC;
+    color: #212121;
+}
+
+
+body{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+}
+
+#cuerpo{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+}
+
+
+
+.cards{
+  padding: 5px;
+  text-align: center;
+  
+}
+
+.card{
+    display: inline-block;
+    margin: 8px;
+    perspective: 1000;
+    position: relative;
+    text-align: left;
+    transition: all 0.3s 0s ease-in;
+    width: 200px;
+    height: 250px;
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.card:hover{
+    cursor: pointer;
+    transition: 0.15s ease-in-out 0s;
+    border-color: rgb(20, 255, 236);
+    box-shadow: 0.15s ease-in-out 0s ;
+}
+
+.card__image-holder{
+    background: whitesmoke;
+    height: 0;
+    padding-bottom: 75%;
+}
+
+.card__image{
+    background: whitesmoke;
+    max-width: 200px;
+}
+
+.card-title{
+    background:  whitesmoke;
+    padding: 6px 15px 10px;
+    position: relative;
+    z-index: 0;
+}
+
+.card-description{
+    padding: 0 15px 10px;
+    position: relative;
+    font-size: 14px;
+    background:  rgb(255, 233, 177); 
+    font-family: 'Hind Siliguri' !important;
+    color:rgb(33, 33, 33);
+}
+
+.card-title h2 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    margin: 0;
+    padding: 0;
+    background-color:  whitesmoke;
+    text-shadow:rgb(33, 33, 33) 0.5 0.5;
+    color: rgb(119, 67, 219) !important;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.nav-link{
+    color: white !important;
+}
+

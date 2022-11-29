@@ -1,0 +1,206 @@
+/*--
+--------------------COLORES del oscuro al claro---------------------
+rgb(33, 33, 33)
+rgb(50, 50, 50)
+rgb(13, 115, 119)
+rgb(20, 255, 236)
+
+------------------FUENTES -------------------------
+font-family: 'Lora', serif;
+font-family: 'Hind Siliguri', sans-serif;
+font-family: 'Titillium Web', sans-serif;
+
+*/
+
+.bdn {
+    background-color: #212121;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.boton-iniciar-sesion {
+    border-color: #14FFEC;
+    color: #fff;
+}
+
+.boton-iniciar-sesion:hover {
+    background-color: #14FFEC;
+    color: #212121
+}
+
+.boton-registrate {
+    background-color: #14FFEC;
+    color: #212121;
+}
+
+.boton-registrate:hover {
+    background-color: none;
+    border-color: #14FFEC;
+    color: #fff;
+}
+
+.boton-enviar {
+    background-color: #14FFEC;
+}
+
+.boton-enviar:hover {
+    background-color: #11d3c3;
+}
+
+.link-ul {
+    color: #fff;
+}
+
+.link-ul:hover {
+    color: #14FFEC;
+}
+
+
+
+h1, h2, h3{
+    font-family:'Hind Siliguri', sans-serif !important;
+}
+    
+p{
+    font-family: 'Hind Siliguri', sans-serif !important;
+}
+
+
+
+
+
+
+
+
+body{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+}
+
+.contenedorBody{
+    margin-right: 20%;
+    margin-left: 20%;
+    padding: 0%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: transparent;
+}
+
+
+
+#mensajeSuperior {
+    background-color: transparent;
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+#burbuja{
+    background-color: rgb(255, 255, 255,0.30);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 20px 0 rgba(31,38,135,0.37);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 10px;
+}
+
+#burbuja h1{
+    color: rgb(33, 33, 33);
+}
+
+#mensajeSuperior p {
+    background-color: transparent;
+    color: rgb(33, 33, 33);
+    font-family: 'Hind Siliguri', sans-serif;
+}
+
+
+
+
+#mensajeFiltros{
+    padding-top: 1%;
+    padding-bottom: 2%;
+    padding-left: 10%;
+    margin: 0%;
+    text-align: left;
+    background-color: transparent;
+}
+
+form{
+    padding: 3px;
+    background-color: transparent;
+}
+
+input{
+    max-width:400px;
+    border-radius:2px;
+    border-top: 0;
+    border-left: 0;
+	padding:20px;
+    text-align: center;
+	padding: 0;
+    background-color: white;
+}
+
+label{
+    background-color: transparent;
+}
+
+label p {
+    background-color: transparent;
+    color: rgb(33, 33, 33);
+}
+
+
+
+.contenedorTabla{
+    padding-left: 10%;
+}
+
+table{ /*seccion*/
+    padding-top: 2%;
+    padding-bottom: 5%;
+    border-collapse: separate;
+}
+
+
+#filaTitulos{
+    font-family:'Hind Siliguri', sans-serif;
+    font-size: large;
+    background-color: rgb(33, 33, 33);
+    color: rgb(255, 233, 177);
+    text-align: center;
+    padding: 5%;
+    border-radius: 10px;
+}
+
+td{
+    font-family: 'Lora', sans-serif;
+    color: rgb(33, 33, 33);
+    text-align: center;
+    background-color: rgb(255, 233, 177) !important;
+    border-radius: 3px;
+    border-color: rgb(33, 33, 33, 1);
+    padding: 5px;
+}
+
+
+
+
+
+.footer{
+    background-color: rgb(33, 33, 33);
+    color: white;
+}
+
+#logoFooter{
+   margin-bottom: 0;
+   align-items: center;
+   justify-content: center;
+   display: flex;
+   width: 10%;
+}
+
+.nav-link{
+   color: white !important;
+}
