@@ -42,10 +42,10 @@ public class Usuario {
     private List<Proyecto> proyecto;
 
     @OneToMany
-    private List<Calendario> calendario;
-    
-    @OneToOne
-    private ListaDeTarea listaDeTarea;
+    private List<Evento> eventos;
+
+    @OneToMany
+    private List<Nota> notas;
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
