@@ -32,7 +32,7 @@ public class AdminControlador {
     UsuarioServicio usuarioServicio;
 
     @GetMapping("/dashboard")
-    public String panelAdministrativo(ModelMap modelo) {
+    public String panelAdministrativo() {
         return "dashboard.html";
     }
 
@@ -46,7 +46,7 @@ public class AdminControlador {
     //LISTAR
     @GetMapping("/tablaClientes")
     public String listarClientes(ModelMap modelo) {
-        List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol("CLIENTE");
+        List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol("USER");
         modelo.addAttribute("usuarios", listaUsuarios);
         return "tablaClientes.html";
     }
@@ -55,9 +55,9 @@ public class AdminControlador {
         try{
             List<Usuario> usuarios = new ArrayList<Usuario>();
             if(nombre.isEmpty() || nombre == null){
-                usuarios = usuarioServicio.buscarPorRol("CLIENTE");
+                usuarios = usuarioServicio.buscarPorRol("USER");
             }else{
-                usuarios = usuarioServicio.usuariosPorNombreYRol(nombre.toUpperCase(), "CLIENTE");
+                usuarios = usuarioServicio.usuariosPorNombreYRol(nombre.toUpperCase(), "USER");
             }
             modelo.addAttribute("usuarios", usuarios);
         }catch(Exception e){
@@ -69,7 +69,7 @@ public class AdminControlador {
     }
     @GetMapping("/tablaTrabajadores")
     public String listarTrabajadores(ModelMap modelo) {
-        List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol("USER");
+        List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol("TRABAJADOR");
         modelo.addAttribute("usuarios", listaUsuarios);
         return "tablaTrabajadores.html";
     }
@@ -78,9 +78,9 @@ public class AdminControlador {
         try{
             List<Usuario> usuarios = new ArrayList<Usuario>();
             if(nombre.isEmpty() || nombre == null){
-                usuarios = usuarioServicio.buscarPorRol("USER");
+                usuarios = usuarioServicio.buscarPorRol("TRABAJADOR");
             }else{
-                usuarios = usuarioServicio.usuariosPorNombreYRol(nombre.toUpperCase(), "USER");
+                usuarios = usuarioServicio.usuariosPorNombreYRol(nombre.toUpperCase(), "TRABAJADOR");
             }
             modelo.addAttribute("usuarios", usuarios);
         }catch(Exception e){
@@ -109,8 +109,8 @@ public class AdminControlador {
         try {
             if (usuario.getRol().toString().equals(rol)){
                 throw new MiException("El usuario ya tiene este rol");
-            }else if (rol.equals("CLIENTE")){
-                usuarioServicio.cambiarRol(id, Rol.CLIENTE);
+            }else if (rol.equals("TRABAJADOR")){
+                usuarioServicio.cambiarRol(id, Rol.TRABAJADOR);
             } else if (rol.equals("USER")) {
                 usuarioServicio.cambiarRol(id, Rol.USER);
             }else if (rol.equals("ADMIN")) {

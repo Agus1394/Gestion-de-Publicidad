@@ -2,7 +2,6 @@ package com.gestiondepublicidad.servicios;
 
 import com.gestiondepublicidad.entidades.Proyecto;
 import com.gestiondepublicidad.entidades.Usuario;
-import com.gestiondepublicidad.enumeraciones.EstadoProyecto;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.repositorios.ProyectoRepositorio;
 import com.gestiondepublicidad.repositorios.UsuarioRepositorio;
@@ -47,8 +46,8 @@ public class ProyectoServicio {
     }
 
     //buscar Proyectos por Usuario
-    public List<Proyecto> buscarPorUsuario(Usuario usuario) {
-        List<Proyecto> proyectos = usuario.getProyecto();
+    public List<Proyecto> buscarPorUsuario(String id_usuario) {
+        List<Proyecto> proyectos = proyectoRepositorio.proyectosDelUsuario(id_usuario);
         return proyectos;
     }
     

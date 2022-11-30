@@ -7,6 +7,7 @@ import com.gestiondepublicidad.servicios.ProyectoServicio;
 import com.gestiondepublicidad.servicios.UsuarioServicio;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -41,14 +42,13 @@ public class PortalControlador {
         return "registro.html";
     }
 
-    
     @PostMapping("/registrar")
     public String registro(@RequestParam String nombre,
             @RequestParam String email, @RequestParam String password,
             @RequestParam String password2, ModelMap modelo) {
         try {
             usuarioServicio.registrar(nombre, email, password, password2);
-            modelo.put("éxito", "Usuario registrado correctamente!");
+            modelo.put("exito", "Usuario registrado correctamente!");
             return "index.html";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
@@ -59,7 +59,6 @@ public class PortalControlador {
     }
 
     //LOGIN
-    
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
         if (error != null) {
@@ -68,25 +67,25 @@ public class PortalControlador {
         return "login.html";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_CLIENTE', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo, HttpSession session) {
 
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         Usuario usuario = usuarioServicio.usuariosPorEmail(logueado.getEmail());
-        if (logueado.getRol().toString().equals("ADMIN")) {
+        if(usuario.getRol().toString().equals("ADMIN")) {
             return "dashboard.html";
-        } else if (logueado.getRol().toString().equals("CLIENTE")) {
-            modelo.addAttribute("proyectos", usuario.getProyecto());
+        } else if (usuario.getRol().toString().equals("USER")) {
+            modelo.addAttribute("proyectos", proyectoServicio.buscarPorUsuario(usuario.getId_usuario()));
             return "indexCliente.html";
-        } else if (logueado.getRol().toString().equals("USER")){
-            modelo.addAttribute("proyectos", usuario.getProyecto());
+        } else if (usuario.getRol().toString().equals("TRABAJADOR")){
+            modelo.addAttribute("proyectos", proyectoServicio.buscarPorUsuario(usuario.getId_usuario()));
             return "indexTrabajador.html";
         }
             return "index.html";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_CLIENTE', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
@@ -97,7 +96,7 @@ public class PortalControlador {
     }
 
     //ACTUALIZAR
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_CLIENTE', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @PostMapping("/perfil/{id}")
     public String actualizar(@RequestParam MultipartFile archivo, @PathVariable String id,
             @RequestParam String nombre, @RequestParam String email,

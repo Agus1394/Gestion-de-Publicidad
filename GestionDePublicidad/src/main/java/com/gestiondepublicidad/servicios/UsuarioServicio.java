@@ -33,7 +33,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private FotoServicio fotoServicio;
-    
+
     @Autowired
     private FotoRepositorio fotoRepositorio;
 
@@ -52,21 +52,21 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setContrasenia(new BCryptPasswordEncoder().
                 encode(contrasenia));
 
-        usuario.setRol(Rol.CLIENTE);
-/*        
-        Foto foto = new Foto();
-                        
+        usuario.setRol(Rol.USER);
+
+ /*       Foto foto = new Foto();
+
         foto.setMime("image/jpeg");
-                
+
         foto.setNombre("ImagenPorDefecto");
-                
+
         foto.setContenido(fotoRepositorio.buscarPorNombre("ImagenPorDefecto1")
                 .getContenido());
 
         fotoRepositorio.save(foto);
 
-        usuario.setFoto(foto);
-*/
+        usuario.setFoto(foto);*/
+
         return usuarioRepositorio.save(usuario);
     }
 
@@ -109,19 +109,28 @@ public class UsuarioServicio implements UserDetailsService {
     //DEVUELVE LOS USUARIO CON EL MISMO NOMBRE
     public List<Usuario> usuariosPorNombre(String nombre) {
 
-        return  usuarioRepositorio.buscarPorNombre(nombre);
+        return usuarioRepositorio.buscarPorNombre(nombre);
     }
 
     public List<Usuario> usuariosPorNombreYRol(String nombre, String rol) {
 
-        return  usuarioRepositorio.buscarPorNombreYRol(nombre, rol);
+        return usuarioRepositorio.buscarPorNombreYRol(nombre, rol);
     }
 
-    //DEVUELVE UN USUARIO BUSCADO POR SU EMAIL
+    //DEVUELVE UN USUARIO BUSCADO POR SU EMAIL ///NO BORRAR
     public Usuario usuariosPorEmail(String email) {
         return usuarioRepositorio.buscarPorEmail(email);
     }
 
+    //DEVUELVE UN USUARIO BUSCADO POR SU EMAIL ///NO BORRAR
+    public Usuario BusquedaPorEmail(String email, String rol) {
+        return usuarioRepositorio.buscarUsuarioPorEmail(email, rol);
+    }
+    
+    //DEVUELVE UN USUARIO BUSCADO POR PUESTO EN LA EMPRESA ///NO BORRAR
+    public List<Usuario> BusquedaPorPuesto(String puesto_empresa, String rol) {
+        return usuarioRepositorio.buscarUsuarioPorPuesto(puesto_empresa, rol);
+    }
     //DEVUELVE LOS USUARIOS CONECTADOS AL MISMO PROYECTO
     public List<Usuario> usuariosPorProyecto(Proyecto proyecto) {
 
@@ -133,7 +142,7 @@ public class UsuarioServicio implements UserDetailsService {
 
         return usuarioRepositorio.findAll();
     }
-    
+
     //CAMBIA ROLES ENTRE USER, CLIENTE Y ADMIN
     @Transactional
     public void cambiarRol(String id_usuario, Rol rol) {
@@ -171,17 +180,17 @@ public class UsuarioServicio implements UserDetailsService {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
         //IMPIDE QUE SE INGRESEN EMAILS EXISTENTES
-        if(usuarioRepositorio.buscarPorEmail(email)!= null) {
+        if (usuarioRepositorio.buscarPorEmail(email) != null) {
             throw new MiException("El email ingresado ya esta registrado");
         }
         //VERIFICA QUE SE INGRESEN EMAILS VÁLIDOS
-        if(!email.contains("@") || !email.contains(".com")){
+        if (!email.contains("@") || !email.contains(".com")) {
             throw new MiException("No se ha ingresado un email válido");
         }
 
     }
 
-    public List<Usuario> buscarPorRol(String rol){
+    public List<Usuario> buscarPorRol(String rol) {
         return usuarioRepositorio.buscarPorRol(rol);
     }
 
