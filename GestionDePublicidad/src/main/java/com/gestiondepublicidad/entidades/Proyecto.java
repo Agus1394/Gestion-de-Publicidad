@@ -1,15 +1,13 @@
 package com.gestiondepublicidad.entidades;
 
-import com.gestiondepublicidad.enumeraciones.EstadoProyecto;
+import com.gestiondepublicidad.enumeraciones.Estado;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -47,12 +45,12 @@ public class Proyecto {
     //Revisar relacion
     
     @OneToMany
-    private List<ListaDeTarea> listaDeTarea;
+    private List<Tarea> Tarea;
 
 //   COMO SON MUCHOS A MUCHOS; TAMBIÉN USUARIO SE ANOTA COMO LIST
     @ManyToMany
     private List<Usuario> usuario;
 
     @Enumerated(EnumType.STRING)
-    private EstadoProyecto estadoProyecto;
+    private Estado estadoProyecto;
 }

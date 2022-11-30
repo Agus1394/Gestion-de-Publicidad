@@ -2,7 +2,6 @@ package com.gestiondepublicidad.servicios;
 
 import com.gestiondepublicidad.entidades.Proyecto;
 import com.gestiondepublicidad.entidades.Usuario;
-import com.gestiondepublicidad.enumeraciones.EstadoProyecto;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.repositorios.ProyectoRepositorio;
 import com.gestiondepublicidad.repositorios.UsuarioRepositorio;

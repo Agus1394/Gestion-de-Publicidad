@@ -1,6 +1,6 @@
 package com.gestiondepublicidad.enumeraciones;
 
-public enum EstadoProyecto {
+public enum Estado {
     
     FINALIZADO,
     ENPROCESO,
