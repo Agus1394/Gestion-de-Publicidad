@@ -17,43 +17,36 @@ font-family: 'Titillium Web', sans-serif;
     font-family: 'Titillium Web', sans-serif;
 }
 
-.boton-iniciar-sesion {
-    border-color: #14FFEC;
+.letrasNav{
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.letrasNav:hover{
+    color: rgb(20, 255, 236);
+    text-decoration: none;
+}
+
+.dropdown-menu{
+    background-color: #212121;
+}
+
+.dropdown-item{
     color: #fff;
 }
 
-.boton-iniciar-sesion:hover {
-    background-color: #14FFEC;
-    color: #212121
-}
-
-.boton-registrate {
-    background-color: #14FFEC;
-    color: #212121;
-}
-
-.boton-registrate:hover {
-    background-color: none;
-    border-color: #14FFEC;
+.dropdown-toggle{
     color: #fff;
 }
 
-.boton-enviar {
-    background-color: #14FFEC;
-}
-
-.boton-enviar:hover {
-    background-color: #11d3c3;
-}
-
-.link-ul {
-    color: #fff;
-}
-
-.link-ul:hover {
+.dropdown-toggle:hover{
     color: #14FFEC;
 }
 
+.dropdown-item:active, .dropdown-item:focus, .dropdown-item:hover{
+    background-color: #14FFEC;
+    color: #212121;
+}
 
 
 h1, h2, h3{
@@ -76,12 +69,7 @@ body{
 }
 
 .contenedorBody{
-    margin-right: 20%;
-    margin-left: 20%;
-    padding: 0%;
-    align-items: center;
     text-align: center;
-    justify-content: center;
     background-color: transparent;
 }
 
@@ -184,23 +172,12 @@ td{
     padding: 5px;
 }
 
-
-
-
-
-.footer{
-    background-color: rgb(33, 33, 33);
-    color: white;
+td button{
+    background-color: transparent;
+   border: none;
+   border-bottom: none;
 }
 
-#logoFooter{
-   margin-bottom: 0;
-   align-items: center;
-   justify-content: center;
-   display: flex;
-   width: 10%;
-}
-
-.nav-link{
-   color: white !important;
+td button img{
+    width: 30px;
 }

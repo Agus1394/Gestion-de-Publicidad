@@ -21,43 +21,47 @@
 </head>
 
 <body>
-  <!-- INICIO NAVBAR -->
-  <div class="container-fluid bdn">
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-      <a href="" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-white text-decoration-none">
-        <img class="diamante"
-          src="https://see.fontimg.com/api/renderfont4/vmpKZ/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjMzNFMkRDIiwiYmdjIjoiIzAxMDEwMSIsInQiOjF9/ZGFzaGJvYXJk/ceceps-handwriting.png"
-          alt="dashboars">
-        <img id="lettering"
-          src="https://see.fontimg.com/api/renderfont4/axgPE/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjRkZGRkZGIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/V2VUaGluaw/cannu-regular.png"
-          alt="wethink">
-      </a>
-
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a th:href="@{/inicio}" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
-        <li><a href="/dashboard" class="nav-link px-2 link-ul">Atras</a></li>
-        <li><a href="" class="nav-link px-2 link-ul">Crear Proyecto</a></li>
-      </ul>
-
-      <div class="col-md-3 text-end">
-        <a href="/perfil"><button type="button" class="btn boton-registrate">Mi perfil</button></a><!-- falta vista -->
-        <a th:href="@{/logout}"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar
-            Sesion</button></a>
-        <!-- falta accion -->
-      </div>
-    </header>
-  </div>
+    <!-- INICIO NAVBAR -->
+    <div class="container-fluid bdn">
+      <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
+        <a href="" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-white text-decoration-none">
+          <img class="diamante"
+            src="https://see.fontimg.com/api/renderfont4/vmpKZ/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjMzNFMkRDIiwiYmdjIjoiIzAxMDEwMSIsInQiOjF9/ZGFzaGJvYXJk/ceceps-handwriting.png"
+            alt="dashboars">
+          <img id="lettering"
+            src="https://see.fontimg.com/api/renderfont4/axgPE/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjRkZGRkZGIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/V2VUaGluaw/cannu-regular.png"
+            alt="wethink">
+        </a>
+  
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="/dashboard" class="nav-link px-2 link-ul letrasNav">Atras</a></li>
+          <li><a href="/crearProyecto" class="nav-link px-2 link-ul letrasNav">Crear Proyecto</a></li>
+          <!--VER CONTROLADOR-->
+        </ul>
+  
+  
+        <div class="dropdown">
+          <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="" alt="" width="32" height="32" class="rounded-circle me-2">
+            <span>Nombre Apellido</span>
+          </a>
+          <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+            <li><a class="dropdown-item" href="#">Perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+          </ul>
+        </div>
+      </header>
+    </div>
   <!-- FIN NAVBAR -->
 
-  <div class="contenedorBody">
-
+  <div class="container-fluid row contenedorBody">
     <!--INICIO/BIENVENIDA-->
-    <div id="body">
+    <div class="col-6">
       <section id="mensajeSuperior">
         <div id="burbuja">
           <h1>Proyectos</h1>
-          <p>A continuacion se listaran los proyectos existentes en la base de datos, puede filtrarlos o no. Para
-            modificar o eliminar debe acceder al mismo. </p>
+          <p>A continuacion se listaran los proyectos existentes puede filtrarlos o no. </p>
         </div>
       </section>
       <!-- FIN INICIO/BIENVENIDA-->
@@ -100,37 +104,49 @@
           </select>
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
-
-
       </section>
       <!-- FIN FILTROS -->
-
+    </div>
+    <div class="col-6">
       <!-- INICIO TABLA -->
       <section class="contenedorTabla">
-        <table>
+        <table class="table">
           <thead>
             <tr id="filaTitulos">
               <th scope="col">Nombre</th>
               <th scope="col">Fecha Inicio</th>
               <th scope="col">Fecha Fin</th>
               <th scope="col">Estado</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody th:each="proyecto:${proyectos}">
             <tr>
-              <td th:text="${proyecto.nombre}"> NOMBRE PRUEBA</td>
-              <!--LINKEAR-->
-              <td th:text="${proyecto.fechaInicio}"> EMAIL PRUEBA</td>
-              <td th:text="${proyecto.fechaFin}"> ROL PRUEBA</td>
-              <td th:text="${proyecto.estadoProyecto}"> ROL PRUEBA</td>
+              <td scope="row" th:text="${proyecto.nombre}">
+                <a th:action="${/proyecto/__{proyecto.id}__}"></a>
+              </td>
+              <!--VER CONTROLADOR-->
+              <td th:text="${proyecto.fechaInicio}"></td>
+              <td th:text="${proyecto.fechaFin}"></td>
+              <td th:text="${proyecto.estadoProyecto}"></td>
+              <td>
+                <a th:action="${admin/modificarProyecto/__{proyecto.id}__}">
+                  <button type="submit"><img
+                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Magic Wand_Lineal-coloured.png"></button>
+                </a>
+                <a th:action="${admin/eliminarProyecto/__{proyecto.id}__}">
+                  <button type="submit"><img
+                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Dustbin_Flat.png"></button>
+                </a>
+              </td>
+              <!--VER y poner icono-->
             </tr>
           </tbody>
         </table>
       </section>
       <!-- FIN TABLA -->
-
     </div>
-
+  </div>
 </body>
 
 </html>

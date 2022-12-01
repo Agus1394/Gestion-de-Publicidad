@@ -119,9 +119,9 @@
                         </thead>
                         <tbody>
                             <tr th:each="proyecto : ${proyectos}">
-                                <td class="celdas" th:text="${proyecto.nombre}"><a
-                                        th:href="@{proyecto/__${proyecto.id}__}"></a>
-                                </td><!-- LINKEAR-->
+                                <td class="celdas" th:text="${proyecto.nombre}">
+                                    <a th:href="@{/proyecto/__${proyecto.id}__}"></a>
+                                </td><!-- LINKEAR a indexProyecto vista Ger-->
                                 <td class="celdas" th:text="${proyecto.fechaInicio}"></td>
                                 <td class="celdas" th:text="${proyecto.fechaFin}"></td>
                                 <td class="celdas" th:text="${proyecto.estado}"></td>
