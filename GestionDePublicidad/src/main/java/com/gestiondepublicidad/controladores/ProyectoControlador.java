@@ -5,7 +5,6 @@ import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.servicios.ProyectoServicio;
 import com.gestiondepublicidad.servicios.UsuarioServicio;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
