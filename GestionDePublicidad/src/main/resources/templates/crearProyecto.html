@@ -66,17 +66,19 @@
             <input type="text" id="descr" name="descripcion" placeholder="" /><br>
 
             <label for="fechaInicio">
-                <p>Nombre/Titulo</p>
+                <p>Fecha Inicio</p>
             </label><br>
             <input type="date" id="fechaInicio" name="fechaInicio" placeholder="" /><br>
 
             <label for="fechaFin">
-                <p>Nombre/Titulo</p>
+                <p>Fecha Fin</p>
             </label><br>
             <input type="date" id="fechaFin" name="fechaFin" placeholder="" /><br><br>
 
-            <input type="hidden" name="estado" th:text="${INICIADO}" /> <!-- VER -->
+            <input type="hidden" name="estado" th:value="INICIADO"/> 
+            <!--que usen el login para agregar el trabajador, preguntar como salio-->
 
+            <!--buscar input de seleccion de varios en tipo select-->
             <p>Recuerde, luego de creado el proyecto, modificarlo para agregar trabajadores y clientes</p><br>
 
             <div class="d-flex justify-content-center mt-3">

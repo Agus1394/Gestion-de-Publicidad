@@ -64,21 +64,21 @@
             <label for="nombre">
               <p>Nombre/Titulo</p>
             </label>
-            <input class="texto" id="nombre" name="nombre" type="text" th:value="$proyecto.nombre" required>
+            <input class="texto" id="nombre" name="nombre" type="text" th:value="${proyecto.nombre}" required>
             <!--descripcion del proyecto-->
             <label for="descr">
               <p>Descripcion</p>
             </label>
-            <input class="texto" id="descr" name="descripcion" type="text" th:value="$proyecto.descripcion" required>
+            <input class="texto" id="descr" name="descripcion" type="text" th:value="${proyecto.descripcion}" required>
             <!--trabajadores y clientes del proyecto-->
             
             <p>Trabajadores/Clientes</p>
             <div class="row">
               <div class="column-6">
                 <table class="table">
-                  <tbody th:each="trabajador:${proyecto.trabajadores}">
+                  <tbody th:each="trabajador:${trabajadores}">
                     <tr>
-                      <td scope="row" th:text="${usuario.nombre}">
+                      <td scope="row" th:text="${trabajador.nombre}">
                       </td>
                     </tr>
                   </tbody>
@@ -86,9 +86,9 @@
               </div>
               <div class="column-6">
                 <table class="table">
-                  <tbody th:each="trabajador:${proyecto.clientes}">
+                  <tbody th:each="cliente:${clientes}">
                     <tr>
-                      <td scope="row" th:text="${usuario.nombre}">
+                      <td scope="row" th:text="${cliente.nombre}">
                       </td>
                     </tr>
                   </tbody>
@@ -99,13 +99,13 @@
             <label for="fechaInicio">
               <p>Fecha Inicio</p>
             </label>
-            <input class="texto" id="fechaInicio" name="fechaInicio" type="date" th:value="$proyecto.fechaInicio"
-              placeholder="inicio" required>
+            <input class="texto" id="fechaInicio" name="fechaInicio" type="date" th:value="${proyecto.fechaInicio}"
+               required>
             <label for="fechaFin">
               <p>Fecha Fin</p>
             </label>
-            <input class="texto" id="fechaFin" name="fechaFin" type="date" th:value="$proyecto.fechaFin"
-              placeholder="fin" required>
+            <input class="texto" id="fechaFin" name="fechaFin" type="date" th:value="${proyecto.fechaFin}"
+               required>
             <!-- estado del proyecto-->
             <label for="estado">
               <p>Estado</p>
@@ -122,10 +122,11 @@
         </form>
 
         <div class="d-flex justify-content-center mt-3">
-          <button type="submit" action="POST" class="btn boton-registrarte"><a
-              th:action="@{/proyecto/agregarCliente/__${proyecto.ID}__}">Agregar Cliente</a></button>
-          <button type="submit" action="POST" class="btn boton-registrarte"><a
-              th:action="@{/proyecto/agregarTrabajador/__${proyecto.ID}__}">Agregar Trabajador</a></button>
+          <button type="submit" class="btn boton-registrarte">
+            <a th:href="@{/proyecto/agregarCliente/__${proyecto.ID}__}">Agregar Cliente            
+            </a></button>
+          <button type="submit" class="btn boton-registrarte"><a
+              th:href="@{/proyecto/agregarTrabajador/__${proyecto.ID}__}">Agregar Trabajador</a></button>
         </div>
 
       </div>

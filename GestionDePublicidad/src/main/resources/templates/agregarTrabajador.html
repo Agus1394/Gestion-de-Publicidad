@@ -60,18 +60,17 @@
                         <tr id="filaTitulos">
                             <th scope="col">Nombre</th>
                             <th scope="col">E-mail</th>
-                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody th:each="trabajador:${trabajadores}">
                         <tr>
-                            <td scope="row" th:text="${trabajador.nombre}">
-                            </td>
+                            <td scope="row" th:text="${trabajador.nombre}"></td>
+                            <td th:text="${trabajador.email}"></td>
                         </tr>
                     </tbody>
                 </table>
             </section>
-        <form th:action="@{/proyecto/__${proyecto.id}__}" method="POST" class="form-registro">
+        <form th:action="@{/proyecto/agregarUsuario/__${proyecto.id}__}" method="POST" class="form-registro">
             <p>Ingrese e-mail del trabajador a agregar</p>
             <input class="texto" type="email" name="email" id="email">
 
