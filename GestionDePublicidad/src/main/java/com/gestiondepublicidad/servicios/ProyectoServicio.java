@@ -140,7 +140,7 @@ public class ProyectoServicio {
 
         List<Proyecto> proyectos = new ArrayList<>();
 
-        return proyectoRepositorio.findAll();
+        return proyectos = proyectoRepositorio.findAll();
     }
 
     public List<Proyecto> buscarPorNombre(String nombre) {
