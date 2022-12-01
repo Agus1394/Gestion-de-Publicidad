@@ -12,7 +12,7 @@
   <!-- ICONOS BOOTSTRAP -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
   <!-- CSS -->
-  <link rel="stylesheet" href="/tablaProyectos.css">
+  <link rel="stylesheet" href="/GestionDePublicidad/src/main/resources/static/tablaProyectos.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,9 +39,10 @@
       </ul>
 
       <div class="col-md-3 text-end">
-        <a href="/perfil"><button type="button" class="btn boton-registrate">Mi perfil</button></a><!-- falta vista -->
-        <a th:href="@{/logout}"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar Sesion</button></a>
-        <!-- falta accion -->
+        <a href="/perfil"><button type="button" class="btn boton-registrate">Mi perfil</button></a>
+        <a th:href="@{/logout}"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">
+            Cerrar Sesion
+          </button></a>
       </div>
     </header>
   </div>
@@ -49,71 +50,84 @@
 
   <div class="contenedorBody">
 
-     <!--INICIO/BIENVENIDA-->
-  <div id="body">
+    <!--INICIO/BIENVENIDA-->
+    <div id="body">
       <section id="mensajeSuperior">
-          <div id="burbuja">
-              <h1>TRABAJADORES</h1>
-              <p>A continuacion se listaran los empleados existentes en la base de datos, puede filtrarlos o no. Para modificar o eliminar debe acceder al mismo. </p>
-          </div>
+        <div id="burbuja">
+          <h1>TRABAJADORES</h1>
+          <p>A continuacion se listaran los empleados existentes en la base de datos, puede filtrarlos o no. Para
+            modificar o eliminar debe acceder al mismo. </p>
+        </div>
       </section>
       <!-- FIN INICIO/BIENVENIDA-->
-      
+
       <!-- INICIO FILTROS -->
-    <section id="mensajeFiltros">
-      <form th:action="@{/admin/tablaTrabajadores/search}" method="post"> <!-- VER -->
-        <label for="nombre">
-          <p>Filtro por nombre</p>
-        </label>
-        <input type="text" id="nombre" name="nombre" placeholder="nombre"/>
-        <button type="submit" class="btn btn-light">Buscar</button>
-      </form>
+      <section id="mensajeFiltros">
+        <form th:action="@{/admin/tablaTrabajadores/search}" method="post">
+          <label for="nombre">
+            <p>Filtro por nombre</p>
+          </label>
+          <input type="text" id="nombre" name="nombre" placeholder="nombre" />
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
 
-<!--      <form th:action="/filtroPorEmail" method="post"> &lt;!&ndash; VER &ndash;&gt;
-        <label for="mail">
-          <p>Filtro por E-mail</p>
-        </label>
-        <input type="text" id="mail" name="email" placeholder="mail" />
-        <button type="submit" class="btn btn-light">Buscar</button>
-      </form>
+        <form th:action="@{/admin/tablaTrabajadores/email}" method="post">
+          <label for="mail">
+            <p>Filtro por E-mail</p>
+          </label>
+          <input type="text" id="mail" name="email" placeholder="mail" />
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
 
-      <form th:action="/filtroPorPuestoEmpresa" method="post"> &lt;!&ndash; VER &ndash;&gt;
-        <label for="puesto">
-          <p>Filtro por puesto en la empresa</p>
-        </label>
-        <input type="text" id="puesto" name="puestoEmpresa" placeholder="" />
-        <button type="submit" class="btn btn-light">Buscar</button>
-      </form>-->
+        <form th:action="@{/admin/tablaTrabajadores/puestoEmpresa}" method="post">
+          <label for="empresa">
+            <p>Filtro por puesto en la empresa</p>
+          </label>
+          <input type="text" id="empresa" name="puestoEmpresa" placeholder="" />
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
 
+        <form th:action="@{/admin/tablaTrabajadores/nombreProyecto}" method="post">
+          <label for="proyecto">
+            <p>Filtro por proyecto</p>
+          </label>
+          <input type="text" id="proyecto" name="nombre" placeholder="" />
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
 
-    </section>
-<!-- FIN FILTROS -->
+      </section>
+      <!-- FIN FILTROS -->
 
-<!-- INICIO TABLA -->
-    <section class="contenedorTabla">
-      <table>
-        <thead>
-          <tr id="filaTitulos">
-            <th scope="col">Usuario</th>
-            <th scope="col">E-mail</th>
-            <th scope="col">ROL</th>
-          <!--  <th scope="col">Proyecto</th> -->
-            <th scope="col">Puesto</th>
-          </tr>
-        </thead>
-        <tbody th:each="usuario:${usuarios}">
-          <tr>
-            <td th:text="${usuario.nombre}"> NOMBRE PRUEBA</td>
-            <td th:text="${usuario.email}"> EMAIL PRUEBA</td>
-            <td th:text="${usuario.rol}"> ROL PRUEBA</td>
-            <td th:text="${usuario.puestoEmpresa}"> ROL PRUEBA</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-    <!-- FIN TABLA -->
+      <!-- INICIO TABLA -->
+      <section class="contenedorTabla">
+        <table>
+          <thead>
+            <tr id="filaTitulos">
+              <th scope="col">Nombre</th>
+              <th scope="col">E-mail</th>
+              <th scope="col">Puesto</th>
+              <th scope="col">ROL</th>
+              <th scope="col">Proyecto</th>
 
-  </div>
+            </tr>
+          </thead>
+          <tbody th:each="usuario:${usuarios}">
+            <tr>
+              <td th:text="${usuario.nombre}"> </td>
+              <td th:text="${usuario.email}"> </td>
+              <td th:text="${usuario.puestoEmpresa}"> </td>
+              <!--LINKEAR-->
+              <td th:text="${usuario.rol}"></td>
+              <!--LINKEAR-->
+              <td th:text="${usuario.proyecto.nombre}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <!-- FIN TABLA -->
+
+    </div>
 
 </body>
+
 </html>

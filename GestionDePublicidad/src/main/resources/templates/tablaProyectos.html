@@ -12,7 +12,7 @@
   <!-- ICONOS BOOTSTRAP -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
   <!-- CSS -->
-  <link rel="stylesheet" href="/tablaProyectos.css">
+  <link rel="stylesheet" href="/GestionDePublicidad/src/main/resources/static/tablaProyectos.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,12 +36,13 @@
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a th:href="@{/inicio}" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
         <li><a href="/dashboard" class="nav-link px-2 link-ul">Atras</a></li>
-        <li><a href="" class="nav-link px-2 link-ul" >Crear Proyecto</a></li>
+        <li><a href="" class="nav-link px-2 link-ul">Crear Proyecto</a></li>
       </ul>
 
       <div class="col-md-3 text-end">
         <a href="/perfil"><button type="button" class="btn boton-registrate">Mi perfil</button></a><!-- falta vista -->
-        <a th:href="@{/logout}"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar Sesion</button></a>
+        <a th:href="@{/logout}"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar
+            Sesion</button></a>
         <!-- falta accion -->
       </div>
     </header>
@@ -50,83 +51,86 @@
 
   <div class="contenedorBody">
 
-     <!--INICIO/BIENVENIDA-->
-  <div id="body">
+    <!--INICIO/BIENVENIDA-->
+    <div id="body">
       <section id="mensajeSuperior">
-          <div id="burbuja">
-              <h1>Proyectos</h1>
-              <p>A continuacion se listaran los proyectos existentes en la base de datos, puede filtrarlos o no. Para modificar o eliminar debe acceder al mismo. </p>
-          </div>
+        <div id="burbuja">
+          <h1>Proyectos</h1>
+          <p>A continuacion se listaran los proyectos existentes en la base de datos, puede filtrarlos o no. Para
+            modificar o eliminar debe acceder al mismo. </p>
+        </div>
       </section>
       <!-- FIN INICIO/BIENVENIDA-->
-      
+
       <!-- INICIO FILTROS -->
-    <section id="mensajeFiltros">
-      <form th:action="@{/proyecto/tablaProyectos/nombre}" > <!-- VER -->
-        <label for="nombre">
-          <p>Filtro por nombre</p>
-        </label>
-        <input type="text" id="nombre" name="nombre" placeholder=""/>
-        <button type="submit" class="btn btn-light">Buscar</button>
-      </form>
+      <section id="mensajeFiltros">
+        <form th:action="@{/proyecto/tablaProyectos/nombre}">
+          <label for="nombre">
+            <p>Filtro por nombre</p>
+          </label>
+          <input type="text" id="nombre" name="nombre" placeholder="" />
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
 
-      <form th:action="@{/proyecto/tablaProyectos/fechaInicio}"> <!-- HAY QUE MODIFICAR -->
-        <label for="inicio">
-          <p>Filtro por fecha de inicio</p>
-        </label>
-        <input type="date" id="inicio" name="fechaInicio" placeholder="" />
-        <button type="submit" class="btn btn-light">Buscar</button>
-      </form> 
+        <form th:action="@{/proyecto/tablaProyectos/fechaInicio}">
+          <label for="inicio">
+            <p>Filtro por fecha de inicio</p>
+          </label>
+          <input type="date" id="inicio" name="fechaInicio" placeholder="" />
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
 
-      <form th:action="@{/proyecto/tablaProyectos/fechaFin}" > <!-- HAY QUE MODIFICAR -->
-        <label for="fin">
-          <p>Filtro por fecha de fin</p>
-        </label>
-        <input type="date" id="fin" name="fechaFin" placeholder="" />
-        <button type="submit" class="btn btn-light">Buscar</button>
-      </form> 
+        <form th:action="@{/proyecto/tablaProyectos/fechaFin}">
+          <label for="fin">
+            <p>Filtro por fecha de fin</p>
+          </label>
+          <input type="date" id="fin" name="fechaFin" placeholder="" />
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
 
-      <form th:action="@{/proyecto/tablaProyectos/estado}" > <!-- HAY QUE MODIFICAR -->
-        <label for="estado">
-          <p>Filtro por estado</p>
-        </label>
-        <select id="estado" name="estado">
-          <option></option>
-          <option value="FINALIZADO">Finalizado</option>
-          <option value="ENPROCESO">En Proceso</option>
-          <option value="INICIADO"> Iniciado</option>
-        </select>
-        <button type="submit" class="btn btn-light">Buscar</button>
-      </form> 
+        <form th:action="@{/proyecto/tablaProyectos/estado}">
+          <label for="estado">
+            <p>Filtro por estado</p>
+          </label>
+          <select id="estado" name="estado">
+            <option></option>
+            <option value="FINALIZADO">Finalizado</option>
+            <option value="ENPROCESO">En Proceso</option>
+            <option value="INICIADO"> Iniciado</option>
+          </select>
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
 
 
-    </section>
-<!-- FIN FILTROS -->
+      </section>
+      <!-- FIN FILTROS -->
 
-<!-- INICIO TABLA -->
-    <section class="contenedorTabla">
-      <table>
-        <thead>
-          <tr id="filaTitulos">
-            <th scope="col">Nombre</th>
-            <th scope="col">Fecha Inicio</th>
-            <th scope="col">Fecha Fin</th>
-            <th scope="col">Estado</th>
-          </tr>
-        </thead>
-        <tbody th:each="proyecto:${proyectos}">
-          <tr>
-            <td th:text="${proyecto.nombre}"> NOMBRE PRUEBA</td>
-            <td th:text="${proyecto.fechaInicio}"> EMAIL PRUEBA</td>
-            <td th:text="${proyecto.fechaFin}"> ROL PRUEBA</td>
-            <td th:text="${proyecto.estadoProyecto}"> ROL PRUEBA</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-    <!-- FIN TABLA -->
+      <!-- INICIO TABLA -->
+      <section class="contenedorTabla">
+        <table>
+          <thead>
+            <tr id="filaTitulos">
+              <th scope="col">Nombre</th>
+              <th scope="col">Fecha Inicio</th>
+              <th scope="col">Fecha Fin</th>
+              <th scope="col">Estado</th>
+            </tr>
+          </thead>
+          <tbody th:each="proyecto:${proyectos}">
+            <tr>
+              <td th:text="${proyecto.nombre}"> NOMBRE PRUEBA</td>
+              <!--LINKEAR-->
+              <td th:text="${proyecto.fechaInicio}"> EMAIL PRUEBA</td>
+              <td th:text="${proyecto.fechaFin}"> ROL PRUEBA</td>
+              <td th:text="${proyecto.estadoProyecto}"> ROL PRUEBA</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <!-- FIN TABLA -->
 
-  </div>
-     
+    </div>
+
 </body>
+
 </html>

@@ -13,7 +13,7 @@
     <!-- ICONOS BOOTSTRAP -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
     <!-- CSS -->
-    <link rel="stylesheet" href="indexTrabajador.css">
+    <link rel="stylesheet" href="/GestionDePublicidad/src/main/resources/static/indexTrabajador.css">
     <!-- FONT TITULO -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,170 +32,150 @@
 
 <body>
     <!-- INICIO NAVBAR -->
-    <div class="container-fluid bdn">
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-            <a href="" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-white text-decoration-none">
-                <img src="img/logos/logo-diamante-blanco.png" style="width: 15%;" alt="logo">
-                <img id="lettering"
-                    src="https://see.fontimg.com/api/renderfont4/axgPE/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjRkZGRkZGIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/V2VUaGluaw/cannu-regular.png"
-                    alt="wethink">
-            </a>
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
+        <a href="" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-white text-decoration-none">
+            <img src="img/logos/logo-diamante-blanco.png" style="width: 15%;" alt="logo">
+            <img id="lettering"
+                src="https://see.fontimg.com/api/renderfont4/axgPE/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjRkZGRkZGIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/V2VUaGluaw/cannu-regular.png"
+                alt="wethink">
+        </a>
 
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/index" class="nav-link px-2 link-ul">Inicio</a></li>
-                <li><a href="" class="nav-link px-2 link-ul"></a></li>
-            </ul>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/index" class="nav-link px-2 link-ul">Inicio</a></li>
+            <li><a href="" class="nav-link px-2 link-ul"></a></li>
+        </ul>
 
-            <div class="col-md-3 text-end">
-            </div>
-        </header>
-    </div>
+        <div class="col-md-3 text-end">
+        </div>
+    </header>
     <!-- FIN NAVBAR -->
 
+    <div class="container-fluid">
+        <div id="body">
 
+            <!--INICIO/BIENVENIDA-->
+            <section id="mensajeSuperior">
+                <div id="burbuja">
+                    <h1>Bienvenido</h1>
+                    <p>A continuacion se listaran los proyectos en que participa, la opcion de agregar mas proyectos
+                        y
+                        su
+                        agenda de contactos interna. </p>
+                </div>
 
-    <div id="body">
-
-        <!--INICIO/BIENVENIDA-->
-        <section id="mensajeSuperior">
-            <div id="burbuja">
-                <h1>Bienvenido</h1>
-                <p>A continuacion se listaran los proyectos en que participa, la opcion de agregar mas proyectos
-                    y
-                    su
-                    agenda de contactos interna. </p>
-            </div>
-        </section>
-        <!-- FIN INICIO/BIENVENIDA-->
-
-        <!-- INICIO OPCIONES-->
-        <div class="container d-flex justify-content-center align-items-center seccion-servicio">
-            <div class="row">
-                <div class="card col-2">
-                    <a href="">
-                        <div class="box">
-                            <div class="content">
-                                <i class="bi bi-list-task"></i>
-                                <h3 id="Agenda">Agenda</h3> <!-- HACER VISTA-->
-                            </div>
+                <!-- INICIO OPCIONES-->
+                <div class="container d-flex justify-content-center align-items-center seccion-servicio">
+                    <div class="row">
+                        <div class="card col-2">
+                            <a href="">
+                                <div class="box">
+                                    <div class="content">
+                                        <i class="bi bi-list-task"></i>
+                                        <h3 id="Agenda">Agenda</h3> <!-- HACER VISTA Y LINKEAR-->
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
 
-                </div>
-
-                <div class="card col-2">
-                    <a href="">
-                        <div class="box">
-                            <div class="content">
-                                <i class="bi bi-sticky"></i>
-                                <h3>Crear Proyecto</h3> <!-- HACER FORMULARIO-->
-                            </div>
+                        <div class="card col-2">
+                            <a th:href="@{proyecto/crear}">
+                                <div class="box">
+                                    <div class="content">
+                                        <i class="bi bi-sticky"></i>
+                                        <h3>Crear Proyecto</h3> <!-- LINKEAR-->
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
+
+                    </div>
                 </div>
+                <!--FIN OPCIONES-->
+            </section>
+            <!-- FIN INICIO/BIENVENIDA-->
 
-            </div>
-        </div>
-        <!--FIN OPCIONES-->
-        <div id="flitroYtabla" class="row">
-            <div class="col-4">
-                <!--FILTROS-->
-                <section id="mensajeFiltros">
-                    <form th:action="@{/proyecto/tablaProyectos/nombre}">
-                        <!-- VER -->
-                        <label for="nombre">
-                            <p>Filtro por nombre</p>
-                        </label>
-                        <input type="text" id="nombre" name="nombre" placeholder="" />
-                        <button type="submit" class="btn btn-light">Buscar</button>
-                    </form>
 
-                    <form th:action="@{/proyecto/tablaProyectos/fechaInicio}">
-                        <!-- HAY QUE MODIFICAR -->
-                        <label for="inicio">
-                            <p>Filtro por fecha de inicio</p>
-                        </label>
-                        <input type="date" id="inicio" name="fechaInicio" placeholder="" />
-                        <button type="submit" class="btn btn-light">Buscar</button>
-                    </form>
+            <section id="flitroYtabla" class="row">
+                <div class="col-6">
+                    <!--FILTROS-->
+                    <section id="mensajeFiltros">
+                        <form th:action="@{/trabajador/tablaProyectos/nombre}">
 
-                    <form th:action="@{/proyecto/tablaProyectos/fechaFin}">
-                        <!-- HAY QUE MODIFICAR -->
-                        <label for="fin">
-                            <p>Filtro por fecha de fin</p>
-                        </label>
-                        <input type="date" id="fin" name="fechaFin" placeholder="" />
-                        <button type="submit" class="btn btn-light">Buscar</button>
-                    </form>
+                            <label for="nombre">
+                                <p>Filtro por nombre</p>
+                            </label><br>
+                            <input type="text" id="nombre" name="nombre" placeholder="" />
+                            <button type="submit" class="btn btn-light">Buscar</button>
+                        </form>
 
-                    <form th:action="@{/proyecto/tablaProyectos/estado}">
-                        <!-- HAY QUE MODIFICAR -->
-                        <label for="estado">
-                            <p>Filtro por estado</p>
-                        </label>
-                        <select id="estado" name="estado">
-                            <option></option>
-                            <option value="FINALIZADO">Finalizado</option>
-                            <option value="ENPROCESO">En Proceso</option>
-                            <option value="INICIADO"> Iniciado</option>
-                        </select>
-                        <button type="submit" class="btn btn-light">Buscar</button>
-                    </form>
-                </section>
-                <!--fin FILTROS-->
-            </div>
-            <div class="col-8">
-                <!--PROYECTOS-->
-                <div id="seccionTabla">
-                    <h1>Proyectos</h1>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Inicio</th>
-                                <th scope="col">Fin</th>
-                                <th scope="col">Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="proyecto : ${proyectos}">
-                                <td class="celdas" th:text="${proyecto.nombre}"><a
-                                        th:href="@{proyecto/__${proyecto.id}__}"></a>
-                                </td>
-                                <!--no hay vista, VER LUEGO DE ARREGLAR RELACIONES EN BACK-->
-                                <td class="celdas" th:text="${proyecto.fechaInicio}"></td>
-                                <td class="celdas" th:text="${proyecto.fechaFin}"></td>
-                                <td class="celdas" th:text="${proyecto.estado}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!--FIN PROYECTOS-->
+                        <form th:action="@{/trabajador/tablaProyectos/fechaInicio}">
+
+                            <label for="inicio">
+                                <p>Filtro por fecha de inicio</p>
+                            </label><br>
+                            <input type="date" id="inicio" name="fechaInicio" placeholder="" />
+                            <button type="submit" class="btn btn-light">Buscar</button>
+                        </form>
+
+                        <form th:action="@{/trabajador/tablaProyectos/fechaFin}">
+
+                            <label for="fin">
+                                <p>Filtro por fecha de fin</p>
+                            </label><br>
+                            <input type="date" id="fin" name="fechaFin" placeholder="" />
+                            <button type="submit" class="btn btn-light">Buscar</button>
+                        </form>
+
+                        <form th:action="@{/trabajador/tablaProyectos/estado}">
+
+                            <label for="estado">
+                                <p>Filtro por estado</p>
+                            </label><br>
+                            <select id="estado" name="estado">
+                                <option></option>
+                                <option value="FINALIZADO">Finalizado</option>
+                                <option value="ENPROCESO">En Proceso</option>
+                                <option value="INICIADO"> Iniciado</option>
+                            </select>
+                            <button type="submit" class="btn btn-light">Buscar</button>
+                        </form>
+                    </section>
+                    <!--fin FILTROS-->
                 </div>
-            </div>
+                <div class="col-6">
+                    <!--PROYECTOS-->
+                    <div id="seccionTabla">
+                        <h1>Proyectos</h1>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Inicio</th>
+                                    <th scope="col">Fin</th>
+                                    <th scope="col">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="proyecto : ${proyectos}">
+                                    <td class="celdas" th:text="${proyecto.nombre}">
+                                        <a th:href="@{proyecto/__${proyecto.id}__}"></a>
+                                    </td><!-- LINKEAR-->
+                                    <td class="celdas" th:text="${proyecto.fechaInicio}"></td>
+                                    <td class="celdas" th:text="${proyecto.fechaFin}"></td>
+                                    <td class="celdas" th:text="${proyecto.estado}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!--FIN PROYECTOS-->
+                    </div>
+                </div>
+            </section>
         </div>
-    </div>
-
-
-
-    <!-- INICIO FOOTER -->
-    <div class="container-fluid footer">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3">
-            <p class="col-md-4 mb-0" style="font-size: 15px;">&copy; Grupo 3, Egg Cooperation</p>
-
-            <img src="/img/logo-diamante-blanco.png" style="width: 45px; height: 40px; padding-right: 10px;" alt="">
-
-            <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="/index" class="nav-link px-2 text-white">Inicio</a></li>
-            </ul>
-        </footer>
-    </div>
-    <!-- FIN FOOTER -->
-
-    <!-- JAVASCRIPT BOOTSTRAP -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-    <!-- JAVASCRIPT -->
+        <!-- JAVASCRIPT BOOTSTRAP -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+        <!-- JAVASCRIPT -->
 </body>
 
 </html>
