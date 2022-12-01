@@ -14,10 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600&family=Titillium+Web&display=swap" rel="stylesheet">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
         <!-- INICIO NAVBAR -->
@@ -70,8 +67,8 @@
                  <div class="d-flex justify-content-center fw-lighter contenedor-span mt-2">
                      <a href="#"><span>¿Has olvidado tu contraseña?</span></a>
                 </div>
-                <div class="d-flex justify-content-center text-danger contenedor-span mt-5">
-                     <p th:text="${error}" class="animate__animated animate__flash" ></p>
+                <div class="d-flex justify-content-center text-danger text-uppercase contenedor-span mt-5 fw-semibold animate__flash">
+                     <span th:text="${error}"></span>
                 </div>
             </form>
      
