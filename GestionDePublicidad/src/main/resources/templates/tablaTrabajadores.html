@@ -116,18 +116,18 @@
           </thead>
           <tbody th:each="trabajador:${trabajadores}">
             <tr>
-              <td th:text="${trabajador.nombre}"> 
-                <a th:action="@{/perfil/__${trabajador.id}__}"></a>
+              <td class="row" th:text="${trabajador.nombre}"> 
+                <a th:href="@{/perfil/__${trabajador.id}__}"></a>
               </td>
               <td th:text="${trabajador.email}"> </td>
               <td th:text="${trabajador.puestoEmpresa}"> </td>
               <td th:text="${trabajador.rol}"> </td>
               <td>
-                <a th:action="@{admin/modificarTrabajador/__${trabajador.id}__}">
+                <a th:href="@{admin/modificarTrabajador/__${trabajador.id}__}">
                   <button type="submit"><img
                       src="/GestionDePublicidad/src/main/resources/static/img/botones/Magic Wand_Lineal-coloured.png"></button>
                 </a>
-                <a th:action="@{admin/eliminarTrabajador/__${trabajador.id}__}">
+                <a th:href="@{admin/eliminarTrabajador/__${trabajador.id}__}">
                   <button type="submit"><img
                       src="/GestionDePublicidad/src/main/resources/static/img/botones/Dustbin_Flat.png"></button>
                 </a>
