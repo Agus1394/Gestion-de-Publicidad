@@ -1,6 +1,7 @@
 package com.gestiondepublicidad.servicios;
 
 import com.gestiondepublicidad.entidades.Nota;
+import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.repositorios.NotaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class NotaServicio {
 
 
     @Transactional
-    public void actualizar(String id, String descripcion, String titulo) throws MiException {
+    public void actualizar(String id, String descripcion, String titulo, Usuario usuario) throws MiException {
 
         Optional<Nota> respuesta = notaRepositorio.findById(id);
         if (respuesta.isPresent()){
@@ -41,7 +42,7 @@ public class NotaServicio {
 
             notaRepositorio.save(nota);
         }else{
-            throw new MiException("no existe est Nota");
+            throw new MiException("No se pudo actualizar la nota");
         }
     }
 

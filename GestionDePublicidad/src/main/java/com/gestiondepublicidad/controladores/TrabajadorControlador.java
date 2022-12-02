@@ -154,12 +154,13 @@ public class TrabajadorControlador {
 
     @PostMapping("/nota/{id_nota}/editada")
     public String editarNota(@PathVariable String id_nota, String titulo, String descripcion, ModelMap modelo, HttpSession session) throws MiException {
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         try{
-            notaServicio.actualizar(id_nota, titulo, descripcion);
+            notaServicio.actualizar(id_nota, titulo, descripcion, logueado);
+            modelo.put("exito", "nota guardada con exito");
         }catch (Exception e){
             modelo.put("error", e.getMessage());
         }finally {
-            Usuario logueado = (Usuario) session.getAttribute("usuariosession");
             modelo.addAttribute("notas", notaServicio.listar(logueado.getId_usuario()));
             return "listarNotas.html";
         }
