@@ -1,8 +1,12 @@
 package com.gestiondepublicidad.controladores;
 
 import java.util.List;
+
+import com.gestiondepublicidad.entidades.Nota;
 import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.excepciones.MiException;
+import com.gestiondepublicidad.repositorios.NotaRepositorio;
+import com.gestiondepublicidad.servicios.NotaServicio;
 import com.gestiondepublicidad.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,12 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/trabajador")
 public class TrabajadorControlador {
 
     @Autowired
     UsuarioServicio usuarioServicio;
+
+    @Autowired
+    NotaServicio notaServicio;
 
     @GetMapping("/dashboard")
     public String panelAdministrativoCliente(ModelMap modelo) {
@@ -108,4 +117,54 @@ public class TrabajadorControlador {
         return "redirect:/trabajador/usuarios";
 
     }
+
+
+    //CREAR NOTA
+    @GetMapping("/nota/crear")
+    public String crearNota(){
+        return "formularioNota.html";
+    }
+
+    @PostMapping("/nota/creado")
+    public String notaCreada(String descripcion, String titulo, HttpSession session, ModelMap modelo){
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        notaServicio.crearNota(descripcion,titulo);
+        Nota nota = new Nota();
+        List<Nota> notas =  notaServicio.listar(logueado.getId_usuario());
+        notas.add(nota) ;
+        modelo.addAttribute("notas", notas);
+        return "listarNotas.html";
+    }
+
+    // NOTAS TRABAJADOR
+    @PreAuthorize("hasRole('ROLE_TRABAJADOR')")
+    @GetMapping("/listaNota")
+    public String listarNota(ModelMap modelo, HttpSession session){
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        modelo.addAttribute("notas", notaServicio.listar(logueado.getId_usuario()));
+        return "listarNotas.html";
+    }
+
+    // EDITAR NOTA TRABAJADOR
+    @PreAuthorize("hasRole('ROLE_TRABAJADOR')")
+    @GetMapping("/nota/{id_nota}")
+    public String editarNota(@PathVariable String id_nota){
+        return "formularioNota.html";
+    }
+
+    @PostMapping("/nota/{id_nota}/editada")
+    public String editarNota(@PathVariable String id_nota, String titulo, String descripcion, ModelMap modelo, HttpSession session) throws MiException {
+        try{
+            notaServicio.actualizar(id_nota, titulo, descripcion);
+        }catch (Exception e){
+            modelo.put("error", e.getMessage());
+        }finally {
+            Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+            modelo.addAttribute("notas", notaServicio.listar(logueado.getId_usuario()));
+            return "listarNotas.html";
+        }
+    }
 }
+
+
+
