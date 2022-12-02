@@ -1,17 +1,13 @@
-
-.bdn {
+.bdn{
     background-color: #212121;
     font-family: 'Titillium Web', sans-serif;
 }
 
-.letrasNav{
-    color: whitesmoke;
-    text-decoration: none;
+.nav-link{
+    color: #fff;
 }
-
-.letrasNav:hover{
-    color: rgb(20, 255, 236);
-    text-decoration: none;
+.nav-link:hover{
+    color: #14FFEC;
 }
 
 .dropdown-menu{
