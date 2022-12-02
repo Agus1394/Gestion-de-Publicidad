@@ -27,28 +27,6 @@ public class TrabajadorControlador {
         return "panel_trabajador.html";
     }
 
-    //LISTAR TRABAJADORES POR NOMBRE
-    @GetMapping("/lista_trabajadores")
-    public String listar(String nombre, ModelMap modelo) {
-        List<Usuario> usuarios = usuarioServicio.usuariosPorNombreYRol(nombre, "TRABAJADOR");
-        modelo.addAttribute("usuarios", usuarios);
-        return "trabajador_list.html";
-    }
-
-    @GetMapping("/lista_trabajadores/{email}")
-    public String listarPorEmail(@PathVariable String email, ModelMap modelo) {
-        Usuario usuario = usuarioServicio.BusquedaPorEmail(email, "TRABAJADOR");
-        modelo.addAttribute("usuario", usuario);
-        return "trabajador_list.html";
-    }
-
-    @GetMapping("/lista_trabajadores/{puesto_empresa}")
-    public String listarPorPuestoEmpresa(@PathVariable String puesto_emoresa, ModelMap modelo) {
-        List<Usuario> usuario = usuarioServicio.BusquedaPorPuesto(puesto_emoresa, "TRABAJADOR");
-        modelo.addAttribute("usuario", usuario);
-        return "trabajador_list.html";
-    }
-
     //REGISTRAR USUARIO/CLIENTE DESDE Trabajador
     @GetMapping("/registrar")
     public String registrar() {
