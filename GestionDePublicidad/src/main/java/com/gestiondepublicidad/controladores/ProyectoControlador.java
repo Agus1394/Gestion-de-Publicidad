@@ -38,7 +38,7 @@ public class ProyectoControlador {
         Usuario usuario = usuarioServicio.getOne(logueado.getId_usuario());
         modelo.put("usuario", usuario);
 
-        return "registrar_proyecto.html";
+        return "crearProyecto.html";
     }
 
     @PostMapping("/cargar")
@@ -59,9 +59,9 @@ public class ProyectoControlador {
             modelo.put("error al subir el proyecto", e.getMessage());
             java.util.logging.Logger.getLogger(ProyectoControlador.class.getName()).log(Level.SEVERE, null, e);
 
-            return "registrar_proyecto.html";
+            return "crearProyecto.html";
         }
-        return "proyecto_cargado.html";
+        return "redirect:/trabajador/tablaProyectos";
     }
 
     //MODIFICAR
@@ -83,7 +83,7 @@ public class ProyectoControlador {
             @RequestParam(required = false) Date fechaFin,
             ModelMap modelo) {
         try {
-            proyectoServicio.actualizar(idProyecto, nombreProyecto,descripcion, fechaFin,
+            proyectoServicio.actualizar(idProyecto, nombreProyecto, descripcion, fechaFin,
                     fechaInicio, idUsuario);
 
             return "redirect:../listar";
@@ -93,10 +93,11 @@ public class ProyectoControlador {
         }
 
     }
+
     //agregar usuario al proyecto
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/modificar/{id_proyecto}/agregarEliminarUsuario")
-    public String agregarEliminarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, ModelMap modelo){
+    public String agregarEliminarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, ModelMap modelo) {
         modelo.addAttribute("usuarios", usuarioServicio.listarUsuarios());
         modelo.put("proyecto", proyectoServicio.getOne(id_proyecto));
         return "agregarEliminarUsuariosProyecto.html";//agregar botones de agregar y eliminar usuario a la vista particular del proyecto
@@ -104,7 +105,7 @@ public class ProyectoControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("{id_proyecto}/agregarUsuario/{id_usuario}")
-    public String agregarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, @PathVariable("id_usuario") String id_usuario, ModelMap modelo){
+    public String agregarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, @PathVariable("id_usuario") String id_usuario, ModelMap modelo) {
         proyectoServicio.agregarUsuarioProyecto(id_proyecto, id_usuario);
 
         modelo.addAttribute("proyectos", proyectoServicio.listarTodos());
@@ -113,7 +114,7 @@ public class ProyectoControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("{id_proyecto}/eliminarUsuario/{id_usuario}")
-    public String eliminarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, @PathVariable("id_usuario") String id_usuario, ModelMap modelo){
+    public String eliminarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, @PathVariable("id_usuario") String id_usuario, ModelMap modelo) {
         proyectoServicio.eliminarUsuarioProyecto(id_proyecto, id_usuario);
 
         modelo.addAttribute("proyectos", proyectoServicio.listarTodos());
@@ -131,49 +132,10 @@ public class ProyectoControlador {
         return "tablaProyectos.html";
     }
 
-    //filtrar por nombre
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/tablaProyectos/nombre")
-    public String filtrarPorNombre(@RequestParam String nombre, ModelMap modelo) {
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-        System.out.println(nombre);
-        if (nombre.isEmpty() || nombre == null){
-            proyectos = proyectoServicio.listarTodos();
-        }else{
-            proyectos = proyectoServicio.buscarPorNombre(nombre.toUpperCase());
-        }
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectos.html ";
-    }
-
-    //filtrar por estado del proyecto
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/tablaProyectos/estado")
-    public String filtrarPorEstadoProyecto(@RequestParam String estado, ModelMap modelo) throws MiException {
-
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-
-        if (estado.isEmpty() || estado == null){
-            proyectos = proyectoServicio.listarTodos();
-        }else{
-            proyectos = proyectoServicio.filtrarProyectoPorEstado(estado);
-        }
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectos.html";
-    }
-    
-    //Listar TODOS
-    @GetMapping("/tablaProyectos")
-    public String listarProyectos(ModelMap modelo) {
-        List<Proyecto> proyectos = proyectoServicio.listarTodos();
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectos.html";
-    }
-
     //Filtrar Por Usuario
     @PreAuthorize("hasAnyRole('ROLE_USER, ROLE_CLIENTE')")
     @GetMapping("/usuario")
-    public String listarProyectosPorUsuario(ModelMap modelo, HttpSession httpSession){
+    public String listarProyectosPorUsuario(ModelMap modelo, HttpSession httpSession) {
         Usuario logueado = (Usuario) httpSession.getAttribute("usuariosession");
         Usuario usuario = usuarioServicio.getOne(logueado.getId_usuario());
 
@@ -183,30 +145,4 @@ public class ProyectoControlador {
         return "tablaProyectos.html";
     }
 
-    @GetMapping("/tablaProyectos/fechaInicio")
-    public String ordenarProyectosPorFechaInicio(@RequestParam String fechaInicio, ModelMap modelo){
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-
-        if (fechaInicio.isEmpty() || fechaInicio == null){
-            proyectos = proyectoServicio.listarTodos();
-        }else{
-            proyectos = proyectoServicio.ordenarProyectosPorFechaInicio(fechaInicio);
-        }
-
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectos.html";
-    }
-    @GetMapping("/tablaProyectos/fechaFin")
-    public String ordenarProyectosPorFechaFin(@RequestParam String fechaFin, ModelMap modelo){
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-
-        if (fechaFin.isEmpty() || fechaFin == null){
-            proyectos = proyectoServicio.listarTodos();
-        }else{
-            proyectos = proyectoServicio.ordenarProyectosPorFechaFin(fechaFin);
-        }
-
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectos.html";
-    }
 }

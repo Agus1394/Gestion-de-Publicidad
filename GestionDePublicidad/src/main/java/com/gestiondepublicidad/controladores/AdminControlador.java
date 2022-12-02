@@ -1,11 +1,17 @@
 package com.gestiondepublicidad.controladores;
 
+import com.gestiondepublicidad.entidades.Proyecto;
 import com.gestiondepublicidad.entidades.Usuario;
+import com.gestiondepublicidad.enumeraciones.PuestoEmpresa;
 import com.gestiondepublicidad.enumeraciones.Rol;
 import com.gestiondepublicidad.excepciones.MiException;
+import com.gestiondepublicidad.servicios.ProyectoServicio;
 import com.gestiondepublicidad.servicios.UsuarioServicio;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -23,11 +29,15 @@ public class AdminControlador {
     @Autowired
     UsuarioServicio usuarioServicio;
 
+    @Autowired
+    private ProyectoServicio proyectoServicio;
+
     @GetMapping("/dashboard")
     public String panelAdministrativo() {
         return "dashboard.html";
     }
 
+    //LISTAR ---TODOS--- LOS USUARIOS
     @GetMapping("/tablaUsuarios")
     public String listarUsuarios(ModelMap modelo) {
         List<Usuario> listaUsuarios = usuarioServicio.listarUsuarios();
@@ -35,95 +45,302 @@ public class AdminControlador {
         return "tablaClientes.html";
     }
 
-    //LISTAR
+    //----------------------------------------CLIENTE--------------------------------------------
+    //FILTRAR POR ROL: CLIENTE
     @GetMapping("/tablaClientes")
     public String listarClientes(ModelMap modelo) {
-        List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol("USER");
+        List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol(Rol.USER);
         modelo.addAttribute("usuarios", listaUsuarios);
         return "tablaClientes.html";
     }
-    @PostMapping("/tablaClientes/search")
+
+    //FILTRAR CLIENTES POR NOMBRE
+    @PostMapping("/tablaClientes/nombre")
     public String buscarClientePorNombre(@RequestParam String nombre, ModelMap modelo) throws Exception {
-        try{
+        try {
             List<Usuario> usuarios = new ArrayList<Usuario>();
-            if(nombre.isEmpty() || nombre == null){
-                usuarios = usuarioServicio.buscarPorRol("USER");
-            }else{
+            if (nombre.isEmpty() || nombre == null) {
+                usuarios = usuarioServicio.buscarPorRol(Rol.USER);
+            } else {
                 usuarios = usuarioServicio.usuariosPorNombreYRol(nombre.toUpperCase(), "USER");
             }
             modelo.addAttribute("usuarios", usuarios);
-        }catch(Exception e){
+        } catch (Exception e) {
             modelo.put("error", e.getMessage());
-
-        }finally {
-            return "tablaClientes.html";
         }
+        return "tablaClientes.html";
+
     }
+
+    //LISTAR CLIENTES POR EMAIL
+    @PostMapping("/tablaClientes/email")
+    public String listarClientesEmail(@RequestParam String email, ModelMap modelo) {
+        try {
+            Usuario listaUsuarios = usuarioServicio.BusquedaPorEmail(email.toLowerCase(), Rol.USER);
+            modelo.addAttribute("usuarios", listaUsuarios);
+        } catch (Exception e) {
+            modelo.put("error", e.getMessage());
+        }
+        return "tablaClientes.html";
+    }
+
+    //LISTAR CLIENTES POR PROYECTO
+    @PostMapping("/tablaClientes/proyecto")
+    public String listarClientesProyecto(@RequestParam String proyecto, ModelMap modelo) {
+        try {
+            List<Usuario> listaUsuarios = usuarioServicio.usuariosPorProyecto(proyecto.toUpperCase(), Rol.USER);
+            modelo.addAttribute("usuarios", listaUsuarios);
+        } catch (Exception e) {
+            modelo.put("error", e.getMessage());
+        }
+        return "tablaClientes.html";
+    }
+
+    //----------------------------------------TRABAJADOR--------------------------------------------
+    //LISTAR TRABAJADORES 
     @GetMapping("/tablaTrabajadores")
     public String listarTrabajadores(ModelMap modelo) {
-        List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol("TRABAJADOR");
+        List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol(Rol.TRABAJADOR);
         modelo.addAttribute("usuarios", listaUsuarios);
         return "tablaTrabajadores.html";
     }
+
+    //LISTAR TRABAJADORES POR NOMBRE
     @PostMapping("/tablaTrabajadores/search")
     public String buscarTrabajadorPorNombre(@RequestParam String nombre, ModelMap modelo) throws Exception {
-        try{
+        try {
             List<Usuario> usuarios = new ArrayList<Usuario>();
-            if(nombre.isEmpty() || nombre == null){
-                usuarios = usuarioServicio.buscarPorRol("TRABAJADOR");
-            }else{
+            if (nombre.isEmpty() || nombre == null) {
+                usuarios = usuarioServicio.buscarPorRol(Rol.TRABAJADOR);
+            } else {
                 usuarios = usuarioServicio.usuariosPorNombreYRol(nombre.toUpperCase(), "TRABAJADOR");
             }
             modelo.addAttribute("usuarios", usuarios);
-        }catch(Exception e){
+        } catch (Exception e) {
             modelo.put("error", e.getMessage());
 
-        }finally {
+        } finally {
             return "tablaTrabajadores.html";
         }
     }
 
-
-    //MODIFICAR ROL USUARIO
-    @GetMapping("/modificarRol/{id}")
-    public String modificarRol(ModelMap modelo, @PathVariable String id) {
-        Usuario usuario = usuarioServicio.getOne(id);
-        modelo.put("usuario", usuario);
-        return "editar_usuario.html";
+    //LISTAR TRABAJADORES POR EMAIL
+    @PostMapping("/tablaTrabajadores/email")
+    public String listarPorEmail(@RequestParam String email, ModelMap modelo) {
+        Usuario usuario = usuarioServicio.BusquedaPorEmail(email.toLowerCase(), Rol.TRABAJADOR);
+        modelo.addAttribute("usuario", usuario);
+        return "tablaTrabajadores.html";
     }
 
-    @PostMapping("/modificarRol/{id}")
-    public String modificarRol(@RequestParam String id, String rol, ModelMap modelo) throws MiException {
-
-        Usuario usuario = usuarioServicio.getOne(id);
-        modelo.put("usuario", usuario);
-
+    //LISTAR TRABAJADORES POR PUESTO EN LA EMPRESA
+    @PostMapping("/tablaTrabajadores/puestoempresa")
+    public String listarPorPuestoEmpresa(@RequestParam(required = false) PuestoEmpresa puestoempresa,
+            ModelMap modelo) throws Exception {
         try {
-            if (usuario.getRol().toString().equals(rol)){
-                throw new MiException("El usuario ya tiene este rol");
-            }else if (rol.equals("TRABAJADOR")){
-                usuarioServicio.cambiarRol(id, Rol.TRABAJADOR);
-            } else if (rol.equals("USER")) {
-                usuarioServicio.cambiarRol(id, Rol.USER);
-            }else if (rol.equals("ADMIN")) {
-                usuarioServicio.cambiarRol(id, Rol.ADMIN);
+            switch (puestoempresa) {
+                case CEO:
+                    List<Usuario> usuario = usuarioServicio.BusquedaPorPuesto(puestoempresa.CEO, Rol.TRABAJADOR);
+                    modelo.addAttribute("usuario", usuario);
+                    break;
+                case CTO:
+                    List<Usuario> usuario1 = usuarioServicio.BusquedaPorPuesto(puestoempresa.CTO, Rol.TRABAJADOR);
+                    modelo.addAttribute("usuario", usuario1);
+                    break;
+                case EMPRESARIO:
+                    List<Usuario> usuario2 = usuarioServicio.BusquedaPorPuesto(puestoempresa.EMPRESARIO, Rol.TRABAJADOR);
+                    modelo.addAttribute("usuario", usuario2);
+
+                    break;
+                case GERENTE:
+                    List<Usuario> usuario3 = usuarioServicio.BusquedaPorPuesto(puestoempresa.GERENTE, Rol.TRABAJADOR);
+                    modelo.addAttribute("usuario", usuario3);
+
+                    break;
+                case MANAGER:
+                    List<Usuario> usuario4 = usuarioServicio.BusquedaPorPuesto(puestoempresa.MANAGER, Rol.TRABAJADOR);
+                    modelo.addAttribute("usuario", usuario4);
+                    break;
+                default:
+                    return "tablaTrabajadores.html";
             }
 
-            modelo.put("exito", "Usuario actualizado correctamente!");
-            return "editar_usuario.html";
+        } catch (Exception e) {
+            modelo.put("error", e.getMessage());
+
+        }
+        return "tablaTrabajadores.html";
+    }
+
+    //LISTAR TRABAJADORES POR PROYECTO
+    @PostMapping("/tablaTrabajadores/proyecto")
+    public String listarPorProyecto(@RequestParam(required = false) String proyecto, ModelMap modelo) {
+        try {
+            List<Usuario> usuarios = new ArrayList<Usuario>();
+            if (proyecto.isEmpty() || proyecto == null) {
+                usuarios = usuarioServicio.buscarPorRol(Rol.TRABAJADOR);
+            } else {
+                List<Usuario> usuario = usuarioServicio.usuariosPorProyecto(proyecto, Rol.TRABAJADOR);
+                modelo.addAttribute("usuario", usuario);
+            }
+        } catch (Exception e) {
+            modelo.put("error", e.getMessage());
+
+        }
+        return "tablaTrabajadores.html";
+    }
+
+    //----------------------------------------PROYECTO--------------------------------------------
+    //Listar TODOS
+    @GetMapping("/tablaProyectos")
+    public String listarProyectos(ModelMap modelo) {
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html";
+    }
+
+    //filtrar por nombre
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/tablaProyectos/nombre")
+    public String filtrarPorNombre(@RequestParam String nombre, ModelMap modelo) {
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+        if (nombre.isEmpty() || nombre == null) {
+            proyectos = proyectoServicio.listarTodos();
+        } else {
+            proyectos = proyectoServicio.buscarPorNombre(nombre.toUpperCase());
+        }
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html ";
+    }
+
+    //FILTRAR POR ESTADO DEL PROYECTO
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/tablaProyectos/estado")
+    public String filtrarPorEstadoProyecto(@RequestParam String estado, ModelMap modelo) throws MiException {
+
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+
+        if (estado.isEmpty() || estado == null) {
+            proyectos = proyectoServicio.listarTodos();
+        } else {
+            proyectos = proyectoServicio.filtrarProyectoPorEstado(estado);
+        }
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html";
+    }
+
+    //FILTRAR POR FECHA DE INICIO
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/tablaProyectos/fechaInicio")
+    public String ordenarProyectosPorFechaInicio(@RequestParam String fechaInicio, ModelMap modelo) {
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+
+        if (fechaInicio.isEmpty() || fechaInicio == null) {
+            proyectos = proyectoServicio.listarTodos();
+        } else {
+            proyectos = proyectoServicio.ordenarProyectosPorFechaInicio(fechaInicio);
+        }
+
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html";
+    }
+
+    //FILTRAR POR FECHA DE FIN
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/tablaProyectos/fechaFin")
+    public String ordenarProyectosPorFechaFin(@RequestParam String fechaFin, ModelMap modelo) {
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+
+        if (fechaFin.isEmpty() || fechaFin == null) {
+            proyectos = proyectoServicio.listarTodos();
+        } else {
+            proyectos = proyectoServicio.ordenarProyectosPorFechaFin(fechaFin);
+        }
+
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html";
+    }
+
+    //----------------------------------------MODIFICAR PROYECTO ADMIN--------------------------------------------
+    //MODIFICAR
+    @GetMapping("/tablaProyectos/modificar/{id}")
+    public String modificar(@PathVariable String id, ModelMap modelo) {
+        modelo.put("proyecto", proyectoServicio.getOne(id));
+        List<Usuario> usuarios = usuarioServicio.listarUsuarios();
+        modelo.addAttribute("usuarios", usuarios);
+
+        return "modificarProyecto.html";
+    }
+
+    @PostMapping("/tablaProyectos/modificar/{id}")
+    public String modificar(@RequestParam String idProyecto,
+            @RequestParam String nombreProyecto,
+            @RequestParam String descripcion,
+            @RequestParam String idUsuario,
+            @RequestParam(required = false) Date fechaInicio,
+            @RequestParam(required = false) Date fechaFin,
+            ModelMap modelo) {
+        try {
+            proyectoServicio.actualizar(idProyecto, nombreProyecto, descripcion, fechaFin,
+                    fechaInicio, idUsuario);
+
+            return "redirect:../tablaProyectos";
         } catch (MiException ex) {
-            modelo.put("error", ex.getMessage());
+            modelo.put("Error", ex.getMessage());
+            return "modificarProyecto.html";
+        }
+
+    }
+//MODIFICAR ROL USUARIO
+        @GetMapping("/modificarRol/{id}")
+        public String modificarRol
+        (ModelMap modelo, 
+        @PathVariable String id
+        
+            ) {
+        Usuario usuario = usuarioServicio.getOne(id);
             modelo.put("usuario", usuario);
             return "editar_usuario.html";
         }
-    }
 
-    //ELIMINAR USUARIO
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id, ModelMap modelo) {
+        @PostMapping("/modificarRol/{id}")
+        public String modificarRol
+        (@RequestParam
+        String id, String rol
+        , ModelMap modelo) throws MiException {
+
+            Usuario usuario = usuarioServicio.getOne(id);
+            modelo.put("usuario", usuario);
+
+            try {
+                if (usuario.getRol().toString().equals(rol)) {
+                    throw new MiException("El usuario ya tiene este rol");
+                } else if (rol.equals("TRABAJADOR")) {
+                    usuarioServicio.cambiarRol(id, Rol.TRABAJADOR);
+                } else if (rol.equals("USER")) {
+                    usuarioServicio.cambiarRol(id, Rol.USER);
+                } else if (rol.equals("ADMIN")) {
+                    usuarioServicio.cambiarRol(id, Rol.ADMIN);
+                }
+
+                modelo.put("exito", "Usuario actualizado correctamente!");
+                return "editar_usuario.html";
+            } catch (MiException ex) {
+                modelo.put("error", ex.getMessage());
+                modelo.put("usuario", usuario);
+                return "editar_usuario.html";
+            }
+        }
+
+        //ELIMINAR USUARIO
+        @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+        @PostMapping("/eliminar/{id}")
+        public String eliminar
+        (@PathVariable
+        String id, ModelMap modelo
+        
+            ) {
         usuarioServicio.eliminarUsuario(id);
-        return "redirect:/admin/usuarios";
+            return "redirect:/admin/usuarios";
 
+        }
     }
-}

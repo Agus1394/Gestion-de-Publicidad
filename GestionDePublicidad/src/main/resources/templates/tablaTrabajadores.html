@@ -34,7 +34,7 @@
       </a>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="/dashboard" class="nav-link px-2 link-ul letrasNav">Atras</a></li>
+        <li><a href="/admin/dashboard" class="nav-link px-2 link-ul letrasNav">Atras</a></li>
       </ul>
 
 
@@ -75,26 +75,26 @@
         </form>
 
         <form th:action="@{/admin/tablaTrabajadores/email}" method="post">
-          <label for="mail">
+          <label for="email">
             <p>Filtro por E-mail</p>
           </label>
-          <input type="text" id="mail" name="email" placeholder="mail" />
+          <input type="text" id="email" name="email" placeholder="mail" />
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
-        <form th:action="@{/admin/tablaTrabajadores/puestoEmpresa}" method="post">
-          <label for="empresa">
+        <form th:action="@{/admin/tablaTrabajadores/puestoempresa}" method="post">
+          <label for="puesto_empresa">
             <p>Filtro por puesto en la empresa</p>
           </label>
-          <input type="text" id="empresa" name="puestoEmpresa" placeholder="" />
+          <input type="text" id="puestoempresa" name="puestoempresa" placeholder="Puesto" />
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
-        <form th:action="@{/admin/tablaTrabajadores/nombreProyecto}" method="post">
+        <form th:action="@{/admin/tablaTrabajadores/proyecto}" method="post">
           <label for="proyecto">
             <p>Filtro por proyecto</p>
           </label>
-          <input type="text" id="proyecto" name="nombre" placeholder="" />
+          <input type="text" id="proyecto" name="nombre" placeholder="Nombre de Proyecto" />
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
