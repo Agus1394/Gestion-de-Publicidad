@@ -33,7 +33,7 @@
         
               <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                  <img th:src="@{/imagen/perfil/__${session.usuariosession.id_usuario}__}"alt="" width="32" height="32" class="rounded-circle me-2">
                   <span>Nombre Apellido</span>
                 </a>
                 <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
@@ -59,16 +59,16 @@
         <div class="row">
         <div class="container-fluid d-flex justify-content-center align-items-center mt-3">
                
-            <form th:action="@{/perfil/__${usuario.id}__}" method="POST" class="form-registro">
+            <form th:action="@{/perfil/__${usuario.id_usuario}__}" method="POST" class="form-registro">
                 <div class="d-flex justify-content-start flex-column  mt-2">
                     <div class="d-flex flex-column align-items-center mb-3 ">
-                    <input type="image" src="" width="100x" height="100px" class="rounded-circle mb-2">
+                    <img th:src="@{/imagen/perfil/__${session.usuariosession.id_usuario}__}" width="100x" height="100px" class="rounded-circle mb-2">
                         <input class="form-control" type="file" id="formFile">
                     </div>
 
-                    <input class="texto" name="nombre" type="text" th:value="$usuario.nombre" placeholder="Nombre de usuario" required>
+                    <input class="texto" name="nombre" type="text" th:value="${usuario.nombre}" placeholder="Nombre de usuario" required>
                 
-                    <input class="texto" name="rol" type="rol" th:value="$usuario.rol" placeholder="Rol" required>
+                    <input class="texto" name="rol" type="rol" th:value="${usuario.rol}" placeholder="Rol" required>
               
                     <input class="texto" name="password" type="password"  placeholder="Contraseña" required>
                

@@ -73,6 +73,7 @@ public class PortalControlador {
 
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         Usuario usuario = usuarioServicio.usuariosPorEmail(logueado.getEmail());
+        modelo.put("usuario", usuario);
         if(usuario.getRol().toString().equals("ADMIN")) {
             return "dashboard.html";
         } else if (usuario.getRol().toString().equals("USER")) {
@@ -90,8 +91,8 @@ public class PortalControlador {
     public String perfil(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
 
-        Usuario usuario1 = usuarioServicio.usuariosPorEmail(usuario.getEmail());
-        modelo.put("usuario", usuario1);
+       // Usuario usuario1 = usuarioServicio.usuariosPorEmail(usuario.getEmail());
+        modelo.put("usuario", usuario);
         return "perfil.html";
     }
 
