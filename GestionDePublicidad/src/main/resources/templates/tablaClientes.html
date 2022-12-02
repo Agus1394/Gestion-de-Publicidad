@@ -9,10 +9,10 @@
   <!-- CSS BOOTSTRAP -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <!-- ICONOS BOOTSTRAP -->
+  <!-- ICONOS  -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
   <!-- CSS -->
-  <link rel="stylesheet" href="/tablaProyectos.css">
+  <link rel="stylesheet" href="/GestionDePublicidad/src/main/resources/static/tablaProyectos.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,8 +21,8 @@
 </head>
 
 <body>
-   <!-- INICIO NAVBAR -->
-   <div class="container-fluid bdn">
+     <!-- INICIO NAVBAR -->
+  <div class="container-fluid bdn">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
       <a href="" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-white text-decoration-none">
         <img class="diamante"
@@ -34,72 +34,108 @@
       </a>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a th:href="@{/inicio}" id="inicio" class="nav-link px-2 link-ul">Inicio</a></li>
-        <li><a href="/dashboard" class="nav-link px-2 link-ul">Atras</a></li>
-
+        <li><a href="/dashboard" class="nav-link px-2 link-ul letrasNav">Atras</a></li>
       </ul>
 
-      <div class="col-md-3 text-end">
-        <a href="/perfil"><button type="button" class="btn boton-registrate">Mi perfil</button></a><!-- falta vista -->
-        <a th:href="@{/logout}"><button type="button" class="btn btn-outline boton-iniciar-sesion me-2">Cerrar Sesion</button></a>
-        <!-- falta accion -->
+
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="" alt="" width="32" height="32" class="rounded-circle me-2">
+          <span>Nombre Apellido</span>
+        </a>
+        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+          <li><a class="dropdown-item" href="#">Perfil</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+        </ul>
       </div>
     </header>
   </div>
   <!-- FIN NAVBAR -->
 
-  <div class="contenedorBody">
-
-     <!--INICIO/BIENVENIDA-->
-  <div id="body">
+  <div class="container-fluid contenedorBody row">
+    <div class="col-6">
+      <!--INICIO/BIENVENIDA-->
       <section id="mensajeSuperior">
-          <div id="burbuja">
-              <h1>Clientes</h1>
-              <p>A continuacion se listaran los clientes existentes en la base de datos, puede filtrarlos o no. Para modificar o eliminar debe acceder al mismo. </p>
-          </div>
+        <div id="burbuja">
+          <h1>Clientes</h1>
+          <p>A continuacion se listaran los clientes existentes y sus filtros</p>
+        </div>
       </section>
       <!-- FIN INICIO/BIENVENIDA-->
-      
+
       <!-- INICIO FILTROS -->
-    <section id="mensajeFiltros">
-      <form th:action="@{/admin/tablaClientes/search}" method="post"> <!-- VER -->
-        <label for="nombre">
-          <p>Filtro por nombre</p>
-        </label>
-        <input type="text" id="nombre" name="nombre" placeholder="Buscar por nombre"/>
-        <button type="submit" class="btn btn-light">Buscar</button>
-      </form>
+      <section id="mensajeFiltros">
+        <form th:action="@{/admin/tablaClientes/search}" method="post">
+          <label for="nombre">
+            <p>Filtro por nombre</p>
+          </label>
+          <input type="text" id="nombre" name="nombre" placeholder="nombre" />
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
 
-<!--      <form th:action="@{/filtroPorEmail}" method="post"> &lt;!&ndash; VER &ndash;&gt;
-        <label for="mail">
-          <p>Filtro por E-mail</p>
-        </label>
-        <input type="text" id="mail" name="email" placeholder="Buscar por mail" />
-        <button type="submit" class="btn btn-light">Buscar</button>
-      </form>-->
-    </section>
-<!-- FIN FILTROS -->
+        <form th:action="@{/admin/tablaClientes/email}" method="post">
+          <label for="mail">
+            <p>Filtro por E-mail</p>
+          </label>
+          <input type="text" id="mail" name="email" placeholder="mail" />
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
 
-<!-- INICIO TABLA -->
-    <section class="contenedorTabla">
-      <table>
-        <thead>
-          <tr id="filaTitulos">
-            <th scope="col">Cliente</th>
-            <th scope="col">E-mail</th>          
-          </tr>
-        </thead>
-        <tbody th:each="usuario : ${usuarios}">
-          <tr>
-            <td th:text="${usuario.nombre}"> NOMBRE PRUEBA</td>
-            <td th:text="${usuario.email}"> EMAIL PRUEBA</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-    <!-- FIN TABLA -->
+        <form th:action="@{/admin/tablaClientes/nombreProyecto}" method="post">
+          <label for="proyecto">
+            <p>Filtro por proyecto</p>
+          </label>
+          <input type="text" id="proyecto" name="nombre" placeholder="" />
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
 
+      </section>
+      <!-- FIN FILTROS -->
+
+    </div>
+    <div class="col-6">
+      <!-- INICIO TABLA -->
+      <section class="contenedorTabla">
+        <table class="table">
+          <thead>
+            <tr id="filaTitulos">
+              <th scope="col">Nombre</th>
+              <th scope="col">E-mail</th>
+              <th scope="col">ROL</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody th:each="cliente:${clientes}">
+            <tr>
+              <td scope="row" th:text="${cliente.nombre}">
+                <a th:action="@{/perfil/__${cliente.id}__}"></a>  
+              </td>
+              <td th:text="${cliente.email}"> </td>
+              <td th:text="${cliente.rol}"></td>
+              <td>
+                <a th:href="@{admin/modificarCliente/__${cliente.id}__}">
+                  <button type="submit"><img
+                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Magic Wand_Lineal-coloured.png"></button>
+                </a>
+                <a th:href="@{admin/eliminarCliente/__${cliente.id}__}">
+                  <button type="submit"><img
+                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Dustbin_Flat.png"></button>
+                </a>
+              </td>
+              <!--VER CONTROLADOR-->
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <!-- FIN TABLA -->
+    </div>
   </div>
-
+ <!-- JAVASCRIPT -->
+ <script src="/script.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" 
+   integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" 
+   crossorigin="anonymous"></script>
 </body>
+
 </html>
