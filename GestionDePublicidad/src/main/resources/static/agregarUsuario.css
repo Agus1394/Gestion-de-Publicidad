@@ -1,0 +1,115 @@
+.bdn {
+    background-color: #212121;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.letrasNav{
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.letrasNav:hover{
+    color: rgb(20, 255, 236);
+    text-decoration: none;
+}
+
+.dropdown-menu{
+    background-color: #212121;
+}
+
+.dropdown-item{
+    color: #fff;
+}
+
+.dropdown-toggle{
+    color: #fff;
+}
+
+.dropdown-toggle:hover{
+    color: #14FFEC;
+}
+
+.dropdown-item:active, .dropdown-item:focus, .dropdown-item:hover{
+    background-color: #14FFEC;
+    color: #212121;
+}
+
+
+h1, h2, h3{
+    font-family:'Hind Siliguri', sans-serif !important;
+}
+    
+p{
+    font-family: 'Hind Siliguri', sans-serif !important;
+}
+
+
+
+
+
+
+
+body{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+}
+
+.contenedorBody{
+    text-align: center;
+    background-color: transparent;
+}
+
+
+.contenedorTabla{
+    padding-left: 10%;
+}
+
+table{ /*seccion*/
+    padding-top: 2%;
+    padding-bottom: 5%;
+    border-collapse: separate;
+}
+
+
+#filaTitulos{
+    font-family:'Hind Siliguri', sans-serif;
+    font-size: large;
+    background-color: rgb(33, 33, 33);
+    color: rgb(255, 233, 177);
+    text-align: center;
+    padding: 5%;
+    border-radius: 10px;
+}
+
+
+td{
+    font-family: 'Lora', sans-serif;
+    color: rgb(33, 33, 33);
+    text-align: center;
+    background-color: rgb(255, 233, 177) !important;
+    border-radius: 3px;
+    border-color: rgb(33, 33, 33, 1);
+    padding: 5px;
+}
+
+.boton-registrate{
+    background-color: #14FFEC;
+    color:#212121;
+}
+
+.boton-registrate:hover{
+    background-color: none;
+    border-color: #14FFEC;
+    color: #fff;
+    transition: 0.3s  all;
+}
+
+.boton-registrarte{
+    backdrop-filter: blur(5px);
+    background-color: #14FFEC;
+    color: #212121;
+}
+
+.boton-registrarte:hover{
+    background-color:#00e3d0;
+    transition: 0.3s  all;
+}

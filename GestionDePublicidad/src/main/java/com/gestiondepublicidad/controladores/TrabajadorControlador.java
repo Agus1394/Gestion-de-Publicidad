@@ -101,7 +101,7 @@ public class TrabajadorControlador {
     }
 
     //ELIMINAR USUARIO/CLIENTE
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
     @PostMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo) {
         usuarioServicio.eliminarUsuario(id);

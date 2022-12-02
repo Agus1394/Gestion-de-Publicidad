@@ -34,7 +34,7 @@
   
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/dashboard" class="nav-link px-2 link-ul letrasNav">Atras</a></li>
-          <li><a href="/crearProyecto" class="nav-link px-2 link-ul letrasNav">Crear Proyecto</a></li>
+          <li><a th:action="@{/crearProyecto}" class="nav-link px-2 link-ul letrasNav">Crear Proyecto</a></li>
           <!--VER CONTROLADOR-->
         </ul>
   
@@ -67,7 +67,7 @@
 
       <!-- INICIO FILTROS -->
       <section id="mensajeFiltros">
-        <form th:action="@{/proyecto/tablaProyectos/nombre}">
+        <form th:action="@{/proyecto/tablaProyectos/nombre}"  method="post">
           <label for="nombre">
             <p>Filtro por nombre</p>
           </label>
@@ -75,7 +75,7 @@
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
-        <form th:action="@{/proyecto/tablaProyectos/fechaInicio}">
+        <form th:action="@{/proyecto/tablaProyectos/fechaInicio}"  method="post">
           <label for="inicio">
             <p>Filtro por fecha de inicio</p>
           </label>
@@ -83,7 +83,7 @@
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
-        <form th:action="@{/proyecto/tablaProyectos/fechaFin}">
+        <form th:action="@{/proyecto/tablaProyectos/fechaFin}"  method="post">
           <label for="fin">
             <p>Filtro por fecha de fin</p>
           </label>
@@ -91,7 +91,7 @@
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
-        <form th:action="@{/proyecto/tablaProyectos/estado}">
+        <form th:action="@{/proyecto/tablaProyectos/estado}"  method="post">
           <label for="estado">
             <p>Filtro por estado</p>
           </label>
@@ -122,18 +122,18 @@
           <tbody th:each="proyecto:${proyectos}">
             <tr>
               <td scope="row" th:text="${proyecto.nombre}">
-                <a th:action="@{/proyecto/__${proyecto.id}__}"></a>
+                <a th:href="@{/proyecto/__${proyecto.id}__}"></a>
               </td>
               <!--VER CONTROLADOR-->
               <td th:text="${proyecto.fechaInicio}"></td>
               <td th:text="${proyecto.fechaFin}"></td>
               <td th:text="${proyecto.estadoProyecto}"></td>
               <td>
-                <a th:action="@{admin/modificarProyecto/__{proyecto.id}__}">
+                <a th:href="@{admin/modificarProyecto/__{proyecto.id}__}">
                   <button type="submit"><img
                       src="/GestionDePublicidad/src/main/resources/static/img/botones/Magic Wand_Lineal-coloured.png"></button>
                 </a>
-                <a th:action="@{admin/eliminarProyecto/__{proyecto.id}__}">
+                <a th:href="@{admin/eliminarProyecto/__{proyecto.id}__}">
                   <button type="submit"><img
                       src="/GestionDePublicidad/src/main/resources/static/img/botones/Dustbin_Flat.png"></button>
                 </a>

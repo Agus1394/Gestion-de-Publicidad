@@ -12,7 +12,7 @@
   <!-- ICONOS BOOTSTRAP -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
   <!-- CSS -->
-  <link rel="stylesheet" href="/GestionDePublicidad/src/main/resources/static/proyecto.css">
+  <link rel="stylesheet" href="/GestionDePublicidad/src/main/resources/static/crearProyecto.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600&family=Titillium+Web&display=swap"
@@ -31,7 +31,7 @@
 
       <div style="margin-left: -150px;">
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li><a th:href="@{/inicio}" class="px-2 link-ul">Inicio</a></li>
+
         </ul>
       </div>
 
@@ -60,31 +60,75 @@
 
         <form th:action="@{/proyecto/__${proyecto.id}__}" method="POST" class="form-registro">
           <div class="d-flex justify-content-start flex-column  mt-2">
-            <input class="texto" name="nombre" type="text" th:value="$proyecto.nombre" placeholder="Nombre de usuario"
-              required>
-
-            <input class="texto" name="rol" type="list" th:value="$proyecto.usuario.nombre" placeholder="cliente"
-              required><!--VER-->
-            <input class="texto" name="rol" type="list" th:value="$proyecto.usuario.nombre" placeholder="trabajador"
-              required><!--VER-->
-
-            <input class="texto" name="rol" type="date" th:value="$proyecto.fechaInicio" placeholder="inicio" required>
-            <input class="texto" name="rol" type="date" th:value="$proyecto.fechaFin" placeholder="fin" required>
+            <!--nombre proyecto-->
+            <label for="nombre">
+              <p>Nombre/Titulo</p>
+            </label>
+            <input class="texto" id="nombre" name="nombre" type="text" th:value="${proyecto.nombre}" required>
+            <!--descripcion del proyecto-->
+            <label for="descr">
+              <p>Descripcion</p>
+            </label>
+            <input class="texto" id="descr" name="descripcion" type="text" th:value="${proyecto.descripcion}" required>
+            <!--trabajadores y clientes del proyecto-->
             
+            <p>Trabajadores/Clientes</p>
+            <div class="row">
+              <div class="column-6">
+                <table class="table">
+                  <tbody th:each="trabajador:${trabajadores}">
+                    <tr>
+                      <td scope="row" th:text="${trabajador.nombre}">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="column-6">
+                <table class="table">
+                  <tbody th:each="cliente:${clientes}">
+                    <tr>
+                      <td scope="row" th:text="${cliente.nombre}">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Fechas del proyecto-->
+            <label for="fechaInicio">
+              <p>Fecha Inicio</p>
+            </label>
+            <input class="texto" id="fechaInicio" name="fechaInicio" type="date" th:value="${proyecto.fechaInicio}"
+               required>
+            <label for="fechaFin">
+              <p>Fecha Fin</p>
+            </label>
+            <input class="texto" id="fechaFin" name="fechaFin" type="date" th:value="${proyecto.fechaFin}"
+               required>
+            <!-- estado del proyecto-->
+            <label for="estado">
+              <p>Estado</p>
+            </label>
             <select id="estado" name="estado">
               <option value="FINALIZADO">Finalizado</option>
               <option value="ENPROCESO">En Proceso</option>
               <option value="INICIADO">Iniciado</option>
             </select>
-
-            <!--agregar boton de sumar clientes o trabajadores y te lleve A UNA NUEVA VISTA. 
-              En ella enviar ID de usuario y ID del proyecto a back, y volver a esta vista. 
-              en caso de querer seguir agregando debera hacerlo 1 a 1-->
           </div>
           <div class="d-flex justify-content-center mt-3">
             <button type="submit" class="btn boton-registrarte">Actualizar Datos</button>
           </div>
         </form>
+
+        <div class="d-flex justify-content-center mt-3">
+          <button type="submit" class="btn boton-registrarte">
+            <a th:href="@{/proyecto/agregarCliente/__${proyecto.ID}__}">Agregar Cliente            
+            </a></button>
+          <button type="submit" class="btn boton-registrarte"><a
+              th:href="@{/proyecto/agregarTrabajador/__${proyecto.ID}__}">Agregar Trabajador</a></button>
+        </div>
+
       </div>
     </div>
   </section>

@@ -114,11 +114,11 @@
               <td th:text="${cliente.email}"> </td>
               <td th:text="${cliente.rol}"></td>
               <td>
-                <a th:action="@{admin/modificarCliente/__${cliente.id}__}">
+                <a th:href="@{admin/modificarCliente/__${cliente.id}__}">
                   <button type="submit"><img
                       src="/GestionDePublicidad/src/main/resources/static/img/botones/Magic Wand_Lineal-coloured.png"></button>
                 </a>
-                <a th:action="@{admin/eliminarCliente/__${cliente.id}__}">
+                <a th:href="@{admin/eliminarCliente/__${cliente.id}__}">
                   <button type="submit"><img
                       src="/GestionDePublicidad/src/main/resources/static/img/botones/Dustbin_Flat.png"></button>
                 </a>
