@@ -14,15 +14,15 @@ public class Evento {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id_evento;
+    private String id;
 
-    private String nombreEvento;
+    private String nombre;
 
     private String descripcion;
 
     @Temporal(TemporalType.DATE)
-    private Date fechaEvento;
+    private Date fecha;
 
     @Enumerated(EnumType.STRING)
-    private TipoEvento tipoEvento;
+    private TipoEvento tipo;
 }

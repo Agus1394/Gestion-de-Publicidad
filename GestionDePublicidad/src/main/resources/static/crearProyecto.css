@@ -1,0 +1,51 @@
+
+.bdn {
+    background-color: #212121;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.letrasNav{
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.letrasNav:hover{
+    color: rgb(20, 255, 236);
+    text-decoration: none;
+}
+
+.dropdown-menu{
+    background-color: #212121;
+}
+
+.dropdown-item{
+    color: #fff;
+}
+
+.dropdown-toggle{
+    color: #fff;
+}
+
+.dropdown-toggle:hover{
+    color: #14FFEC;
+}
+
+.dropdown-item:active, .dropdown-item:focus, .dropdown-item:hover{
+    background-color: #14FFEC;
+    color: #212121;
+}
+ 
+p{
+    font-family: 'Hind Siliguri', sans-serif;
+}
+
+
+
+
+
+
+
+
+body{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+}
