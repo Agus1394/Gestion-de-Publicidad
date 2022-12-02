@@ -1,4 +1,5 @@
 // EFECTO MAQUINA DE ESCRIBIR
+
 const efectoTexto = document.getElementById("typewriter")
 const typewriter = new Typewriter(efectoTexto,{
     loop:true,
