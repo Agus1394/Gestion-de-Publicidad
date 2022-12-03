@@ -2,13 +2,16 @@ package com.gestiondepublicidad.controladores;
 
 import com.gestiondepublicidad.entidades.Proyecto;
 import java.util.List;
+
+import com.gestiondepublicidad.entidades.Nota;
 import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.excepciones.MiException;
+
+import com.gestiondepublicidad.servicios.NotaServicio;
 import com.gestiondepublicidad.servicios.ProyectoServicio;
+
 import com.gestiondepublicidad.servicios.UsuarioServicio;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/trabajador")
 public class TrabajadorControlador {
@@ -29,6 +34,9 @@ public class TrabajadorControlador {
     UsuarioServicio usuarioServicio;
     @Autowired
     private ProyectoServicio proyectoServicio;
+
+    @Autowired
+    NotaServicio notaServicio;
 
     @GetMapping("/dashboard")
     public String panelAdministrativoCliente(ModelMap modelo) {
@@ -166,4 +174,71 @@ public class TrabajadorControlador {
         return "redirect:/trabajador/usuarios";
 
     }
+
+
+    //CREAR NOTA
+    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
+    @GetMapping("/nota/crear")
+    public String crearNota(){
+        return "formularioNota.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
+    @PostMapping("/nota/creado")
+    public String notaCreada(String descripcion, String titulo, HttpSession session, ModelMap modelo){
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        Usuario usuario = usuarioServicio.getOne(logueado.getId_usuario());
+
+        Nota nota = new Nota();
+        nota.setTitulo(titulo);
+        nota.setDescripcion(descripcion);
+        notaServicio.crearNota(nota);
+        usuarioServicio.agregarNotaUsuario(usuario, nota);
+
+        modelo.put("nota", nota);
+        modelo.put("exito", "nota creada con éxito");
+        return "redirect:/trabajador/nota/" + nota.getId_nota();
+    }
+
+    // NOTAS TRABAJADOR
+    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
+    @GetMapping("/listaNota")
+    public String listarNota(ModelMap modelo, HttpSession session){
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        modelo.addAttribute("notas", notaServicio.listarNotas(logueado.getId_usuario()));
+        return "listarNotas.html";
+    }
+
+    // EDITAR NOTA TRABAJADOR
+    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
+    @GetMapping("/nota/{id_nota}")
+    public String editarNota(@PathVariable String id_nota){
+        return "formularioNota.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
+    @PostMapping("/nota/{id_nota}/editada")
+    public String editarNota(@PathVariable String id_nota, String titulo, String descripcion, ModelMap modelo, HttpSession session) throws MiException {
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        try{
+            notaServicio.actualizar(id_nota, titulo, descripcion, logueado);
+            modelo.put("exito", "nota guardada con exito");
+        }catch (Exception e){
+            modelo.put("error", e.getMessage());
+        }finally {
+            modelo.addAttribute("notas", notaServicio.listarNotas(logueado.getId_usuario()));
+            return "listarNotas.html";
+        }
+    }
+
+//    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
+    @GetMapping("/nota/eliminar/{id}")
+    public String eliminarNota(@PathVariable String id, HttpSession session) throws MiException {
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        notaServicio.eliminar(id);
+        return "listarNotas.html";
+    }
 }
+
+
+

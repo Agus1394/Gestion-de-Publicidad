@@ -3,9 +3,8 @@ package com.gestiondepublicidad.entidades;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -20,5 +19,9 @@ public class Nota {
 
     private String descripcion;
 
-    private String fechaCreacion;
+    @Temporal(TemporalType.DATE)
+    private Date fechaCreacion;
+
+    @ManyToOne
+    Usuario usuario;
 }

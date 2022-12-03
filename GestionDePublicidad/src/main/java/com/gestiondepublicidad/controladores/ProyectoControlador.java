@@ -145,4 +145,37 @@ public class ProyectoControlador {
         return "tablaProyectos.html";
     }
 
+    @GetMapping("/tablaProyectos/fechaInicio")
+    public String ordenarProyectosPorFechaInicio(@RequestParam String fechaInicio, ModelMap modelo){
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+
+        if (fechaInicio.isEmpty() || fechaInicio == null){
+            proyectos = proyectoServicio.listarTodos();
+        }else{
+            proyectos = proyectoServicio.ordenarProyectosPorFechaInicio(fechaInicio);
+        }
+
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html";
+    }
+    @GetMapping("/tablaProyectos/fechaFin")
+    public String ordenarProyectosPorFechaFin(@RequestParam String fechaFin, ModelMap modelo){
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+
+        if (fechaFin.isEmpty() || fechaFin == null){
+            proyectos = proyectoServicio.listarTodos();
+        }else{
+            proyectos = proyectoServicio.ordenarProyectosPorFechaFin(fechaFin);
+        }
+
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html";
+    }
+
+    @GetMapping("{id_proyecto}/agenda")
+    public String agenda(@PathVariable String id_proyecto, ModelMap modelo){
+
+        modelo.addAttribute("usuarios", usuarioServicio.agendaProyecto(id_proyecto));
+        return "agenda.html";
+    }
 }
