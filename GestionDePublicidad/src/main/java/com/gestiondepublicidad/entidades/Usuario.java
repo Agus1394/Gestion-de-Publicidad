@@ -3,15 +3,8 @@ package com.gestiondepublicidad.entidades;
 import com.gestiondepublicidad.enumeraciones.PuestoEmpresa;
 import com.gestiondepublicidad.enumeraciones.Rol;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,7 +37,7 @@ public class Usuario {
     @OneToMany
     private List<Evento> eventos;
 
-    @OneToMany
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Nota> notas;
 
     @Enumerated(EnumType.STRING)

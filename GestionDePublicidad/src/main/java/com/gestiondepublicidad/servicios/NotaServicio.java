@@ -19,13 +19,16 @@ public class NotaServicio {
     @Autowired
     NotaRepositorio notaRepositorio;
 
+    @Autowired
+    UsuarioServicio usuarioServicio;
+
     @Transactional
-    public void crearNota(String descripcion, String titulo){
-        Nota nota = new Nota();
+    public void crearNota(Nota nota){
+        /*Nota nota = new Nota();
 
         nota.setDescripcion(descripcion);
         nota.setTitulo(titulo);
-        nota.setFechaCreacion(new Date());
+        nota.setFechaCreacion(new Date());*/
 
         notaRepositorio.save(nota);
     }
@@ -48,19 +51,11 @@ public class NotaServicio {
 
     @Transactional
     public void eliminar(String id) throws MiException {
-        Optional<Nota> respuesta = notaRepositorio.findById(id);
-
-        if (respuesta.isPresent()){
-            Nota nota = respuesta.get();
-            notaRepositorio.delete(nota);
-        }else{
-            throw new MiException("no existe esta nota");
-        }
+        Nota nota = notaRepositorio.getReferenceById(id);
+        notaRepositorio.delete(nota);
     }
 
-    public List<Nota> listar(String id_usuario){
-
+    public List<Nota> listarNotas(String id_usuario){
         return notaRepositorio.notasUsuario(id_usuario);
     }
-
 }

@@ -1,13 +1,16 @@
 package com.gestiondepublicidad.servicios;
 
 import com.gestiondepublicidad.entidades.Foto;
+import com.gestiondepublicidad.entidades.Nota;
 import com.gestiondepublicidad.entidades.Proyecto;
 import com.gestiondepublicidad.entidades.Usuario;
 import com.gestiondepublicidad.enumeraciones.Rol;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.repositorios.FotoRepositorio;
+import com.gestiondepublicidad.repositorios.NotaRepositorio;
 import com.gestiondepublicidad.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -33,6 +36,9 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private FotoServicio fotoServicio;
+
+    @Autowired
+    NotaRepositorio notaRepositorio;
 
     @Autowired
     private FotoRepositorio fotoRepositorio;
@@ -220,4 +226,33 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
 
+    //AGENDA DE USUARIOS DE UN PROYECTO
+    public List<Usuario> agendaProyecto(String id_proyecto){
+        return usuarioRepositorio.agendaProyecto(id_proyecto);
+    }
+
+    @Transactional
+    public void agregarNotaUsuario(Usuario usuario, Nota nota){
+        List<Nota> notas = usuario.getNotas();
+        notas.add(nota);
+
+        usuario.setNotas(notas);
+        usuarioRepositorio.save(usuario);
+
+    }
+
+    @Transactional
+    public void eliminarNotaUsuario(String id_usuario, Nota nota){
+        Usuario usuario = usuarioRepositorio.getOne(id_usuario);
+        List<Nota> notas = notaRepositorio.notasUsuario(id_usuario);
+        Iterator itr = notas.iterator();
+
+        while (itr.hasNext()) {
+            Nota notab = (Nota)itr.next();
+            if (notab.getId_nota().equals(nota.getId_nota()) ){
+                itr.remove();
+            }
+        }
+        usuarioRepositorio.saveAndFlush(usuario);
+    }
 }

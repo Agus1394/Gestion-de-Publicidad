@@ -209,4 +209,11 @@ public class ProyectoControlador {
         modelo.addAttribute("proyectos", proyectos);
         return "tablaProyectos.html";
     }
+
+    @GetMapping("{id_proyecto}/agenda")
+    public String agenda(@PathVariable String id_proyecto, ModelMap modelo){
+
+        modelo.addAttribute("usuarios", usuarioServicio.agendaProyecto(id_proyecto));
+        return "agenda.html";
+    }
 }

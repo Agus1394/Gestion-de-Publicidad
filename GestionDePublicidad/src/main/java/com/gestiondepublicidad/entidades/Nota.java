@@ -21,4 +21,7 @@ public class Nota {
 
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
+
+    @ManyToOne
+    Usuario usuario;
 }
