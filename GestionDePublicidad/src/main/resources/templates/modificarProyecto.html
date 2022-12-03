@@ -58,7 +58,8 @@
     <div class="row">
       <div class="container-fluid d-flex justify-content-center align-items-center mt-3">
 
-        <form th:action="@{/proyecto/__${proyecto.id}__}" method="POST" class="form-registro">
+        <form th:action="@{/admin/tablaProyectos/modificar/__${proyecto.id}__}" 
+              method="POST" class="form-registro">
           <div class="d-flex justify-content-start flex-column  mt-2">
             <!--nombre proyecto-->
             <label for="nombre">
@@ -110,7 +111,7 @@
             <label for="estado">
               <p>Estado</p>
             </label>
-            <select id="estado" name="estado">
+            <select id="estado" name="estado">                
               <option value="FINALIZADO">Finalizado</option>
               <option value="ENPROCESO">En Proceso</option>
               <option value="INICIADO">Iniciado</option>

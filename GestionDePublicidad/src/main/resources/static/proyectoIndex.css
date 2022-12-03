@@ -1,0 +1,93 @@
+h1{
+    font-family: 'Lora', serif;
+    font-size: 30px;
+}
+
+p{
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 18px;
+}
+
+h3{
+    font-family: 'Titillium Web', sans-serif;
+}
+
+body{
+    background-image: linear-gradient(90deg,#fff 0%, #14FFEC 200%);
+}
+
+.bdn{
+    background-color: #212121;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+
+.link-navbar{
+    color: #fff;
+    text-decoration: none;
+}
+.link-navbar:hover{
+    color: #14FFEC;
+}
+
+.sidebar{
+    width: 220px;
+    height: 100vh;
+    position: fixed;
+    background-color: #212121;
+    transition: 0.4s;
+}
+
+.link-sidebar{
+    font-size: 1.10em;
+    text-shadow: 1px 1px 10px #212121;
+    color: #fff;
+}
+
+.link-sidebar:active, .link-sidebar:focus, .link-sidebar:hover{
+    background-color: #14FFEC;
+    color: #fff;
+}
+
+.dropdown-menu{
+    background-color: #212121;
+}
+
+.dropdown-item{
+    color: #fff;
+}
+
+.dropdown-toggle{
+    color: #fff;
+}
+
+.dropdown-toggle:hover{
+    color: #14FFEC;
+}
+
+.dropdown-item:active, .dropdown-item:focus, .dropdown-item:hover{
+    background-color: #14FFEC;
+    color: #212121;
+}
+
+.container-datos{
+    margin-left: 250px;
+    transition: 0.4s;
+}
+
+.active-nav{
+    margin-left: -300px;
+}
+
+.active-cont{
+    margin-left: 0;
+}
+
+.active{
+    background-color: #14FFEC;
+}
+
+#menu-btn{
+    background-color: #14FFEC;
+    color: #212121;
+}
