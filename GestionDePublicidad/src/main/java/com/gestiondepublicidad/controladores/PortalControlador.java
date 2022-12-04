@@ -73,6 +73,7 @@ public class PortalControlador {
 
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         Usuario usuario = usuarioServicio.usuariosPorEmail(logueado.getEmail());
+        modelo.put("usuario", usuario);
         if(usuario.getRol().toString().equals("ADMIN")) {
             return "dashboard.html";
         } else if (usuario.getRol().toString().equals("USER")) {
@@ -90,14 +91,16 @@ public class PortalControlador {
     public String perfil(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
 
-        Usuario usuario1 = usuarioServicio.usuariosPorEmail(usuario.getEmail());
-        modelo.put("usuario", usuario1);
+       // Usuario usuario1 = usuarioServicio.usuariosPorEmail(usuario.getEmail());
+        modelo.put("usuario", usuario);
         return "perfil.html";
     }
 
     //ACTUALIZAR
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @PostMapping("/perfil/{id}")
+    
+    //REVISAR FOTO Y RETURN DEL TRY
     public String actualizar(@RequestParam MultipartFile archivo, @PathVariable String id,
             @RequestParam String nombre, @RequestParam String email,
             @RequestParam String password, @RequestParam String password2,
@@ -106,7 +109,7 @@ public class PortalControlador {
         try {
             usuarioServicio.actualizar(archivo, id, nombre, email, password, password2);
             modelo.put("exito", "Usuario actualizado correctamente!");
-            return "index.html";
+            return "perfil.html";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);

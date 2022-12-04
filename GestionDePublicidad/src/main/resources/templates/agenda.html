@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeThink</title>
+    <!-- CSS BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- ICONOS BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="agenda.css">
+    <!-- FONT TITULO -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,700&display=swap" rel="stylesheet">
+    <!-- FONT PARRAFO -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300&display=swap" rel="stylesheet">
+    <!-- FONT H2,H3,H4 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- INICIO NAVBAR -->
+    <nav class="navbar navbar-expand-sm bdn">
+    
+      <div class="container-fluid">
+        <div>
+          <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-decoration-none">
+            <img src="/img/logos/logo-diamante-blanco.png" style="width: 50px; height: auto; margin-right: 5px;"
+              alt="diamante">
+            <img src="/img/logos/logo-blanco.png" style="width: 105px; height: auto;" alt="logo">
+          </a>
+        </div>
+    
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto mb-2 mb-lg-0 py-2">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">Inicio</a>
+            </li>
+          </ul>
+    
+          <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser2"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+              <span>Nombre Apellido</span>
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+              <li><a class="dropdown-item" href="#">Perfil</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+            </ul>
+          </div>
+    
+        </div>
+      </div>
+    </nav>
+    <!-- FIN NAVBAR -->
+
+
+
+
+    <!-- INICIO AGENDA -->
+    <div class="container mt-5">
+      
+      <div class="mb-5 d-flex justify-content-center contenedor-modal">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Agregar Contacto
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title mx-auto" id="exampleModalLabel">Contacto</h5>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container-fluid">
+                        <form action="">
+                          <div class="row mb-2 mx-auto">
+                            <label for="nombre" class="col-2 col-form-label">Nombre:</label>
+                          <div class="col-9">
+                            <input type="text" class="form-control" id="nombre"
+                            name="nombre">
+                          </div>
+                          </div>
+                          <div class="row mb-2 mx-auto">
+                            <label for="apellido" class="col-2 col-form-label">Apellido:</label>
+                          <div class="col-9">
+                            <input type="text" class="form-control" id="apellido"
+                            name="apellido">
+                          </div>
+                          </div>
+                          <div class="row mb-2 mx-auto">
+                            <label for="email" class="col-2 col-form-label">Email:</label>
+                          <div class="col-9">
+                            <input type="text" class="form-control" id="email"
+                            name="email">
+                          </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn" data-bs-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </div>
+
+    <table class="table">
+      <thead>
+        <tr class="table-dark">
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Email</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-light">
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>asd@gmail.com</td>
+          <td><button type="button" class="btn boton-tabla" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Modificar
+          </button></td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <!-- FIN AGENDA -->                               
+
+
+
+    <!-- JAVASCRIPT BOOTSTRAP -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -97,11 +97,12 @@ public class AdminControlador {
     }
 
     //----------------------------------------TRABAJADOR--------------------------------------------
-    //LISTAR TRABAJADORES 
+    //LISTAR TRABAJADORES
+    //NO FUNCIONAN LOS FILTROS
     @GetMapping("/tablaTrabajadores")
     public String listarTrabajadores(ModelMap modelo) {
-        List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol(Rol.TRABAJADOR);
-        modelo.addAttribute("usuarios", listaUsuarios);
+        List<Usuario> usuarios = usuarioServicio.buscarPorRol(Rol.TRABAJADOR);
+        modelo.addAttribute("trabajadores", usuarios);
         return "tablaTrabajadores.html";
     }
 
@@ -115,7 +116,7 @@ public class AdminControlador {
             } else {
                 usuarios = usuarioServicio.usuariosPorNombreYRol(nombre.toUpperCase(), "TRABAJADOR");
             }
-            modelo.addAttribute("usuarios", usuarios);
+            modelo.addAttribute("trabajadores", usuarios);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
 
@@ -128,7 +129,7 @@ public class AdminControlador {
     @PostMapping("/tablaTrabajadores/email")
     public String listarPorEmail(@RequestParam String email, ModelMap modelo) {
         Usuario usuario = usuarioServicio.BusquedaPorEmail(email.toLowerCase(), Rol.TRABAJADOR);
-        modelo.addAttribute("usuario", usuario);
+        modelo.addAttribute("trabajadores", usuario);
         return "tablaTrabajadores.html";
     }
 
@@ -140,25 +141,25 @@ public class AdminControlador {
             switch (puestoempresa) {
                 case CEO:
                     List<Usuario> usuario = usuarioServicio.BusquedaPorPuesto(puestoempresa.CEO, Rol.TRABAJADOR);
-                    modelo.addAttribute("usuario", usuario);
+                    modelo.addAttribute("trabajadores", usuario);
                     break;
                 case CTO:
                     List<Usuario> usuario1 = usuarioServicio.BusquedaPorPuesto(puestoempresa.CTO, Rol.TRABAJADOR);
-                    modelo.addAttribute("usuario", usuario1);
+                    modelo.addAttribute("trabajadores", usuario1);
                     break;
                 case EMPRESARIO:
                     List<Usuario> usuario2 = usuarioServicio.BusquedaPorPuesto(puestoempresa.EMPRESARIO, Rol.TRABAJADOR);
-                    modelo.addAttribute("usuario", usuario2);
+                    modelo.addAttribute("trabajadores", usuario2);
 
                     break;
                 case GERENTE:
                     List<Usuario> usuario3 = usuarioServicio.BusquedaPorPuesto(puestoempresa.GERENTE, Rol.TRABAJADOR);
-                    modelo.addAttribute("usuario", usuario3);
+                    modelo.addAttribute("trabajadores", usuario3);
 
                     break;
                 case MANAGER:
                     List<Usuario> usuario4 = usuarioServicio.BusquedaPorPuesto(puestoempresa.MANAGER, Rol.TRABAJADOR);
-                    modelo.addAttribute("usuario", usuario4);
+                    modelo.addAttribute("trabajadores", usuario4);
                     break;
                 default:
                     return "tablaTrabajadores.html";
@@ -180,7 +181,7 @@ public class AdminControlador {
                 usuarios = usuarioServicio.buscarPorRol(Rol.TRABAJADOR);
             } else {
                 List<Usuario> usuario = usuarioServicio.usuariosPorProyecto(proyecto, Rol.TRABAJADOR);
-                modelo.addAttribute("usuario", usuario);
+                modelo.addAttribute("trabajadores", usuario);
             }
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
@@ -188,7 +189,19 @@ public class AdminControlador {
         }
         return "tablaTrabajadores.html";
     }
+    
+        //ELIMINAR USUARIO
+        @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+        @PostMapping("/eliminar/{id}")
+        public String eliminar
+        (@PathVariable
+        String id, ModelMap modelo
+        
+            ) {
+        usuarioServicio.eliminarUsuario(id);
+            return "redirect:/admin/usuarios";
 
+        }
     //----------------------------------------PROYECTO--------------------------------------------
     //Listar TODOS
     @GetMapping("/tablaProyectos")
@@ -265,7 +278,7 @@ public class AdminControlador {
     @GetMapping("/tablaProyectos/modificar/{id}")
     public String modificar(@PathVariable String id, ModelMap modelo) {
         modelo.put("proyecto", proyectoServicio.getOne(id));
-        List<Usuario> usuarios = usuarioServicio.listarUsuarios();
+        List<Usuario> usuarios = usuarioServicio.listarUsuarios(); //LISTAR USUARIO POR PROYECTO Y ROL. ESTE METODO INCLUYE TODOS LOS USUARIOS.
         modelo.addAttribute("usuarios", usuarios);
 
         return "modificarProyecto.html";
@@ -288,6 +301,7 @@ public class AdminControlador {
             modelo.put("Error", ex.getMessage());
             return "modificarProyecto.html";
         }
+        //ESTA DEVOLVIENDO UNA LISTA DE USUARIO Y NO SOLO UN ID.
 
     }
 //MODIFICAR ROL USUARIO
@@ -330,17 +344,6 @@ public class AdminControlador {
                 return "editar_usuario.html";
             }
         }
+        //FALTA VISTA EN FRONT
 
-        //ELIMINAR USUARIO
-        @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-        @PostMapping("/eliminar/{id}")
-        public String eliminar
-        (@PathVariable
-        String id, ModelMap modelo
-        
-            ) {
-        usuarioServicio.eliminarUsuario(id);
-            return "redirect:/admin/usuarios";
-
-        }
     }
