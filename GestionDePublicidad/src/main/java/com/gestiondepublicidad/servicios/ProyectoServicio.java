@@ -27,12 +27,18 @@ public class ProyectoServicio {
     public void registrar(String id_proyecto, String nombre, String descripcion,
             Date fechaInicio, Date fechaFin, String id_usuario) throws MiException {
 
-        validar(id_proyecto, nombre, descripcion, fechaInicio, fechaFin, id_usuario);
+        validar(id_proyecto, nombre, descripcion, fechaInicio, fechaFin);
 
-        Usuario usuario = usuarioRepositorio.findById(id_usuario).get();
+        Optional<Usuario> respuestausuario = usuarioRepositorio.findById(id_usuario);
         Proyecto proyecto = new Proyecto();
 
+        Usuario usuario = new Usuario();
+
         List<Usuario> nuevoUsuario = new ArrayList();
+
+        if (respuestausuario.isPresent()) {
+            usuario = respuestausuario.get();
+        }
 
         proyecto.setId_proyecto(id_proyecto);
         proyecto.setNombre(nombre);
@@ -50,12 +56,11 @@ public class ProyectoServicio {
         List<Proyecto> proyectos = proyectoRepositorio.proyectosDelUsuario(id_usuario);
         return proyectos;
     }
-    
-    
+
     //metodo que filtra al proyecto por estado
-    public List<Proyecto> filtrarProyectoPorEstado (String estadoProyecto) throws MiException{
+    public List<Proyecto> filtrarProyectoPorEstado(String estadoProyecto) throws MiException {
         return proyectoRepositorio.buscarPorEstado(estadoProyecto);
-        
+
     }
 
     //ACTUALIZAR
@@ -63,13 +68,13 @@ public class ProyectoServicio {
     public void actualizar(String id_proyecto, String nombre, String descripcion,
             Date fechaInicio, Date fechaFin, String id_usuario) throws MiException {
 
-        validar(id_proyecto, nombre, descripcion, fechaInicio, fechaFin, id_usuario);
+        validar(id_proyecto, nombre, descripcion, fechaInicio, fechaFin);
 
         Optional<Proyecto> respuesta = proyectoRepositorio.findById(id_proyecto);
         Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id_usuario);
         Usuario usuario = new Usuario();
-        
-        List <Proyecto> proyectoActualizado = new ArrayList();
+
+        List<Proyecto> proyectoActualizado = new ArrayList();
 
         if (respuestaUsuario.isPresent()) {
             usuario = respuestaUsuario.get();
@@ -81,8 +86,8 @@ public class ProyectoServicio {
             proyecto.setNombre(nombre);
             proyecto.setDescripcion(descripcion);
             proyecto.setFechaInicio(fechaInicio);
-            proyecto.setFechaFin(fechaFin);   
-            
+            proyecto.setFechaFin(fechaFin);
+
             proyectoActualizado.add(proyecto);
             usuario.setProyecto(proyectoActualizado);
 
@@ -91,7 +96,7 @@ public class ProyectoServicio {
     }
 
     @Transactional
-    public void agregarUsuarioProyecto(String id_proyecto, String id_usuario){
+    public void agregarUsuarioProyecto(String id_proyecto, String id_usuario) {
         Proyecto proyecto = proyectoRepositorio.getOne(id_proyecto);
         Usuario usuario = usuarioRepositorio.getOne(id_usuario);
 
@@ -109,7 +114,7 @@ public class ProyectoServicio {
     }
 
     @Transactional
-    public void eliminarUsuarioProyecto(String id_proyecto, String id_usuario){
+    public void eliminarUsuarioProyecto(String id_proyecto, String id_usuario) {
         Proyecto proyecto = proyectoRepositorio.getOne(id_proyecto);
         Usuario usuario = usuarioRepositorio.getOne(id_usuario);
 
@@ -147,17 +152,17 @@ public class ProyectoServicio {
         return proyectoRepositorio.buscarPorNombreProy(nombre);
     }
 
-    public List<Proyecto> ordenarProyectosPorFechaInicio(String fechaInicio){
+    public List<Proyecto> ordenarProyectosPorFechaInicio(String fechaInicio) {
         return proyectoRepositorio.proyectosOrdenadosPorFechaInicio(fechaInicio);
     }
 
-    public List<Proyecto> ordenarProyectosPorFechaFin(String fechaFin){
+    public List<Proyecto> ordenarProyectosPorFechaFin(String fechaFin) {
         return proyectoRepositorio.proyectosOrdenadosPorFechaFin(fechaFin);
     }
 
     //VALIDACION
     private void validar(String id_proyecto, String nombre, String descripcion,
-            Date fechaInicio, Date fechaFin, String id_usuario) throws MiException {
+            Date fechaInicio, Date fechaFin) throws MiException {
 
         if (id_proyecto.isEmpty() || id_proyecto == null) {
             throw new MiException("El id del proyecto no puede estar vacío");
@@ -179,9 +184,6 @@ public class ProyectoServicio {
             throw new MiException("La fecha del proyecto no puede estar vacía");
         }
 
-        if (id_usuario.isEmpty() || id_usuario == null) {
-            throw new MiException("El id del usuario no puede estar vacío");
-        }
     }
 
 }

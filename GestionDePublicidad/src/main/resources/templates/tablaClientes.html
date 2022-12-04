@@ -66,7 +66,7 @@
 
       <!-- INICIO FILTROS -->
       <section id="mensajeFiltros">
-        <form th:action="@{/admin/tablaClientes/search}" method="post">
+        <form th:action="@{/admin/tablaClientes/nombre}" method="post">
           <label for="nombre">
             <p>Filtro por nombre</p>
           </label>
@@ -75,18 +75,18 @@
         </form>
 
         <form th:action="@{/admin/tablaClientes/email}" method="post">
-          <label for="mail">
+          <label for="email">
             <p>Filtro por E-mail</p>
           </label>
           <input type="text" id="mail" name="email" placeholder="mail" />
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
-        <form th:action="@{/admin/tablaClientes/nombreProyecto}" method="post">
+        <form th:action="@{/admin/tablaClientes/proyecto}" method="post">
           <label for="proyecto">
             <p>Filtro por proyecto</p>
           </label>
-          <input type="text" id="proyecto" name="nombre" placeholder="" />
+          <input type="text" id="proyecto" name="proyecto" placeholder="Nombre del Proyecto" />
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 

@@ -39,14 +39,14 @@
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0 py-2">
-            <li><a th:href="@{/crearProyecto}" class="nav-link px-2 link-ul letrasNav">Crear Proyecto</a></li>
+            <li><a th:href="@{/proyecto/registro}" class="nav-link px-2 link-ul letrasNav">Crear Proyecto</a></li>
             <li><a th:href="@{/inicio}" class="nav-link px-2 link-ul letrasNav">Atras</a></li>
           </ul>
     
           <div class="dropdown">
             <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser2"
               data-bs-toggle="dropdown" aria-expanded="false">
-              <img th:src="@{/imagen/perfil/__${session.usuariosession.id_usuario}__}" alt="foto-perfil" width="32" height="32" class="rounded-circle me-2">
+              <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
               <span>Nombre Apellido</span>
             </a>
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
@@ -79,7 +79,7 @@
 
       <!-- INICIO FILTROS -->
       <section id="mensajeFiltros">
-        <form th:action="@{/admin/tablaProyectos/nombre}"  method="post">
+        <form th:action="@{/trabajador/tablaProyectos/nombre}"  method="post">
           <label for="nombre">
             <p>Filtro por nombre</p>
           </label>
@@ -87,7 +87,7 @@
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
-        <form th:action="@{/admin/tablaProyectos/fechaInicio}"  method="post">
+        <form th:action="@{/trabajador/tablaProyectos/fechaInicio}"  method="post">
           <label for="inicio">
             <p>Filtro por fecha de inicio</p>
           </label>
@@ -95,7 +95,7 @@
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
-        <form th:action="@{/admin/tablaProyectos/fechaFin}"  method="post">
+        <form th:action="@{/trabajador/tablaProyectos/fechaFin}"  method="post">
           <label for="fin">
             <p>Filtro por fecha de fin</p>
           </label>
@@ -103,7 +103,7 @@
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
-        <form th:action="@{/admin/tablaProyectos/estado}"  method="post">
+        <form th:action="@{/trabajador/tablaProyectos/estado}"  method="post">
           <label for="estado">
             <p>Filtro por estado</p>
           </label>
@@ -128,7 +128,6 @@
               <th scope="col">Fecha Inicio</th>
               <th scope="col">Fecha Fin</th>
               <th scope="col">Estado</th>
-              <th scope="col" sec:authorize="hasRole('ADMIN')">Acciones</th>
             </tr>
           </thead>
           <tbody th:each="proyecto:${proyectos}">
@@ -140,16 +139,6 @@
               <td th:text="${proyecto.fechaInicio}"></td>
               <td th:text="${proyecto.fechaFin}"></td>
               <td th:text="${proyecto.estadoProyecto}"></td>
-              <td>
-                <a sec:authorize="hasRole('ADMIN')" th:href="@{admin/modificarProyecto/__{proyecto.id}__}">
-                  <button type="submit"><img
-                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Magic Wand_Lineal-coloured.png"></button>
-                </a>
-                <a sec:authorize="hasRole('ADMIN')" th:href="@{admin/eliminarProyecto/__{proyecto.id}__}">
-                  <button type="submit"><img
-                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Dustbin_Flat.png"></button>
-                </a>
-              </td>
               <!--VER y poner icono-->
             </tr>
           </tbody>
