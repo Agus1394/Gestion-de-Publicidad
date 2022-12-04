@@ -99,6 +99,8 @@ public class PortalControlador {
     //ACTUALIZAR
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @PostMapping("/perfil/{id}")
+    
+    //REVISAR FOTO Y RETURN DEL TRY
     public String actualizar(@RequestParam MultipartFile archivo, @PathVariable String id,
             @RequestParam String nombre, @RequestParam String email,
             @RequestParam String password, @RequestParam String password2,
@@ -107,7 +109,7 @@ public class PortalControlador {
         try {
             usuarioServicio.actualizar(archivo, id, nombre, email, password, password2);
             modelo.put("exito", "Usuario actualizado correctamente!");
-            return "index.html";
+            return "perfil.html";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
