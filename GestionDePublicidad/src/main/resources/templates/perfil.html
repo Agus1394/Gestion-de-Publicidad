@@ -18,33 +18,50 @@
 <body>
     
         <!-- INICIO NAVBAR -->
-        <div class="container-fluid bdn">
-            <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-              <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-decoration-none">
-                <img src="/img/logos/logo-diamante-blanco.png" style="width: 15%; margin-right: 10px;" alt="diamante">
-                <img src="/img/logos/logo-blanco.png" alt="WeThink" style="width: 35%;">
-              </a>
-        
-              <div style="margin-left: -150px;">
-              <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <nav class="navbar navbar-expand-sm bdn">
+    
+      <div class="container-fluid">
+        <div>
+          <a href="" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-decoration-none">
+            <img src="/img/logos/logo-diamante-blanco.png" style="width: 50px; height: auto; margin-right: 5px;"
+              alt="diamante">
+            <img src="/img/logos/logo-blanco.png" style="width: 105px; height: auto;" alt="logo">
+          </a>
+        </div>
+    
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto mb-2 mb-lg-0 py-2">
+            <li class="nav-item">
                 <li><a th:href="@{/inicio}" class="px-2 link-ul">Inicio</a></li>
-              </ul>
-                </div>
-        
-              <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img th:src="@{/imagen/perfil/__${session.usuariosession.id_usuario}__}"alt="" width="32" height="32" class="rounded-circle me-2">
-                  <span>Nombre Apellido</span>
-                </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                  <li><a class="dropdown-item" th:href="@{/perfil}">Perfil</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" th:href="@{/logout}">Cerrar Sesion</a></li>
-                </ul> 
-              </div>
-            </header>
+            </li>
+          </ul>
+            
+            <div class="">
+          <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser2"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <img th:src="@{/imagen/perfil/__${session.usuariosession.id_usuario}__}" alt="" width="32" height="32" class="rounded-circle me-2">
+              <span th:text="${session.usuariosession.nombre}"></span>
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+              <li><a class="dropdown-item" th:href="@{/perfil}" >Perfil</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" th:href="@{/logout}">Cerrar Sesion</a></li>
+            </ul>
           </div>
-            <!-- FIN NAVBAR -->
+           </div>
+    
+        </div>
+      </div>
+    </nav>
+    <!-- FIN NAVBAR -->
 
             
 
