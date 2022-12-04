@@ -52,11 +52,11 @@ public class EventoControlador {
         try {
             eventoServicio.registrar(id, nombre, descripcion, fecha, tipo);
 
-            modelo.put("Proyecto publicado", "!!");
+            modelo.put("Evento publicado", "!!");
         } catch (MiException e) {
 
-            modelo.put("error al subir el proyecto", e.getMessage());
-            java.util.logging.Logger.getLogger(ProyectoControlador.class.getName())
+            modelo.put("error al subir el evento", e.getMessage());
+            java.util.logging.Logger.getLogger(EventoControlador.class.getName())
                     .log(Level.SEVERE, null, e);
 
             return "registrar_evento.html";
@@ -96,8 +96,8 @@ public class EventoControlador {
     @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
     @GetMapping("/tablaEventos")
     public String listar(ModelMap modelo) {
-        List<Evento> noticias = eventoServicio.listarTodos();
-        modelo.addAttribute("noticias", noticias);
+        List<Evento> eventos = eventoServicio.listarTodos();
+        modelo.addAttribute("eventos", eventos);
         return "tablaEventos.html";
     }
 
@@ -168,8 +168,8 @@ public class EventoControlador {
     @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
     @PostMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo) {
-        List<Evento> proyectos = eventoServicio.listarTodos();
-        modelo.addAttribute("proyectos", proyectos);
+        List<Evento> eventos = eventoServicio.listarTodos();
+        modelo.addAttribute("eventos", eventos);
         eventoServicio.eliminarEvento(id);
         return "tablaEventos.html";
     }
