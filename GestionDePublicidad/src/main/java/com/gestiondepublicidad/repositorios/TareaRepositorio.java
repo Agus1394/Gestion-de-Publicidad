@@ -12,23 +12,28 @@ import org.springframework.stereotype.Repository;
 public interface TareaRepositorio extends JpaRepository<Tarea, String> {
 
     // BUSQUEDA DE TAREA POR SU NOMBRE
-    @Query("SELECT t FROM Tarea t  WHERE t.nombre_tarea LIKE %:nombre%")
+    @Query(value = "SELECT * FROM Tarea  WHERE nombre_tarea LIKE %:nombre%",
+            nativeQuery = true)
     List<Tarea> buscarPorNombre(@Param("nombre") String nombre);
 
     // BUSQUEDA DE TAREA POR SU DESCRIPCION
-    @Query("SELECT t FROM Tarea t  WHERE t.descripcion LIKE %:descripcion%")
+    @Query(value = "SELECT * FROM Tarea WHERE descripcion LIKE %:descripcion%",
+            nativeQuery = true)
     List<Tarea> buscarPorDescripcion(@Param("descripcion") String descripcion);
 
     //BUSQUEDA POR FECHA DE CRACION
-    @Query("SELECT t FROM Tarea t WHERE t.fecha_creacion = :fechaCreacion")
+    @Query(value = "SELECT * FROM Tarea WHERE fecha_creacion = :fechaCreacion",
+            nativeQuery = true)
     public List<Tarea> buscarFechaCreacion(@Param("fechaCreacion") String fechaCreacion);
 
     //BUSQUEDA POR FECHA DE ASIGNACION
-    @Query("SELECT t FROM Tarea t WHERE t.fecha_asignacion = :fechaAsignacion")
+    @Query(value = "SELECT * FROM Tarea WHERE fecha_asignacion = :fechaAsignacion",
+            nativeQuery = true)
     public List<Tarea> buscarFechaAsignacion(@Param("fechaAsignacion") String fechaAsignacion);
-    
+
     //BUSQUEDA POR ESTADO
-    @Query("SELECT t FROM Tarea t WHERE t.estado_tarea = :estado")
+    @Query(value = "SELECT * FROM Tarea WHERE estado_tarea = :estado",
+            nativeQuery = true)
     public List<Tarea> buscarPorEstado(@Param("estado") Estado estado);
 
 }
