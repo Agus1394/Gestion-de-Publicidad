@@ -128,22 +128,22 @@
               <th scope="col">Acciones</th>
             </tr>
           </thead>
-          <tbody th:each="trabajador:${trabajadores}">
+          <tbody th:each="trabajador : ${trabajadores}">
             <tr>
               <td class="row" th:text="${trabajador.nombre}"> 
-                <a th:href="@{/perfil/__${trabajador.id}__}"></a>
+                <a th:href="@{/perfil/__${trabajador.id_usuario}__}"></a>
               </td>
               <td th:text="${trabajador.email}"> </td>
               <td th:text="${trabajador.puestoEmpresa}"> </td>
               <td th:text="${trabajador.rol}"> </td>
               <td>
-                <a th:href="@{admin/modificarTrabajador/__${trabajador.id}__}">
+                <a th:href="@{admin/modificarTrabajador/__${trabajador.id_usuario}__}">
                   <button type="submit"><img
-                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Magic Wand_Lineal-coloured.png"></button>
+                      src="/img/botones/Magic Wand_Lineal-coloured.png"></button>
                 </a>
-                <a th:href="@{admin/eliminarTrabajador/__${trabajador.id}__}">
+                <a th:href="@{admin/eliminarTrabajador/__${trabajador.id_usuario}__}">
                   <button type="submit"><img
-                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Dustbin_Flat.png"></button>
+                      src="/img/botones/Dustbin_Flat.png"></button>
                 </a>
               </td>           
              </tr>

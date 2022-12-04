@@ -77,23 +77,21 @@
         <div class="container-fluid d-flex justify-content-center align-items-center mt-3">
                
             <form th:action="@{/perfil/__${usuario.id_usuario}__}" method="POST" class="form-registro">
-                <div class="d-flex justify-content-start flex-column  mt-2">
+                <div class="d-flex justify-content-start flex-column  mt-4">
                     <div class="d-flex flex-column align-items-center mb-3 ">
-                    <img th:src="@{/imagen/perfil/__${session.usuariosession.id_usuario}__}" width="100x" height="100px" class="rounded-circle mb-2">
-                        <input class="form-control" type="file" id="formFile">
+                    <img th:src="@{/imagen/perfil/__${session.usuariosession.id_usuario}__}" width="100px" height="100px" class="rounded-circle mb-2">
+                        <input class="form-control" type="file" id="formFile" name="archivo">
                     </div>
 
                     <input class="texto" name="nombre" type="text" th:value="${usuario.nombre}" placeholder="Nombre de usuario" required>
                 
-                    <input class="texto" name="rol" type="rol" th:value="${usuario.rol}" placeholder="Rol" required>
-              
                     <input class="texto" name="password" type="password"  placeholder="Contraseña">
-               
-                    <select>
-                        <option value="GERENTE"> GERENTE</option>
-                        <option value="EMPRESARIO">EMPRESARIO</option>
-                        <option value="CEO">CEO</option>
-                    </select>
+                    
+                    <input class="texto" th:value="__${usuario.id_usuario}__" type="hidden" name="id">
+                    <input class="texto" th:value="${usuario.email}" type="hidden" name="email">
+                    
+                    <input class="texto" name="password2" type="password"  placeholder="Repetir Contraseña">
+
                 </div>  
                 <div class="d-flex justify-content-center mt-3">
                 <button type="submit" class="btn boton-registrarte">Actualizar Datos</button>
