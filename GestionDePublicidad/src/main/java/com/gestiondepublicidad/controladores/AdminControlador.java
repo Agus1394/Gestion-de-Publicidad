@@ -37,6 +37,7 @@ public class AdminControlador {
         return "dashboard.html";
     }
 
+
     //LISTAR ---TODOS--- LOS USUARIOS
     @GetMapping("/tablaUsuarios")
     public String listarUsuarios(ModelMap modelo) {
@@ -88,9 +89,14 @@ public class AdminControlador {
     //LISTAR CLIENTES POR PROYECTO
     @PostMapping("/tablaClientes/proyecto")
     public String listarClientesProyecto(@RequestParam String proyecto, ModelMap modelo) {
+        List<Usuario> usuarios = new ArrayList<Usuario>();
         try {
-            List<Usuario> listaUsuarios = usuarioServicio.usuariosPorProyecto(proyecto.toUpperCase(), Rol.USER);
-            modelo.addAttribute("clientes", listaUsuarios);
+            if (proyecto.isEmpty() || proyecto == null) {
+                usuarios = usuarioServicio.buscarPorRol(Rol.USER);
+            } else {
+                usuarios = usuarioServicio.nombreProyectoUsuarios(proyecto, "USER");
+            }
+            modelo.addAttribute("clientes", usuarios);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
         }
@@ -181,9 +187,9 @@ public class AdminControlador {
             if (proyecto.isEmpty() || proyecto == null) {
                 usuarios = usuarioServicio.buscarPorRol(Rol.TRABAJADOR);
             } else {
-                List<Usuario> usuario = usuarioServicio.usuariosPorProyecto(proyecto, Rol.TRABAJADOR);
-                modelo.addAttribute("trabajadores", usuario);
+                usuarios = usuarioServicio.nombreProyectoUsuarios(proyecto, "TRABAJADOR");
             }
+            modelo.addAttribute("trabajadores", usuarios);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
 

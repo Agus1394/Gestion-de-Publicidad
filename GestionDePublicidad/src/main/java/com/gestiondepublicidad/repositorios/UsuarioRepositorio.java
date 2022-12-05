@@ -52,9 +52,9 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
             nativeQuery = true)
     public List<Usuario> agendaProyecto(@Param("id_proyecto") String id_proyecto);
 
-//    @Query(value = "SELECT u.* FROM Usuario u LEFT JOIN usuario_proyecto up ON u.id_usuario = up.usuario_id_usuario WHERE %:nombre% LIKE up.nombre",
-//            nativeQuery = true)
-//    public List<Usuario> nombreProyectoUsuario(@Param("id_proyecto") String id_proyecto);
+    @Query(value = "SELECT u.* FROM Usuario u LEFT JOIN usuario_proyecto up ON u.id_usuario = up.usuario_id_usuario WHERE up.proyecto_id_proyecto = :id_proyecto AND u.rol = :rol",
+            nativeQuery = true)
+    public List<Usuario> nombreProyectoUsuarios(@Param("id_proyecto") String id_proyecto, @Param("rol") String rol);
 
     @Query("SELECT u FROM Usuario u WHERE UPPER(u.rol) = :rol")
     List<Usuario> buscarPorRol(@Param("rol") Rol rol);

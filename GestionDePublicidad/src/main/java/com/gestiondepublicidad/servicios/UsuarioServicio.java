@@ -9,6 +9,7 @@ import com.gestiondepublicidad.enumeraciones.Rol;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.repositorios.FotoRepositorio;
 import com.gestiondepublicidad.repositorios.NotaRepositorio;
+import com.gestiondepublicidad.repositorios.ProyectoRepositorio;
 import com.gestiondepublicidad.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,6 +41,9 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     NotaRepositorio notaRepositorio;
+
+    @Autowired
+    ProyectoRepositorio proyectoRepositorio;
 
     @Autowired
     private FotoRepositorio fotoRepositorio;
@@ -111,6 +115,11 @@ public class UsuarioServicio implements UserDetailsService {
     //DEVUELVE UN USUARIO POR SU ID
     public Usuario getOne(String id_usuario) {
         return usuarioRepositorio.getOne(id_usuario);
+    }
+
+    public List<Usuario> buscarPorRol(String rol) {
+
+        return usuarioRepositorio.buscarPorRol(rol);
     }
 
     //DEVUELVE LOS USUARIO CON EL MISMO NOMBRE
@@ -197,9 +206,11 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
 
+
     public List<Usuario> buscarPorRol(Rol rol) {
         return usuarioRepositorio.buscarPorRol(rol);
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -255,5 +266,18 @@ public class UsuarioServicio implements UserDetailsService {
             }
         }
         usuarioRepositorio.saveAndFlush(usuario);
+    }
+
+    public List<Usuario> nombreProyectoUsuarios(String nombreProyecto, String rol){
+        List<Proyecto> proyectos = proyectoRepositorio.buscarPorNombreProy(nombreProyecto);
+        List<Usuario> usuarios = new ArrayList<Usuario>();
+        for (Proyecto proyecto: proyectos) {
+            List<Usuario> usuarios1 = usuarioRepositorio.nombreProyectoUsuarios(proyecto.getId_proyecto(), rol);
+            for (Usuario usuario : usuarios1) {
+                usuarios.add(usuario);
+            }
+        }
+
+        return usuarios;
     }
 }

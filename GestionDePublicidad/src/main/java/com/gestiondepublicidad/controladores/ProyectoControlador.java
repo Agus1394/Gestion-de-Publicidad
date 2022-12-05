@@ -132,6 +132,44 @@ public class ProyectoControlador {
         return "tablaProyectos.html";
     }
 
+    //filtrar por nombre
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/tablaProyectos/nombre")
+    public String filtrarPorNombre(@RequestParam String nombre, ModelMap modelo) {
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+        if (nombre.isEmpty() || nombre == null){
+            proyectos = proyectoServicio.listarTodos();
+        }else{
+            proyectos = proyectoServicio.buscarPorNombre(nombre.toUpperCase());
+        }
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html ";
+    }
+
+    //filtrar por estado del proyecto
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/tablaProyectos/estado")
+    public String filtrarPorEstadoProyecto(@RequestParam String estado, ModelMap modelo) throws MiException {
+
+        List<Proyecto> proyectos = new ArrayList<Proyecto>();
+
+        if (estado.isEmpty() || estado == null){
+            proyectos = proyectoServicio.listarTodos();
+        }else{
+            proyectos = proyectoServicio.filtrarProyectoPorEstado(estado);
+        }
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html";
+    }
+    
+    //Listar TODOS
+    @GetMapping("/tablaProyectos")
+    public String listarProyectos(ModelMap modelo) {
+        List<Proyecto> proyectos = proyectoServicio.listarTodos();
+        modelo.addAttribute("proyectos", proyectos);
+        return "tablaProyectos.html";
+    }
+
     //Filtrar Por Usuario
     @PreAuthorize("hasAnyRole('ROLE_USER, ROLE_CLIENTE')")
     @GetMapping("/usuario")
