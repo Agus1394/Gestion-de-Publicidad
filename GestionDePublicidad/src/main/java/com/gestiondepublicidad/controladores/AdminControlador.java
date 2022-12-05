@@ -36,6 +36,8 @@ public class AdminControlador {
         return "dashboard.html";
     }
 
+
+    //NO SE USA
     @GetMapping("/tablaUsuarios")
     public String listarUsuarios(ModelMap modelo) {
         List<Usuario> listaUsuarios = usuarioServicio.listarUsuarios();

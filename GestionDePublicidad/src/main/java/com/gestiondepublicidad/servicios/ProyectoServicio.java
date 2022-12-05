@@ -19,10 +19,11 @@ public class ProyectoServicio {
 
     @Autowired
     private ProyectoRepositorio proyectoRepositorio;
-
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
+
+    //----------------------------------CUD, read esta mas abajo-----------------------------------------
     //CREAR
     @Transactional
     public void registrar(String id_proyecto, String nombre, String descripcion,
@@ -46,20 +47,7 @@ public class ProyectoServicio {
         proyectoRepositorio.save(proyecto);
     }
 
-    //buscar Proyectos por Usuario
-    public List<Proyecto> buscarPorUsuario(String id_usuario) {
-        List<Proyecto> proyectos = proyectoRepositorio.proyectosDelUsuario(id_usuario);
-        return proyectos;
-    }
-    
-    
-    //metodo que filtra al proyecto por estado
-    public List<Proyecto> filtrarProyectoPorEstado (String estadoProyecto) throws MiException{
-        return proyectoRepositorio.buscarPorEstado(estadoProyecto);
-        
-    }
 
-    //ACTUALIZAR
     @Transactional
     public void actualizar(String id_proyecto, String nombre, String descripcion,
             Date fechaInicio, Date fechaFin, String id_usuario) throws MiException {
@@ -91,6 +79,14 @@ public class ProyectoServicio {
         }
     }
 
+    public void eliminar(String id) {
+        proyectoRepositorio.deleteById(id);
+    }
+
+
+    //---------------------------------------------------------------------------
+
+    //--------------------------------------SUS USUARIOS-------------------------------------
     @Transactional
     public void agregarUsuarioProyecto(String id_proyecto, String id_usuario){
         Proyecto proyecto = proyectoRepositorio.getOne(id_proyecto);
@@ -127,20 +123,27 @@ public class ProyectoServicio {
         proyectoRepositorio.save(proyecto);
     }
 
-    //ELIMINAR
-    public void eliminar(String id) {
-        proyectoRepositorio.deleteById(id);
+
+
+    //-----------------------------------FILTROS---------------------------------------------
+    //buscar Proyectos por Usuario
+    public List<Proyecto> buscarPorUsuario(String id_usuario) {
+        List<Proyecto> proyectos = proyectoRepositorio.proyectosDelUsuario(id_usuario);
+        return proyectos;
     }
 
-    //LISTAR-QUERYS
+    //buscar proyecto por estado
+    public List<Proyecto> filtrarProyectoPorEstado (String estadoProyecto) throws MiException{
+        return proyectoRepositorio.buscarPorEstado(estadoProyecto);
+    }
+
+    //Buscar uno por id
     public Proyecto getOne(String id) {
         return proyectoRepositorio.getOne(id);
     }
 
     public List<Proyecto> listarTodos() {
-
         List<Proyecto> proyectos = new ArrayList<>();
-
         return proyectoRepositorio.findAll();
     }
 
@@ -156,6 +159,17 @@ public class ProyectoServicio {
         return proyectoRepositorio.proyectosOrdenadosPorFechaFin(fechaFin);
     }
 
+    //---------------------------------FILTROS POR ROL Y...-------------------------------------------------------
+//nombre, fechas, estado
+    public List<Proyecto> proyectosPorNombreYID (String nombre, String id){
+
+
+
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
     //VALIDACION
     private void validar(String id_proyecto, String nombre, String descripcion,
             Date fechaInicio, Date fechaFin, String id_usuario) throws MiException {

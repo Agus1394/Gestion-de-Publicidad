@@ -42,7 +42,7 @@
             </a>
                                         <!--CENTRAR-->
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a th:action="@{/crearProyecto}" class="nav-link px-2 link-ul">Crear Proyecto</a></li>
+                <li><a th:action="@{/trabajador/crearProyecto}" class="nav-link px-2 link-ul">Crear Proyecto</a></li>
                 <li><a th:action="@{/trabajador/agenda}" class="nav-link px-2 link-ul">Agenda</a></li>
                 <li><a th:action="@{/trabajador/notas}" class="nav-link px-2 link-ul">Notas</a></li>
               </ul>
@@ -80,7 +80,7 @@
                 <!--FILTROS-->
                 <section id="mensajeFiltros">
 
-                    <form th:action="@{/trabajador/tablaProyectos/nombre}">
+                    <form th:action="@{/trabajador/nombre}" method="post">
                         <label for="nombre">
                             <p>Filtro por nombre</p>
                         </label><br>
@@ -88,7 +88,7 @@
                         <button type="submit" class="btn btn-light">Buscar</button>
                     </form>
 
-                    <form th:action="@{/trabajador/tablaProyectos/fechaInicio}">
+                    <form th:action="@{/trabajador/fechaInicio}" method="post">
                         <label for="inicio">
                             <p>Filtro por fecha de inicio</p>
                         </label><br>
@@ -96,7 +96,7 @@
                         <button type="submit" class="btn btn-light">Buscar</button>
                     </form>
 
-                    <form th:action="@{/trabajador/tablaProyectos/fechaFin}">
+                    <form th:action="@{/trabajador/fechaFin}" method="post">
                         <label for="fin">
                             <p>Filtro por fecha de fin</p>
                         </label><br>
@@ -104,7 +104,7 @@
                         <button type="submit" class="btn btn-light">Buscar</button>
                     </form>
 
-                    <form th:action="@{/trabajador/tablaProyectos/estado}">
+                    <form th:action="@{/trabajador/estado}" method="post">
                         <label for="estado">
                             <p>Filtro por estado</p>
                         </label><br>

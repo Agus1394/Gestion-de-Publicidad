@@ -137,7 +137,6 @@ public class ProyectoControlador {
     @GetMapping("/tablaProyectos/nombre")
     public String filtrarPorNombre(@RequestParam String nombre, ModelMap modelo) {
         List<Proyecto> proyectos = new ArrayList<Proyecto>();
-        System.out.println(nombre);
         if (nombre.isEmpty() || nombre == null){
             proyectos = proyectoServicio.listarTodos();
         }else{

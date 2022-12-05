@@ -16,68 +16,117 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
+@Secured({"ROLE_TRABAJADOR"})
 @RequestMapping("/trabajador")
 public class TrabajadorControlador {
 
     @Autowired
     UsuarioServicio usuarioServicio;
+    ProyectoServicio proyectoServicio;
 
-    @GetMapping("/dashboard")
-    public String panelAdministrativoCliente(ModelMap modelo) {
-        return "panel_trabajador.html";
+
+    @GetMapping("/indexTrabajador")
+    //inicio del trabajador tiene una tabla con sus proyectos
+    public List<Proyecto> panelAdministrativoTrabajador(ModelMap modelo, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+        Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario()));
+        List <Proyecto> proyectos = proyectoServicio.buscarPorUsuario(usuario1.getId_usuario()));
+        modelo.put("proyectos", proyectos);
+
+        return "indexTrabajador.html";
     }
 
-    //LISTAR TRABAJADORES POR NOMBRE
-    @GetMapping("/lista_trabajadores")
-    public String listar(String nombre, ModelMap modelo) {
-        List<Usuario> usuarios = usuarioServicio.usuariosPorNombreYRol(nombre, "TRABAJADOR");
-        modelo.addAttribute("usuarios", usuarios);
-        return "trabajador_list.html";
-    }
+    //------------------------------------------FILTROS PROYECTOS-----------------------------------
 
-    @GetMapping("/lista_trabajadores/{email}")
-    public String listarPorEmail(@PathVariable String email, ModelMap modelo) {
-        Usuario usuario = usuarioServicio.BusquedaPorEmail(email, "TRABAJADOR");
-        modelo.addAttribute("usuario", usuario);
-        return "trabajador_list.html";
-    }
+    @PostMapping("/indexTrabajador/nombre")
+    public String listarProyectosPorNombre(@RequestParam String nombre, ModelMap modelo, HttpSession session) {
+        try{
+            Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario()));
+            if(nombre.isEmpty() || nombre == null){
+               panelAdministrativoTrabajador();
+            }else{
+                List<Proyecto> proyectos = new ArrayList<Proyecto>();
+                proyectos = proyectoServicio.proyectosPorNombreYID(nombre.toUpperCase(), usuario1.getId_usuario());
+                modelo.put("proyectos", proyectos);
+            }
+            modelo.addAttribute("proyectos", proyectos);
+        }catch(Exception e){
+            modelo.put("error", e.getMessage());
 
-    @GetMapping("/lista_trabajadores/{puesto_empresa}")
-    public String listarPorPuestoEmpresa(@PathVariable String puesto_emoresa, ModelMap modelo) {
-        List<Usuario> usuario = usuarioServicio.BusquedaPorPuesto(puesto_emoresa, "TRABAJADOR");
-        modelo.addAttribute("usuario", usuario);
-        return "trabajador_list.html";
-    }
-
-    //REGISTRAR USUARIO/CLIENTE DESDE Trabajador
-    @GetMapping("/registrar")
-    public String registrar() {
-        return "registro_usuario.html";
-    }
-
-    @PostMapping("/registro")
-    public String registro(@RequestParam String nombre,
-            @RequestParam String email, @RequestParam String password,
-            @RequestParam String password2, ModelMap modelo) {
-        try {
-            usuarioServicio.registrar(nombre, email, password, password2);
-            modelo.put("éxito", "Usuario registrado correctamente!");
-            return "usuario_cargado.html";
-        } catch (MiException ex) {
-            modelo.put("error", ex.getMessage());
-            modelo.put("nombre", nombre);
-            modelo.put("email", email);
-            return "registro.html";
+        }finally {
+            return "indexTrabajador.html";
         }
-
     }
 
-    //MODIFICAR Trabajador
+    @GetMapping("/indexTrabajador/estado")
+    public String listarProyectosPorEstado(@RequestParam String estado, ModelMap modelo,HttpSession session) {
+        try{
+            Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario()));
+            List<Proyecto> proyectos = new ArrayList<Proyecto>();
+            if(estado.isEmpty() || estado == null){
+                panelAdministrativoTrabajador();
+            }else{
+                proyectos = proyectoServicio.proyectosPorEstadoYID(estado.toUpperCase(), usuario1.getId_usuario());
+            }
+            modelo.addAttribute("proyectos", proyectos);
+        }catch(Exception e){
+            modelo.put("error", e.getMessage());
+
+        }finally {
+            return "indexTrabajador.html";
+        }
+    }
+
+    @GetMapping("/indexTrabajador/fechaFin")
+    public String listarProyectosPorFechaFin(@RequestParam String fechaFin, ModelMap modelo, HttpSession session) {
+        try{
+            Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario()));
+            List<Proyecto> proyectos = new ArrayList<Proyecto>();
+            if(fechaFin.isEmpty() || fechaFin == null){
+                panelAdministrativoTrabajador();
+            }else{
+                proyectos = proyectoServicio.proyectosPorFechaFinYID(fechaFin.toUpperCase(), usuario1.getId_usuario());
+            }
+            modelo.addAttribute("proyectos", proyectos);
+        }catch(Exception e){
+            modelo.put("error", e.getMessage());
+
+        }finally {
+            return "indexTrabajador.html";
+        }
+    }
+
+    @GetMapping("/indexTrabajador/fechaInicio")
+    public String listarProyectosPorFechaInico(@RequestParam String fechaInicio, ModelMap modelo, HttpSession session) {
+        try{
+            Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario()));
+            List<Proyecto> proyectos = new ArrayList<Proyecto>();
+            if(fechaInicio.isEmpty() || fechaInicio == null){
+                panelAdministrativoTrabajador();
+            }else{
+                proyectos = proyectoServicio.proyectosPorFechaInicioYID(fechaInicio.toUpperCase(), usuario1.getId_usuario());
+            }
+            modelo.addAttribute("proyectos", proyectos);
+        }catch(Exception e){
+            modelo.put("error", e.getMessage());
+
+        }finally {
+            return "indexTrabajador.html";
+        }
+    }
+
+//------------------------------------------------------------------------------------------------------
+
+    //MODIFICARSE
     @GetMapping("/modificar/{id}")
     public String modificar(ModelMap modelo, @PathVariable String id) {
         Usuario usuario = usuarioServicio.getOne(id);
         modelo.put("usuario", usuario);
-        return "editar_trabajador.html";
+        return "perfil.html";
     }
 
     @PostMapping("/modificar/{id}")
@@ -96,16 +145,8 @@ public class TrabajadorControlador {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("email", email);
-            return "editar_trabajador.html";
+            return "perfil.html";
         }
     }
 
-    //ELIMINAR USUARIO/CLIENTE
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @PostMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id, ModelMap modelo) {
-        usuarioServicio.eliminarUsuario(id);
-        return "redirect:/trabajador/usuarios";
-
-    }
 }
