@@ -37,6 +37,7 @@ public class AdminControlador {
         return "dashboard.html";
     }
 
+
     //LISTAR ---TODOS--- LOS USUARIOS
     @GetMapping("/tablaUsuarios")
     public String listarUsuarios(ModelMap modelo) {

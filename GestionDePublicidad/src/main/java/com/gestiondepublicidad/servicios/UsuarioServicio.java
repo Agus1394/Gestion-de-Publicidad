@@ -113,6 +113,11 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarioRepositorio.getOne(id_usuario);
     }
 
+    public List<Usuario> buscarPorRol(String rol) {
+
+        return usuarioRepositorio.buscarPorRol(rol);
+    }
+
     //DEVUELVE LOS USUARIO CON EL MISMO NOMBRE
     public List<Usuario> usuariosPorNombre(String nombre) {
 
@@ -197,9 +202,11 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
 
+
     public List<Usuario> buscarPorRol(Rol rol) {
         return usuarioRepositorio.buscarPorRol(rol);
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
