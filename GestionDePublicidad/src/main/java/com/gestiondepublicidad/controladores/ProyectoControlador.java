@@ -50,7 +50,7 @@ public class ProyectoControlador {
             @RequestParam(required = false) Date fechaFin,
             ModelMap modelo) {
         try {
-            proyectoServicio.registrar(idProyecto, idUsuario,
+            proyectoServicio.registrar(idProyecto, nombreProyecto,
                     descripcion, fechaInicio, fechaFin, idUsuario);
 
             modelo.put("Proyecto publicado", "!!");

@@ -28,19 +28,13 @@ public class ProyectoServicio {
             Date fechaInicio, Date fechaFin, String id_usuario) throws MiException {
         
         validar(id_proyecto, nombre, descripcion, fechaInicio, fechaFin);
-        
-        Optional<Usuario> respuestausuario = usuarioRepositorio.findById(id_usuario);
+
         Proyecto proyecto = new Proyecto();
         
-        Usuario usuario = new Usuario();
+        Usuario usuario = usuarioRepositorio.getOne(id_usuario);
         
-        List<Usuario> nuevoUsuario = new ArrayList();
-        
-        if (respuestausuario.isPresent()) {
-            usuario = respuestausuario.get();
-
-            nuevoUsuario =  (List<Usuario>) usuario;
-        }
+        List<Usuario> nuevoUsuario = usuarioRepositorio.agendaProyecto(id_proyecto);
+        nuevoUsuario.add(usuario);
         
         proyecto.setId_proyecto(id_proyecto);
         proyecto.setNombre(nombre);

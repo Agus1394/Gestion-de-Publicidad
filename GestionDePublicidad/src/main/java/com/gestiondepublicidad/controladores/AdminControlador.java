@@ -50,21 +50,22 @@ public class AdminControlador {
     @GetMapping("/tablaClientes")
     public String listarClientes(ModelMap modelo) {
         List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol(Rol.USER);
-        modelo.addAttribute("usuarios", listaUsuarios);
+        System.out.println(listaUsuarios);
+        modelo.addAttribute("clientes", listaUsuarios);
         return "tablaClientes.html";
     }
 
     //FILTRAR CLIENTES POR NOMBRE
     @PostMapping("/tablaClientes/nombre")
     public String buscarClientePorNombre(@RequestParam String nombre, ModelMap modelo) throws Exception {
+        List<Usuario> usuarios = new ArrayList<Usuario>();
         try {
-            List<Usuario> usuarios = new ArrayList<Usuario>();
             if (nombre.isEmpty() || nombre == null) {
                 usuarios = usuarioServicio.buscarPorRol(Rol.USER);
             } else {
                 usuarios = usuarioServicio.usuariosPorNombreYRol(nombre.toUpperCase(), "USER");
             }
-            modelo.addAttribute("usuarios", usuarios);
+            modelo.addAttribute("clientes", usuarios);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
         }
@@ -77,7 +78,7 @@ public class AdminControlador {
     public String listarClientesEmail(@RequestParam String email, ModelMap modelo) {
         try {
             Usuario listaUsuarios = usuarioServicio.BusquedaPorEmail(email.toLowerCase(), Rol.USER);
-            modelo.addAttribute("usuarios", listaUsuarios);
+            modelo.addAttribute("clientes", listaUsuarios);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
         }
@@ -89,7 +90,7 @@ public class AdminControlador {
     public String listarClientesProyecto(@RequestParam String proyecto, ModelMap modelo) {
         try {
             List<Usuario> listaUsuarios = usuarioServicio.usuariosPorProyecto(proyecto.toUpperCase(), Rol.USER);
-            modelo.addAttribute("usuarios", listaUsuarios);
+            modelo.addAttribute("clientes", listaUsuarios);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
         }

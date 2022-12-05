@@ -33,4 +33,7 @@ public class Evento {
 
     @Enumerated(EnumType.STRING)
     private TipoEvento tipo;
+
+    @ManyToOne
+    Usuario usuario;
 }

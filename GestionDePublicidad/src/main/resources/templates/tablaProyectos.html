@@ -134,17 +134,17 @@
           <tbody th:each="proyecto:${proyectos}">
             <tr>
               <td scope="row" th:text="${proyecto.nombre}">
-                <a th:href="@{/proyecto/__${proyecto.id}__}"></a>
+                <a th:href="@{/proyecto/__${proyecto.id_proyecto}__}"></a>
               </td>
               <td th:text="${proyecto.fechaInicio}"></td>
               <td th:text="${proyecto.fechaFin}"></td>
               <td th:text="${proyecto.estadoProyecto}"></td>
               <td>
-                <a sec:authorize="hasRole('ADMIN')" th:href="@{admin/modificarProyecto/__{proyecto.id}__}">
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{admin/modificarProyecto/__${proyecto.id_proyecto}__}">
                   <button type="submit"><img
                       src="/GestionDePublicidad/src/main/resources/static/img/botones/Magic Wand_Lineal-coloured.png"></button>
                 </a>
-                <a sec:authorize="hasRole('ADMIN')" th:href="@{admin/eliminarProyecto/__{proyecto.id}__}">
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{admin/eliminarProyecto/__${proyecto.id_proyecto}__}">
                   <button type="submit"><img
                       src="/GestionDePublicidad/src/main/resources/static/img/botones/Dustbin_Flat.png"></button>
                 </a>

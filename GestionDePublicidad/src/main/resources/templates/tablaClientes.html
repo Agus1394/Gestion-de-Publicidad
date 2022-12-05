@@ -120,21 +120,21 @@
               <th scope="col">Acciones</th>
             </tr>
           </thead>
-          <tbody th:each="cliente:${clientes}">
+          <tbody th:each="cliente : ${clientes}">
             <tr>
               <td scope="row" th:text="${cliente.nombre}">
-                <a th:action="@{/perfil/__${cliente.id}__}"></a>  
+                <a th:action="@{/perfil/__${cliente.id_usuario}__}"></a>
               </td>
               <td th:text="${cliente.email}"> </td>
               <td th:text="${cliente.rol}"></td>
               <td>
-                <a th:href="@{admin/modificarCliente/__${cliente.id}__}">
+                <a th:href="@{admin/modificarCliente/__${cliente.id_usuario}__}">
                   <button type="submit"><img
-                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Magic Wand_Lineal-coloured.png"></button>
+                      src="/img/botones/Magic Wand_Lineal-coloured.png"></button>
                 </a>
-                <a th:href="@{admin/eliminarCliente/__${cliente.id}__}">
+                <a th:href="@{admin/eliminarCliente/__${cliente.id_usuario}__}">
                   <button type="submit"><img
-                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Dustbin_Flat.png"></button>
+                      src="/img/botones/Dustbin_Flat.png"></button>
                 </a>
               </td>
               <!--VER CONTROLADOR-->
