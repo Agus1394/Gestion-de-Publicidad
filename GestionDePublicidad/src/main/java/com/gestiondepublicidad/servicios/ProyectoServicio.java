@@ -172,15 +172,15 @@ public class ProyectoServicio {
 
     }
 public List<Proyecto> proyectosPorIdYEstado (String estado, String id){
-        return proyectoRepositorio.listarIDyNombre(id, estado);
+        return proyectoRepositorio.listarIDyEstado(id, estado);
 
     }
 public List<Proyecto> proyectosPorIdYFechaFin (String fechaFin, String id){
-        return proyectoRepositorio.listarIDyNombre(id, fechaFin);
-
+        return proyectoRepositorio.listarIDyFechaFin(id, fechaFin);
+} 
 
 public List<Proyecto> proyectosPorIdYFechaInicio (String fechaInicio, String id){
-        return proyectoRepositorio.listarIDyNombre(id, fechaInicio);
+        return proyectoRepositorio.listarIDyFechaInicio(id, fechaInicio);
     }
 
     //------------------------------------------------------------------------------------------
