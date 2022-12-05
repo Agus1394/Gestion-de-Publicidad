@@ -10,8 +10,7 @@ import com.gestiondepublicidad.servicios.UsuarioServicio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -51,21 +50,22 @@ public class AdminControlador {
     @GetMapping("/tablaClientes")
     public String listarClientes(ModelMap modelo) {
         List<Usuario> listaUsuarios = usuarioServicio.buscarPorRol(Rol.USER);
-        modelo.addAttribute("usuarios", listaUsuarios);
+        System.out.println(listaUsuarios);
+        modelo.addAttribute("clientes", listaUsuarios);
         return "tablaClientes.html";
     }
 
     //FILTRAR CLIENTES POR NOMBRE
     @PostMapping("/tablaClientes/nombre")
     public String buscarClientePorNombre(@RequestParam String nombre, ModelMap modelo) throws Exception {
+        List<Usuario> usuarios = new ArrayList<Usuario>();
         try {
-            List<Usuario> usuarios = new ArrayList<Usuario>();
             if (nombre.isEmpty() || nombre == null) {
                 usuarios = usuarioServicio.buscarPorRol(Rol.USER);
             } else {
                 usuarios = usuarioServicio.usuariosPorNombreYRol(nombre.toUpperCase(), "USER");
             }
-            modelo.addAttribute("usuarios", usuarios);
+            modelo.addAttribute("clientes", usuarios);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
         }
@@ -78,7 +78,7 @@ public class AdminControlador {
     public String listarClientesEmail(@RequestParam String email, ModelMap modelo) {
         try {
             Usuario listaUsuarios = usuarioServicio.BusquedaPorEmail(email.toLowerCase(), Rol.USER);
-            modelo.addAttribute("usuarios", listaUsuarios);
+            modelo.addAttribute("clientes", listaUsuarios);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
         }
@@ -88,9 +88,14 @@ public class AdminControlador {
     //LISTAR CLIENTES POR PROYECTO
     @PostMapping("/tablaClientes/proyecto")
     public String listarClientesProyecto(@RequestParam String proyecto, ModelMap modelo) {
+        List<Usuario> usuarios = new ArrayList<Usuario>();
         try {
-            List<Usuario> listaUsuarios = usuarioServicio.usuariosPorProyecto(proyecto.toUpperCase(), Rol.USER);
-            modelo.addAttribute("usuarios", listaUsuarios);
+            if (proyecto.isEmpty() || proyecto == null) {
+                usuarios = usuarioServicio.buscarPorRol(Rol.USER);
+            } else {
+                usuarios = usuarioServicio.nombreProyectoUsuarios(proyecto, "USER");
+            }
+            modelo.addAttribute("clientes", usuarios);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
         }
@@ -181,9 +186,9 @@ public class AdminControlador {
             if (proyecto.isEmpty() || proyecto == null) {
                 usuarios = usuarioServicio.buscarPorRol(Rol.TRABAJADOR);
             } else {
-                List<Usuario> usuario = usuarioServicio.usuariosPorProyecto(proyecto, Rol.TRABAJADOR);
-                modelo.addAttribute("trabajadores", usuario);
+                usuarios = usuarioServicio.nombreProyectoUsuarios(proyecto, "TRABAJADOR");
             }
+            modelo.addAttribute("trabajadores", usuarios);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
 
@@ -277,7 +282,7 @@ public class AdminControlador {
     //----------------------------------------MODIFICAR PROYECTO ADMIN--------------------------------------------
     //MODIFICAR
     @GetMapping("/tablaProyectos/modificar/{id}")
-    public String modificar(@PathVariable String id, ModelMap modelo) {
+    public String modificar(@PathVariable String id, ModelMap modelo) throws MiException {
         modelo.put("proyecto", proyectoServicio.getOne(id));
         List<Usuario> usuarios = usuarioServicio.listarUsuarios(); //LISTAR USUARIO POR PROYECTO Y ROL. ESTE METODO INCLUYE TODOS LOS USUARIOS.
         modelo.addAttribute("usuarios", usuarios);

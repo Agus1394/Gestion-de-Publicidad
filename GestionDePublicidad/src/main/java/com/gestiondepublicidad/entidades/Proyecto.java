@@ -3,16 +3,8 @@ package com.gestiondepublicidad.entidades;
 import com.gestiondepublicidad.enumeraciones.Estado;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,13 +33,12 @@ public class Proyecto {
     
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
+
+    private boolean proyectoActivo;
     
-    //Revisar relacion
-    
-    @OneToMany
+    @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tarea> Tarea;
 
-//   COMO SON MUCHOS A MUCHOS; TAMBIÉN USUARIO SE ANOTA COMO LIST
     @ManyToMany
     private List<Usuario> usuario;
 

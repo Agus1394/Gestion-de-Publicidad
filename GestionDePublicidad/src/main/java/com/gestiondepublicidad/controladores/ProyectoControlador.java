@@ -50,7 +50,7 @@ public class ProyectoControlador {
             @RequestParam(required = false) Date fechaFin,
             ModelMap modelo) {
         try {
-            proyectoServicio.registrar(idProyecto, idUsuario,
+            proyectoServicio.registrar(idProyecto, nombreProyecto,
                     descripcion, fechaInicio, fechaFin, idUsuario);
 
             modelo.put("Proyecto publicado", "!!");
@@ -66,7 +66,7 @@ public class ProyectoControlador {
 
     //MODIFICAR
     @GetMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id, ModelMap modelo) {
+    public String modificar(@PathVariable String id, ModelMap modelo) throws MiException {
         modelo.put("proyecto", proyectoServicio.getOne(id));
         List<Usuario> usuarios = usuarioServicio.listarUsuarios();
         modelo.addAttribute("usuarios", usuarios);
@@ -97,7 +97,7 @@ public class ProyectoControlador {
     //agregar usuario al proyecto
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/modificar/{id_proyecto}/agregarEliminarUsuario")
-    public String agregarEliminarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, ModelMap modelo) {
+    public String agregarEliminarUsuarioProyecto(@PathVariable("id_proyecto") String id_proyecto, ModelMap modelo) throws MiException {
         modelo.addAttribute("usuarios", usuarioServicio.listarUsuarios());
         modelo.put("proyecto", proyectoServicio.getOne(id_proyecto));
         return "agregarEliminarUsuariosProyecto.html";//agregar botones de agregar y eliminar usuario a la vista particular del proyecto

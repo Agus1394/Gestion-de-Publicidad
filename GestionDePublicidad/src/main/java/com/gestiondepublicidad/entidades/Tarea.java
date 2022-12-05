@@ -39,4 +39,7 @@ public class Tarea {
 
     @ManyToOne
     private Usuario usuario;
+
+    @ManyToOne
+    private Proyecto proyecto;
 }

@@ -1,5 +1,4 @@
 package com.gestiondepublicidad.entidades;
-
 import com.gestiondepublicidad.enumeraciones.PuestoEmpresa;
 import com.gestiondepublicidad.enumeraciones.Rol;
 import java.util.List;
@@ -34,7 +33,7 @@ public class Usuario {
     @ManyToMany
     private List<Proyecto> proyecto;
 
-    @OneToMany
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Evento> eventos;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)

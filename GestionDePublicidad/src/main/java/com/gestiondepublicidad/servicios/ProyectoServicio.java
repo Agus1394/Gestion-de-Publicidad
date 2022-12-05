@@ -26,20 +26,17 @@ public class ProyectoServicio {
     //CREAR
     @Transactional
     public void registrar(String id_proyecto, String nombre, String descripcion,
-            Date fechaInicio, Date fechaFin, String id_usuario) throws MiException {
+                          Date fechaInicio, Date fechaFin, String id_usuario) throws MiException {
 
         validar(id_proyecto, nombre, descripcion, fechaInicio, fechaFin);
 
-        Optional<Usuario> respuestausuario = usuarioRepositorio.findById(id_usuario);
         Proyecto proyecto = new Proyecto();
-        Usuario usuario = new Usuario();
 
-        List<Usuario> nuevoUsuario = new ArrayList();
+        Usuario usuario = usuarioRepositorio.getOne(id_usuario);
 
-        if (respuestausuario.isPresent()) {
-            usuario = respuestausuario.get();
-            nuevoUsuario =  (List<Usuario>) usuario;
-        }
+        List<Usuario> nuevoUsuario = usuarioRepositorio.agendaProyecto(id_proyecto);
+        nuevoUsuario.add(usuario);
+
 
         proyecto.setId_proyecto(id_proyecto);
         proyecto.setNombre(nombre);
@@ -53,13 +50,13 @@ public class ProyectoServicio {
 
     @Transactional
     public void actualizar(String id_proyecto, String nombre, String descripcion,
-            Date fechaInicio, Date fechaFin, String id_usuario) throws MiException {
+                           Date fechaInicio, Date fechaFin, String id_usuario) throws MiException {
 
         validar(id_proyecto, nombre, descripcion, fechaInicio, fechaFin);
 
         Optional<Proyecto> respuesta = proyectoRepositorio.findById(id_proyecto);
         Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id_usuario);
-        Usuario usuario = new Usuario();       
+        Usuario usuario = new Usuario();
 
         List<Proyecto> proyectoActualizado = new ArrayList();
 
@@ -86,128 +83,125 @@ public class ProyectoServicio {
         proyectoRepositorio.deleteById(id);
     }
 
-     //Buscar uno por id
-    public Proyecto getOne(String id) {
+    //Buscar uno por id
+    public Proyecto getOne(String id) throws MiException {
         return proyectoRepositorio.getOne(id);
-
-        
-
-    //--------------------------------------SUS USUARIOS-------------------------------------
-    @Transactional
-    public void agregarUsuarioProyecto(String id_proyecto, String id_usuario) {
-        Proyecto proyecto = proyectoRepositorio.getOne(id_proyecto);
-        Usuario usuario = usuarioRepositorio.getOne(id_usuario);
-
-        List<Usuario> usuarios = proyecto.getUsuario();
-        List<Proyecto> proyectos = usuario.getProyecto();
-
-        usuarios.add(usuario);
-        proyecto.setUsuario(usuarios);
-
-        proyectos.add(proyecto);
-        usuario.setProyecto(proyectos);
-
-        usuarioRepositorio.save(usuario);
-        proyectoRepositorio.save(proyecto);
     }
 
-    @Transactional
-    public void eliminarUsuarioProyecto(String id_proyecto, String id_usuario) {
-        Proyecto proyecto = proyectoRepositorio.getOne(id_proyecto);
-        Usuario usuario = usuarioRepositorio.getOne(id_usuario);
+        //--------------------------------------SUS USUARIOS-------------------------------------
+        @Transactional
+        public void agregarUsuarioProyecto (String id_proyecto, String id_usuario){
+            Proyecto proyecto = proyectoRepositorio.getOne(id_proyecto);
+            Usuario usuario = usuarioRepositorio.getOne(id_usuario);
 
-        List<Usuario> usuarios = proyecto.getUsuario();
-        List<Proyecto> proyectos = usuario.getProyecto();
+            List<Usuario> usuarios = proyecto.getUsuario();
+            List<Proyecto> proyectos = usuario.getProyecto();
 
-        usuarios.remove(usuario);
-        proyecto.setUsuario(usuarios);
+            usuarios.add(usuario);
+            proyecto.setUsuario(usuarios);
 
-        proyectos.remove(proyecto);
-        usuario.setProyecto(proyectos);
+            proyectos.add(proyecto);
+            usuario.setProyecto(proyectos);
 
-        usuarioRepositorio.save(usuario);
-        proyectoRepositorio.save(proyecto);
-    }
+            usuarioRepositorio.save(usuario);
+            proyectoRepositorio.save(proyecto);
+        }
+
+        @Transactional
+        public void eliminarUsuarioProyecto (String id_proyecto, String id_usuario){
+            Proyecto proyecto = proyectoRepositorio.getOne(id_proyecto);
+            Usuario usuario = usuarioRepositorio.getOne(id_usuario);
+
+            List<Usuario> usuarios = proyecto.getUsuario();
+            List<Proyecto> proyectos = usuario.getProyecto();
+
+            usuarios.remove(usuario);
+            proyecto.setUsuario(usuarios);
+
+            proyectos.remove(proyecto);
+            usuario.setProyecto(proyectos);
+
+            usuarioRepositorio.save(usuario);
+            proyectoRepositorio.save(proyecto);
+        }
 
 
 //ADMIN
-    //-----------------------------------FILTROS---------------------------------------------
- //buscar Proyectos por Usuario
-    public List<Proyecto> buscarPorUsuario(String id_usuario) {
-        List<Proyecto> proyectos = proyectoRepositorio.proyectosDelUsuario(id_usuario);
-        return proyectos;
-    }
+        //-----------------------------------FILTROS---------------------------------------------
+        //buscar Proyectos por Usuario
+        public List<Proyecto> buscarPorUsuario (String id_usuario){
+            List<Proyecto> proyectos = proyectoRepositorio.proyectosDelUsuario(id_usuario);
+            return proyectos;
+        }
 
-    //metodo que filtra al proyecto por estado
-    public List<Proyecto> filtrarProyectoPorEstado(String estadoProyecto) throws MiException {
-        return proyectoRepositorio.buscarPorEstado(estadoProyecto);
-    }
+        //metodo que filtra al proyecto por estado
+        public List<Proyecto> filtrarProyectoPorEstado (String estadoProyecto) throws MiException {
+            return proyectoRepositorio.buscarPorEstado(estadoProyecto);
+        }
 
-    public List<Proyecto> listarTodos() {
-        List<Proyecto> proyectos = new ArrayList<>();
-        return proyectoRepositorio.findAll();
+        public List<Proyecto> listarTodos () {
+            List<Proyecto> proyectos = new ArrayList<>();
+            return proyectoRepositorio.findAll();
 
-    }
+        }
 
-    public List<Proyecto> buscarPorNombre(String nombre) {
-        return proyectoRepositorio.buscarPorNombreProy(nombre);
-    }
+        public List<Proyecto> buscarPorNombre (String nombre){
+            return proyectoRepositorio.buscarPorNombreProy(nombre);
+        }
 
-    public List<Proyecto> ordenarProyectosPorFechaInicio(String fechaInicio) {
-        return proyectoRepositorio.proyectosOrdenadosPorFechaInicio(fechaInicio);
-    }
+        public List<Proyecto> ordenarProyectosPorFechaInicio (String fechaInicio){
+            return proyectoRepositorio.proyectosOrdenadosPorFechaInicio(fechaInicio);
+        }
 
-    public List<Proyecto> ordenarProyectosPorFechaFin(String fechaFin) {
-        return proyectoRepositorio.proyectosOrdenadosPorFechaFin(fechaFin);
-    }
+        public List<Proyecto> ordenarProyectosPorFechaFin (String fechaFin){
+            return proyectoRepositorio.proyectosOrdenadosPorFechaFin(fechaFin);
+        }
 
 
-    
-    
-   //TRABAJADOR Y CLIENTE
+        //TRABAJADOR Y CLIENTE
 //---------------------------------FILTROS POR ROL Y...-------------------------------------------------------
 
-    public List<Proyecto> proyectosPorIdYNombre (String nombre, String id){
-        return proyectoRepositorio.listarIDyNombre(id, nombre);
+        public List<Proyecto> proyectosPorIdYNombre (String nombre, String id){
+            return proyectoRepositorio.listarIDyNombre(id, nombre);
 
-    }
-public List<Proyecto> proyectosPorIdYEstado (String estado, String id){
-        return proyectoRepositorio.listarIDyEstado(id, estado);
+        }
+        public List<Proyecto> proyectosPorIdYEstado (String estado, String id){
+            return proyectoRepositorio.listarIDyEstado(id, estado);
 
-    }
-public List<Proyecto> proyectosPorIdYFechaFin (String fechaFin, String id){
-        return proyectoRepositorio.listarIDyFechaFin(id, fechaFin);
-} 
-
-public List<Proyecto> proyectosPorIdYFechaInicio (String fechaInicio, String id){
-        return proyectoRepositorio.listarIDyFechaInicio(id, fechaInicio);
-    }
-
-    //------------------------------------------------------------------------------------------
-    //VALIDACION
-    private void validar(String id_proyecto, String nombre, String descripcion,
-            Date fechaInicio, Date fechaFin) throws MiException {
-
-        if (id_proyecto.isEmpty() || id_proyecto == null) {
-            throw new MiException("El id del proyecto no puede estar vacío");
+        }
+        public List<Proyecto> proyectosPorIdYFechaFin (String fechaFin, String id){
+            return proyectoRepositorio.listarIDyFechaFin(id, fechaFin);
         }
 
-        if (nombre.isEmpty() || nombre == null) {
-            throw new MiException("El nombre del proyecto no puede estar vacío");
+        public List<Proyecto> proyectosPorIdYFechaInicio (String fechaInicio, String id){
+            return proyectoRepositorio.listarIDyFechaInicio(id, fechaInicio);
         }
 
-        if (descripcion.isEmpty() || descripcion == null) {
-            throw new MiException("La descripcion del proyecto no puede estar vacía");
-        }
+        //------------------------------------------------------------------------------------------
+        //VALIDACION
+        private void validar(String id_proyecto, String nombre, String descripcion, Date fechaInicio, Date fechaFin) throws MiException{
 
-        if (fechaInicio.toString().isEmpty() || fechaInicio == null) {
-            throw new MiException("La fecha del proyecto no puede estar vacía");
-        }
+            if (id_proyecto.isEmpty() || id_proyecto == null) {
+                throw new MiException("El id del proyecto no puede estar vacío");
+            }
 
-        if (fechaFin.toString().isEmpty() || fechaFin == null) {
-            throw new MiException("La fecha del proyecto no puede estar vacía");
-        }
+            if (nombre.isEmpty() || nombre == null) {
+                throw new MiException("El nombre del proyecto no puede estar vacío");
+            }
 
-    }
+            if (descripcion.isEmpty() || descripcion == null) {
+                throw new MiException("La descripcion del proyecto no puede estar vacía");
+            }
+
+            if (fechaInicio.toString().isEmpty() || fechaInicio == null) {
+                throw new MiException("La fecha del proyecto no puede estar vacía");
+            }
+
+            if (fechaFin.toString().isEmpty() || fechaFin == null) {
+                throw new MiException("La fecha del proyecto no puede estar vacía");
+            }
+
+        }
 
 }
+

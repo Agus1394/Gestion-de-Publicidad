@@ -9,6 +9,7 @@ import com.gestiondepublicidad.enumeraciones.Rol;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.repositorios.FotoRepositorio;
 import com.gestiondepublicidad.repositorios.NotaRepositorio;
+import com.gestiondepublicidad.repositorios.ProyectoRepositorio;
 import com.gestiondepublicidad.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,6 +41,9 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     NotaRepositorio notaRepositorio;
+
+    @Autowired
+    ProyectoRepositorio proyectoRepositorio;
 
     @Autowired
     private FotoRepositorio fotoRepositorio;
@@ -262,5 +266,18 @@ public class UsuarioServicio implements UserDetailsService {
             }
         }
         usuarioRepositorio.saveAndFlush(usuario);
+    }
+
+    public List<Usuario> nombreProyectoUsuarios(String nombreProyecto, String rol){
+        List<Proyecto> proyectos = proyectoRepositorio.buscarPorNombreProy(nombreProyecto);
+        List<Usuario> usuarios = new ArrayList<Usuario>();
+        for (Proyecto proyecto: proyectos) {
+            List<Usuario> usuarios1 = usuarioRepositorio.nombreProyectoUsuarios(proyecto.getId_proyecto(), rol);
+            for (Usuario usuario : usuarios1) {
+                usuarios.add(usuario);
+            }
+        }
+
+        return usuarios;
     }
 }
