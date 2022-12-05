@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@Secured({"ROLE_TRABAJADOR"})
+@PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
 @RequestMapping("/trabajador")
 public class TrabajadorControlador {
 
@@ -45,27 +45,34 @@ public class TrabajadorControlador {
 
     @GetMapping("/indexTrabajador")
     //inicio del trabajador tiene una tabla con sus proyectos
-    public List<Proyecto> panelAdministrativoTrabajador(ModelMap modelo, HttpSession session) {
+    public String panelAdministrativoTrabajador(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-        Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario()));
-        List <Proyecto> proyectos = proyectoServicio.buscarPorUsuario(usuario1.getId_usuario()));
+        Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
+        List <Proyecto> proyectos = proyectoServicio.buscarPorUsuario(usuario1.getId_usuario());
         modelo.put("proyectos", proyectos);
 
         return "indexTrabajador.html";
     }
 
-    //------------------------------------------FILTROS PROYECTOS-----------------------------------
+    @PostMapping("/crearProyecto")
+    public String crearProyecto (){
+     
+        return "";
+    }
+    
+    
+    //------------------------------------------FILTROS ID y PROYECTOS-----------------------------------
 
-    @PostMapping("/indexTrabajador/nombre")
+    @PostMapping("/nombre")
     public String listarProyectosPorNombre(@RequestParam String nombre, ModelMap modelo, HttpSession session) {
         try{
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario()));
+            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
+            List<Proyecto> proyectos = new ArrayList<Proyecto>();
             if(nombre.isEmpty() || nombre == null){
-               panelAdministrativoTrabajador();
+               panelAdministrativoTrabajador(modelo, session);
             }else{
-                List<Proyecto> proyectos = new ArrayList<Proyecto>();
-                proyectos = proyectoServicio.proyectosPorNombreYID(nombre.toUpperCase(), usuario1.getId_usuario());
+                proyectos = proyectoServicio.proyectosPorIdYNombre(nombre.toUpperCase(), usuario1.getId_usuario());
                 modelo.put("proyectos", proyectos);
             }
             modelo.addAttribute("proyectos", proyectos);
@@ -73,72 +80,71 @@ public class TrabajadorControlador {
             modelo.put("error", e.getMessage());
 
         }finally {
-            return "indexTrabajador.html";
+            return "/indexTrabajador";
         }
     }
 
-    @GetMapping("/indexTrabajador/estado")
+    @PostMapping("/estado")
     public String listarProyectosPorEstado(@RequestParam String estado, ModelMap modelo,HttpSession session) {
         try{
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario()));
+            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
             List<Proyecto> proyectos = new ArrayList<Proyecto>();
             if(estado.isEmpty() || estado == null){
-                panelAdministrativoTrabajador();
+                panelAdministrativoTrabajador(modelo, session);
             }else{
-                proyectos = proyectoServicio.proyectosPorEstadoYID(estado.toUpperCase(), usuario1.getId_usuario());
+                proyectos = proyectoServicio.proyectosPorIdYEstado(estado.toUpperCase(), usuario1.getId_usuario());
             }
             modelo.addAttribute("proyectos", proyectos);
         }catch(Exception e){
             modelo.put("error", e.getMessage());
 
         }finally {
-            return "indexTrabajador.html";
+            return "/indexTrabajador";
         }
-
     }
 
-    @GetMapping("/indexTrabajador/fechaFin")
+    @PostMapping("/fechaFin")
     public String listarProyectosPorFechaFin(@RequestParam String fechaFin, ModelMap modelo, HttpSession session) {
         try{
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario()));
+            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
             List<Proyecto> proyectos = new ArrayList<Proyecto>();
             if(fechaFin.isEmpty() || fechaFin == null){
-                panelAdministrativoTrabajador();
+                panelAdministrativoTrabajador(modelo, session);
             }else{
-                proyectos = proyectoServicio.proyectosPorFechaFinYID(fechaFin.toUpperCase(), usuario1.getId_usuario());
+                proyectos = proyectoServicio.proyectosPorIdYFechaFin(fechaFin.toUpperCase(), usuario1.getId_usuario());
             }
             modelo.addAttribute("proyectos", proyectos);
         }catch(Exception e){
             modelo.put("error", e.getMessage());
 
         }finally {
-            return "indexTrabajador.html";
+            return "/indexTrabajador";
         }
     }
 
-    @GetMapping("/indexTrabajador/fechaInicio")
+    @PostMapping("/fechaInicio")
     public String listarProyectosPorFechaInico(@RequestParam String fechaInicio, ModelMap modelo, HttpSession session) {
         try{
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario()));
+            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
             List<Proyecto> proyectos = new ArrayList<Proyecto>();
             if(fechaInicio.isEmpty() || fechaInicio == null){
-                panelAdministrativoTrabajador();
+                panelAdministrativoTrabajador(modelo, session);
             }else{
-                proyectos = proyectoServicio.proyectosPorFechaInicioYID(fechaInicio.toUpperCase(), usuario1.getId_usuario());
+                proyectos = proyectoServicio.proyectosPorIdYFechaInicio(fechaInicio.toUpperCase(), usuario1.getId_usuario());
             }
             modelo.addAttribute("proyectos", proyectos);
         }catch(Exception e){
             modelo.put("error", e.getMessage());
 
         }finally {
-            return "indexTrabajador.html";
+            return "/indexTrabajador";
         }
     }
 
-//------------------------------------------------------------------------------------------------------
+//-------------------------------------PERFIL----------------------------------------------------
 
     //MODIFICARSE
     @GetMapping("/modificar/{id}")
@@ -168,87 +174,8 @@ public class TrabajadorControlador {
         }
     }
 
-
-    //----------------------------------------PROYECTOS--------------------------------------------
-    //FILTRAR POR NOMBRE
-    @GetMapping("/tablaProyectos")
-    public String listarProyectos(ModelMap modelo) {
-        List<Proyecto> proyectos = proyectoServicio.listarTodos();
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectosTrabajador.html";
-    }
-
-    //filtrar por nombre
-    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
-    @PostMapping("/tablaProyectos/nombre")
-    public String filtrarPorNombre(@RequestParam String nombre, ModelMap modelo) {
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-        if (nombre.isEmpty() || nombre == null) {
-            proyectos = proyectoServicio.listarTodos();
-        } else {
-            proyectos = proyectoServicio.buscarPorNombre(nombre.toUpperCase());
-        }
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectosTrabajador.html ";
-    }
-
-    //FILTRAR POR ESTADO DEL PROYECTO
-    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
-    @PostMapping("/tablaProyectos/estado")
-    public String filtrarPorEstadoProyecto(@RequestParam String estado, ModelMap modelo) throws MiException {
-
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-
-        if (estado.isEmpty() || estado == null) {
-            proyectos = proyectoServicio.listarTodos();
-        } else {
-            proyectos = proyectoServicio.filtrarProyectoPorEstado(estado);
-        }
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectosTrabajador.html";
-    }
-
-    //FILTRAR POR FECHA DE INICIO
-    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
-    @PostMapping("/tablaProyectos/fechaInicio")
-    public String ordenarProyectosPorFechaInicio(@RequestParam String fechaInicio, ModelMap modelo) {
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-
-        if (fechaInicio.isEmpty() || fechaInicio == null) {
-            proyectos = proyectoServicio.listarTodos();
-        } else {
-            proyectos = proyectoServicio.ordenarProyectosPorFechaInicio(fechaInicio);
-        }
-
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectosTrabajador.html";
-    }
-
-    //FILTRAR POR FECHA DE FIN
-    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
-    @PostMapping("/tablaProyectos/fechaFin")
-    public String ordenarProyectosPorFechaFin(@RequestParam String fechaFin, ModelMap modelo) {
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-
-        if (fechaFin.isEmpty() || fechaFin == null) {
-            proyectos = proyectoServicio.listarTodos();
-        } else {
-            proyectos = proyectoServicio.ordenarProyectosPorFechaFin(fechaFin);
-        }
-
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectosTrabajador.html";
-    }
-
-
-    //ELIMINAR USUARIO/CLIENTE
-    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
-    @PostMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id, ModelMap modelo) {
-        usuarioServicio.eliminarUsuario(id);
-        return "redirect:/trabajador/usuarios";
-
-    }
+    
+   //---------------------------NOTA--------------------------------------------------------
 
 
     //CREAR NOTA
@@ -315,6 +242,8 @@ public class TrabajadorControlador {
     }
 
 }
+
+
 
 
 
