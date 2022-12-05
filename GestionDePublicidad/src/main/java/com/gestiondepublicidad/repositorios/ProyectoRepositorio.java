@@ -32,5 +32,23 @@ public interface ProyectoRepositorio extends JpaRepository<Proyecto, String> {
     @Query(value = "SELECT p.* FROM Proyecto p LEFT JOIN proyecto_usuario pu ON p.id_proyecto = pu.proyecto_id_proyecto WHERE pu.usuario_id_usuario = :id_usuario",
     nativeQuery = true)
     public List<Proyecto> proyectosDelUsuario(@Param("id_usuario") String id_usuario);
+    
+    
+    
+    @Query(value = "SELECT p.* FROM Proyecto p LEFT JOIN proyecto_usuario pu ON p.id_proyecto = pu.proyecto_id_proyecto WHERE pu.usuario_id_usuario = :id_usuario AND p.nombre=  %:nombre%",
+    nativeQuery = true)
+    public List<Proyecto> listarIDyNombre(@Param("nombre") String nombre, @Param("id_usuario") String id_usuario);
+
+      @Query(value = "SELECT p.* FROM Proyecto p LEFT JOIN proyecto_usuario pu ON p.id_proyecto = pu.proyecto_id_proyecto WHERE pu.usuario_id_usuario = :id_usuario AND p.estado=  :estado",
+    nativeQuery = true)
+    public List<Proyecto> listarIDyEstado(@Param("estado") String estado, @Param("id_usuario") String id_usuario);
+
+      @Query(value = "SELECT p.* FROM Proyecto p LEFT JOIN proyecto_usuario pu ON p.id_proyecto = pu.proyecto_id_proyecto WHERE pu.usuario_id_usuario = :id_usuario AND p.fechaFin=  :fechaFin",
+    nativeQuery = true)
+    public List<Proyecto> listarIDyFechaFin(@Param("fechaFin") String fechaFin, @Param("id_usuario") String id_usuario);
+
+      @Query(value = "SELECT p.* FROM Proyecto p LEFT JOIN proyecto_usuario pu ON p.id_proyecto = pu.proyecto_id_proyecto WHERE pu.usuario_id_usuario = :id_usuario AND p.fechaInicio=  :fechaInicio",
+    nativeQuery = true)
+    public List<Proyecto> listarIDyFechaInicio(@Param("fechaInicio") String fechaInicio, @Param("id_usuario") String id_usuario);
 
 }

@@ -24,11 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
-import org.springframework.security.access.annotation.Secured;
-
 @Controller
-@Secured({"ROLE_TRABAJADOR"})
+@PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
 @RequestMapping("/trabajador")
 public class TrabajadorControlador {
 
@@ -46,98 +43,117 @@ public class TrabajadorControlador {
     public String panelAdministrativoTrabajador(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
         Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
-        List<Proyecto> proyectos = proyectoServicio.buscarPorUsuario(usuario1.getId_usuario());
+
+        List <Proyecto> proyectos = proyectoServicio.buscarPorUsuario(usuario1.getId_usuario());
+
         modelo.put("proyectos", proyectos);
 
         return "indexTrabajador.html";
     }
 
-    //------------------------------------------FILTROS PROYECTOS-----------------------------------
-    @PostMapping("/indexTrabajador/nombre")
+
+    @PostMapping("/crearProyecto")
+    public String crearProyecto (){
+     
+        return "";
+    }
+    
+    
+    //------------------------------------------FILTROS ID y PROYECTOS-----------------------------------
+
+    @PostMapping("/nombre")
+
     public String listarProyectosPorNombre(@RequestParam String nombre, ModelMap modelo, HttpSession session) {
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
             Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
             List<Proyecto> proyectos = new ArrayList<Proyecto>();
 
-            if (nombre.isEmpty() || nombre == null) {
-                panelAdministrativoTrabajador(modelo, session);
-            } else {
-                proyectos = proyectoServicio.proyectosPorNombreYID(nombre.toUpperCase(), usuario1.getId_usuario());
+            if(nombre.isEmpty() || nombre == null){
+               panelAdministrativoTrabajador(modelo, session);
+            }else{
+                proyectos = proyectoServicio.proyectosPorIdYNombre(nombre.toUpperCase(), usuario1.getId_usuario());
+
                 modelo.put("proyectos", proyectos);
             }
             modelo.addAttribute("proyectos", proyectos);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
 
-        } finally {
-            return "indexTrabajador.html";
+        }finally {
+            return "/indexTrabajador";
         }
     }
 
-    @GetMapping("/indexTrabajador/estado")
-    public String listarProyectosPorEstado(@RequestParam String estado, ModelMap modelo, HttpSession session) {
-        try {
+    @PostMapping("/estado")
+    public String listarProyectosPorEstado(@RequestParam String estado, ModelMap modelo,HttpSession session) {
+        try{
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
             Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
             List<Proyecto> proyectos = new ArrayList<Proyecto>();
-            if (estado.isEmpty() || estado == null) {
-                panelAdministrativoTrabajador();
-            } else {
-                proyectos = proyectoServicio.proyectosPorEstadoYID(estado.toUpperCase(), usuario1.getId_usuario());
+            if(estado.isEmpty() || estado == null){
+                panelAdministrativoTrabajador(modelo, session);
+            }else{
+                proyectos = proyectoServicio.proyectosPorIdYEstado(estado.toUpperCase(), usuario1.getId_usuario());
+
             }
             modelo.addAttribute("proyectos", proyectos);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
 
-        } finally {
-            return "indexTrabajador.html";
-        }
 
+        }finally {
+            return "redirect:/indexTrabajador";
+        }
     }
 
-    @GetMapping("/indexTrabajador/fechaFin")
+    @PostMapping("/fechaFin")
     public String listarProyectosPorFechaFin(@RequestParam String fechaFin, ModelMap modelo, HttpSession session) {
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+
             Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
             List<Proyecto> proyectos = new ArrayList<Proyecto>();
-            if (fechaFin.isEmpty() || fechaFin == null) {
-                panelAdministrativoTrabajador();
-            } else {
-                proyectos = proyectoServicio.ordenarProyectosPorFechaInicio();
+            if(fechaFin.isEmpty() || fechaFin == null){
+                panelAdministrativoTrabajador(modelo, session);
+            }else{
+                proyectos = proyectoServicio.proyectosPorIdYFechaFin(fechaFin.toUpperCase(), usuario1.getId_usuario());
+
             }
             modelo.addAttribute("proyectos", proyectos);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
 
-        } finally {
-            return "indexTrabajador.html";
+        }finally {
+            return "redirect:/indexTrabajador";
+
         }
     }
 
-    @GetMapping("/indexTrabajador/fechaInicio")
+    @PostMapping("/fechaInicio")
     public String listarProyectosPorFechaInico(@RequestParam String fechaInicio, ModelMap modelo, HttpSession session) {
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
-            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario())
-            );
+            Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
             List<Proyecto> proyectos = new ArrayList<Proyecto>();
-            if (fechaInicio.isEmpty() || fechaInicio == null) {
-                panelAdministrativoTrabajador();
-            } else {
-                proyectos = proyectoServicio.proyectosPorFechaInicioYID(fechaInicio.toUpperCase(), usuario1.getId_usuario());
+            if(fechaInicio.isEmpty() || fechaInicio == null){
+                panelAdministrativoTrabajador(modelo, session);
+            }else{
+                proyectos = proyectoServicio.proyectosPorIdYFechaInicio(fechaInicio.toUpperCase(), usuario1.getId_usuario());
+
             }
             modelo.addAttribute("proyectos", proyectos);
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
 
-        } finally {
-            return "indexTrabajador.html";
+
+        }finally {
+            return "redirect:/indexTrabajador";
         }
     }
 
-//------------------------------------------------------------------------------------------------------
+//-------------------------------------PERFIL----------------------------------------------------
+
     //MODIFICARSE
     @GetMapping("/modificar/{id}")
     public String modificar(ModelMap modelo, @PathVariable String id) {
@@ -166,85 +182,9 @@ public class TrabajadorControlador {
         }
     }
 
-    //----------------------------------------PROYECTOS--------------------------------------------
-    //FILTRAR POR NOMBRE
-    @GetMapping("/tablaProyectos")
-    public String listarProyectos(ModelMap modelo) {
-        List<Proyecto> proyectos = proyectoServicio.listarTodos();
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectosTrabajador.html";
-    }
 
-    //filtrar por nombre
-    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
-    @PostMapping("/tablaProyectos/nombre")
-    public String filtrarPorNombre(@RequestParam String nombre, ModelMap modelo) {
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-        if (nombre.isEmpty() || nombre == null) {
-            proyectos = proyectoServicio.listarTodos();
-        } else {
-            proyectos = proyectoServicio.buscarPorNombre(nombre.toUpperCase());
-        }
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectosTrabajador.html ";
-    }
 
-    //FILTRAR POR ESTADO DEL PROYECTO
-    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
-    @PostMapping("/tablaProyectos/estado")
-    public String filtrarPorEstadoProyecto(@RequestParam String estado, ModelMap modelo) throws MiException {
-
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-
-        if (estado.isEmpty() || estado == null) {
-            proyectos = proyectoServicio.listarTodos();
-        } else {
-            proyectos = proyectoServicio.filtrarProyectoPorEstado(estado);
-        }
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectosTrabajador.html";
-    }
-
-    //FILTRAR POR FECHA DE INICIO
-    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
-    @PostMapping("/tablaProyectos/fechaInicio")
-    public String ordenarProyectosPorFechaInicio(@RequestParam String fechaInicio, ModelMap modelo) {
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-
-        if (fechaInicio.isEmpty() || fechaInicio == null) {
-            proyectos = proyectoServicio.listarTodos();
-        } else {
-            proyectos = proyectoServicio.ordenarProyectosPorFechaInicio(fechaInicio);
-        }
-
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectosTrabajador.html";
-    }
-
-    //FILTRAR POR FECHA DE FIN
-    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
-    @PostMapping("/tablaProyectos/fechaFin")
-    public String ordenarProyectosPorFechaFin(@RequestParam String fechaFin, ModelMap modelo) {
-        List<Proyecto> proyectos = new ArrayList<Proyecto>();
-
-        if (fechaFin.isEmpty() || fechaFin == null) {
-            proyectos = proyectoServicio.listarTodos();
-        } else {
-            proyectos = proyectoServicio.ordenarProyectosPorFechaFin(fechaFin);
-        }
-
-        modelo.addAttribute("proyectos", proyectos);
-        return "tablaProyectosTrabajador.html";
-    }
-
-    //ELIMINAR USUARIO/CLIENTE
-    @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
-    @PostMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id, ModelMap modelo) {
-        usuarioServicio.eliminarUsuario(id);
-        return "redirect:/trabajador/usuarios";
-
-    }
+   //------------------------NOTA-----------------------------
 
     //CREAR NOTA
     @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
@@ -310,3 +250,4 @@ public class TrabajadorControlador {
     }
 
 }
+
