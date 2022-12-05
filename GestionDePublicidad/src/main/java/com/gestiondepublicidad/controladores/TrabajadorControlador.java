@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import org.springframework.security.access.annotation.Secured;
 
 @Controller
 @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
@@ -40,19 +41,19 @@ public class TrabajadorControlador {
     @Autowired
     NotaServicio notaServicio;
 
-
-
-
     @GetMapping("/indexTrabajador")
     //inicio del trabajador tiene una tabla con sus proyectos
     public String panelAdministrativoTrabajador(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
         Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
+
         List <Proyecto> proyectos = proyectoServicio.buscarPorUsuario(usuario1.getId_usuario());
+
         modelo.put("proyectos", proyectos);
 
         return "indexTrabajador.html";
     }
+
 
     @PostMapping("/crearProyecto")
     public String crearProyecto (){
@@ -64,19 +65,22 @@ public class TrabajadorControlador {
     //------------------------------------------FILTROS ID y PROYECTOS-----------------------------------
 
     @PostMapping("/nombre")
+
     public String listarProyectosPorNombre(@RequestParam String nombre, ModelMap modelo, HttpSession session) {
-        try{
+        try {
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
             Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
             List<Proyecto> proyectos = new ArrayList<Proyecto>();
+
             if(nombre.isEmpty() || nombre == null){
                panelAdministrativoTrabajador(modelo, session);
             }else{
                 proyectos = proyectoServicio.proyectosPorIdYNombre(nombre.toUpperCase(), usuario1.getId_usuario());
+
                 modelo.put("proyectos", proyectos);
             }
             modelo.addAttribute("proyectos", proyectos);
-        }catch(Exception e){
+        } catch (Exception e) {
             modelo.put("error", e.getMessage());
 
         }finally {
@@ -94,39 +98,44 @@ public class TrabajadorControlador {
                 panelAdministrativoTrabajador(modelo, session);
             }else{
                 proyectos = proyectoServicio.proyectosPorIdYEstado(estado.toUpperCase(), usuario1.getId_usuario());
+
             }
             modelo.addAttribute("proyectos", proyectos);
-        }catch(Exception e){
+        } catch (Exception e) {
             modelo.put("error", e.getMessage());
 
+
         }finally {
-            return "/indexTrabajador";
+            return "redirect:/indexTrabajador";
         }
     }
 
     @PostMapping("/fechaFin")
     public String listarProyectosPorFechaFin(@RequestParam String fechaFin, ModelMap modelo, HttpSession session) {
-        try{
+        try {
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+
             Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
             List<Proyecto> proyectos = new ArrayList<Proyecto>();
             if(fechaFin.isEmpty() || fechaFin == null){
                 panelAdministrativoTrabajador(modelo, session);
             }else{
                 proyectos = proyectoServicio.proyectosPorIdYFechaFin(fechaFin.toUpperCase(), usuario1.getId_usuario());
+
             }
             modelo.addAttribute("proyectos", proyectos);
-        }catch(Exception e){
+        } catch (Exception e) {
             modelo.put("error", e.getMessage());
 
         }finally {
-            return "/indexTrabajador";
+            return "redirect:/indexTrabajador";
+
         }
     }
 
     @PostMapping("/fechaInicio")
     public String listarProyectosPorFechaInico(@RequestParam String fechaInicio, ModelMap modelo, HttpSession session) {
-        try{
+        try {
             Usuario usuario = (Usuario) session.getAttribute("usuariosession");
             Usuario usuario1 = usuarioServicio.getOne(usuario.getId_usuario());
             List<Proyecto> proyectos = new ArrayList<Proyecto>();
@@ -134,13 +143,15 @@ public class TrabajadorControlador {
                 panelAdministrativoTrabajador(modelo, session);
             }else{
                 proyectos = proyectoServicio.proyectosPorIdYFechaInicio(fechaInicio.toUpperCase(), usuario1.getId_usuario());
+
             }
             modelo.addAttribute("proyectos", proyectos);
-        }catch(Exception e){
+        } catch (Exception e) {
             modelo.put("error", e.getMessage());
 
+
         }finally {
-            return "/indexTrabajador";
+            return "redirect:/indexTrabajador";
         }
     }
 
@@ -174,20 +185,20 @@ public class TrabajadorControlador {
         }
     }
 
-    
-   //---------------------------NOTA--------------------------------------------------------
 
+
+   //------------------------NOTA-----------------------------
 
     //CREAR NOTA
     @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
     @GetMapping("/nota/crear")
-    public String crearNota(){
+    public String crearNota() {
         return "formularioNota.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
     @PostMapping("/nota/creado")
-    public String notaCreada(String descripcion, String titulo, HttpSession session, ModelMap modelo){
+    public String notaCreada(String descripcion, String titulo, HttpSession session, ModelMap modelo) {
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         Usuario usuario = usuarioServicio.getOne(logueado.getId_usuario());
 
@@ -205,7 +216,7 @@ public class TrabajadorControlador {
     // NOTAS TRABAJADOR
     @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
     @GetMapping("/listaNota")
-    public String listarNota(ModelMap modelo, HttpSession session){
+    public String listarNota(ModelMap modelo, HttpSession session) {
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         modelo.addAttribute("notas", notaServicio.listarNotas(logueado.getId_usuario()));
         return "listarNotas.html";
@@ -214,7 +225,7 @@ public class TrabajadorControlador {
     // EDITAR NOTA TRABAJADOR
     @PreAuthorize("hasAnyRole('ROLE_TRABAJADOR')")
     @GetMapping("/nota/{id_nota}")
-    public String editarNota(@PathVariable String id_nota){
+    public String editarNota(@PathVariable String id_nota) {
         return "formularioNota.html";
     }
 
@@ -222,12 +233,12 @@ public class TrabajadorControlador {
     @PostMapping("/nota/{id_nota}/editada")
     public String editarNota(@PathVariable String id_nota, String titulo, String descripcion, ModelMap modelo, HttpSession session) throws MiException {
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-        try{
+        try {
             notaServicio.actualizar(id_nota, titulo, descripcion, logueado);
             modelo.put("exito", "nota guardada con exito");
-        }catch (Exception e){
+        } catch (Exception e) {
             modelo.put("error", e.getMessage());
-        }finally {
+        } finally {
             modelo.addAttribute("notas", notaServicio.listarNotas(logueado.getId_usuario()));
             return "listarNotas.html";
         }
@@ -242,8 +253,4 @@ public class TrabajadorControlador {
     }
 
 }
-
-
-
-
 
