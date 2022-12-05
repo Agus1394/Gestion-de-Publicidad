@@ -282,7 +282,7 @@ public class AdminControlador {
     //----------------------------------------MODIFICAR PROYECTO ADMIN--------------------------------------------
     //MODIFICAR
     @GetMapping("/tablaProyectos/modificar/{id}")
-    public String modificar(@PathVariable String id, ModelMap modelo) {
+    public String modificar(@PathVariable String id, ModelMap modelo) throws MiException {
         modelo.put("proyecto", proyectoServicio.getOne(id));
         List<Usuario> usuarios = usuarioServicio.listarUsuarios(); //LISTAR USUARIO POR PROYECTO Y ROL. ESTE METODO INCLUYE TODOS LOS USUARIOS.
         modelo.addAttribute("usuarios", usuarios);
