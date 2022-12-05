@@ -80,7 +80,7 @@
                 <!--FILTROS-->
                 <section id="mensajeFiltros">
                     
-                <form th:action="@{/cliente/tablaProyectos/nombre}">
+                <form th:action="@{/cliente/tablaProyectos/nombre}" method="post">
                     <label for="nombre">
                         <p>Filtro por nombre</p>
                     </label><br>
@@ -88,7 +88,7 @@
                     <button type="submit" class="btn btn-light">Buscar</button>
                 </form>
 
-                <form th:action="@{/cliente/tablaProyectos/fechaInicio}">
+                <form th:action="@{/cliente/tablaProyectos/fechaInicio}" method="post">
                     <label for="inicio">
                         <p>Filtro por fecha de inicio</p>
                     </label><br>
@@ -96,7 +96,7 @@
                     <button type="submit" class="btn btn-light">Buscar</button>
                 </form>
 
-                <form th:action="@{/cliente/tablaProyectos/fechaFin}">
+                <form th:action="@{/cliente/tablaProyectos/fechaFin}" method="post">
 
                     <label for="fin">
                         <p>Filtro por fecha de fin</p>
@@ -105,7 +105,7 @@
                     <button type="submit" class="btn btn-light">Buscar</button>
                 </form>
 
-                <form th:action="@{/cliente/tablaProyectos/estado}">
+                <form th:action="@{/cliente/tablaProyectos/estado}" method="post">
                     <label for="estado">
                         <p>Filtro por estado</p>
                     </label><br>
