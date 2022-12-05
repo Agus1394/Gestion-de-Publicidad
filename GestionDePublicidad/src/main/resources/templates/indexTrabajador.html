@@ -51,8 +51,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0 py-2">
             <li class="nav-item">
-                <li><a th:href="@{/crearProyecto}" class="nav-link px-2 link-ul">Crear Proyecto</a></li>
-                <li><a th:href="@{/trabajador/agenda}" class="nav-link px-2 link-ul">Agenda</a></li>
+                <li><a th:href="@{/trabajador/crearProyecto}" class="nav-link px-2 link-ul">Crear Proyecto</a></li>                
                 <li><a th:href="@{/trabajador/notas}" class="nav-link px-2 link-ul">Notas</a></li>
             </li>
           </ul>
@@ -145,23 +144,18 @@
                                 <th scope="col">Inicio</th>
                                 <th scope="col">Fin</th>
                                 <th scope="col">Estado</th>
-                                <th scope="col">Acciones</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="proyecto:${proyectos}">
                                 <td scope="row" th:text="${proyecto.nombre}">
                                     <a th:href="@{proyecto/__${proyecto.id}__}"></a>
-                                </td><!-- VER CONTROLADOR-->
+                                </td>
                                 <td th:text="${proyecto.fechaInicio}"></td>
                                 <td th:text="${proyecto.fechaFin}"></td>
                                 <td th:text="${proyecto.estado}"></td>
-                                <td>
-                                    <a th:action="@{admin/modificarProyecto/__{proyecto.id}__}">
-                                        <button type="submit"><img
-                                            src="/GestionDePublicidad/src/main/resources/static/img/botones/Magic Wand_Lineal-coloured.png"></button>
-                                      </a>
-                                </td>
+                                
                             </tr>
                         </tbody>
                     </table>

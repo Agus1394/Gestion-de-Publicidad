@@ -32,15 +32,13 @@ public class ProyectoServicio {
 
         Optional<Usuario> respuestausuario = usuarioRepositorio.findById(id_usuario);
         Proyecto proyecto = new Proyecto();
-
         Usuario usuario = new Usuario();
 
         List<Usuario> nuevoUsuario = new ArrayList();
 
         if (respuestausuario.isPresent()) {
             usuario = respuestausuario.get();
-
-            nuevoUsuario = (List<Usuario>) usuario;
+            nuevoUsuario =  (List<Usuario>) usuario;
         }
 
         proyecto.setId_proyecto(id_proyecto);
@@ -48,22 +46,9 @@ public class ProyectoServicio {
         proyecto.setDescripcion(descripcion);
         proyecto.setFechaInicio(fechaInicio);
         proyecto.setFechaFin(fechaFin);
-
         proyecto.setUsuario(nuevoUsuario);
 
         proyectoRepositorio.save(proyecto);
-    }
-
-    //buscar Proyectos por Usuario
-    public List<Proyecto> buscarPorUsuario(String id_usuario) {
-        List<Proyecto> proyectos = proyectoRepositorio.proyectosDelUsuario(id_usuario);
-        return proyectos;
-    }
-
-    //metodo que filtra al proyecto por estado
-    public List<Proyecto> filtrarProyectoPorEstado(String estadoProyecto) throws MiException {
-        return proyectoRepositorio.buscarPorEstado(estadoProyecto);
-
     }
 
     @Transactional
@@ -74,7 +59,7 @@ public class ProyectoServicio {
 
         Optional<Proyecto> respuesta = proyectoRepositorio.findById(id_proyecto);
         Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id_usuario);
-        Usuario usuario = new Usuario();
+        Usuario usuario = new Usuario();       
 
         List<Proyecto> proyectoActualizado = new ArrayList();
 
@@ -101,7 +86,12 @@ public class ProyectoServicio {
         proyectoRepositorio.deleteById(id);
     }
 
-    //---------------------------------------------------------------------------
+     //Buscar uno por id
+    public Proyecto getOne(String id) {
+        return proyectoRepositorio.getOne(id);
+
+        
+
     //--------------------------------------SUS USUARIOS-------------------------------------
     @Transactional
     public void agregarUsuarioProyecto(String id_proyecto, String id_usuario) {
@@ -139,25 +129,21 @@ public class ProyectoServicio {
         proyectoRepositorio.save(proyecto);
     }
 
+
+//ADMIN
     //-----------------------------------FILTROS---------------------------------------------
-    //buscar Proyectos por Usuario
+ //buscar Proyectos por Usuario
     public List<Proyecto> buscarPorUsuario(String id_usuario) {
         List<Proyecto> proyectos = proyectoRepositorio.proyectosDelUsuario(id_usuario);
         return proyectos;
     }
 
-    //buscar proyecto por estado
+    //metodo que filtra al proyecto por estado
     public List<Proyecto> filtrarProyectoPorEstado(String estadoProyecto) throws MiException {
         return proyectoRepositorio.buscarPorEstado(estadoProyecto);
     }
 
-    //Buscar uno por id
-    public Proyecto getOne(String id) {
-        return proyectoRepositorio.getOne(id);
-    }
-
     public List<Proyecto> listarTodos() {
-
         List<Proyecto> proyectos = new ArrayList<>();
         return proyectoRepositorio.findAll();
 
@@ -175,12 +161,26 @@ public class ProyectoServicio {
         return proyectoRepositorio.proyectosOrdenadosPorFechaFin(fechaFin);
     }
 
-    //---------------------------------FILTROS POR ROL Y...-------------------------------------------------------
-//nombre, fechas, estado
-    public List<Proyecto> proyectosPorNombreYID(String nombre, String id) {
 
-        List<Proyecto> proyectos = new ArrayList<>();
-        return proyectoRepositorio.findAll();
+    
+    
+   //TRABAJADOR Y CLIENTE
+//---------------------------------FILTROS POR ROL Y...-------------------------------------------------------
+
+    public List<Proyecto> proyectosPorIdYNombre (String nombre, String id){
+        return proyectoRepositorio.listarIDyNombre(id, nombre);
+
+    }
+public List<Proyecto> proyectosPorIdYEstado (String estado, String id){
+        return proyectoRepositorio.listarIDyNombre(id, estado);
+
+    }
+public List<Proyecto> proyectosPorIdYFechaFin (String fechaFin, String id){
+        return proyectoRepositorio.listarIDyNombre(id, fechaFin);
+
+
+public List<Proyecto> proyectosPorIdYFechaInicio (String fechaInicio, String id){
+        return proyectoRepositorio.listarIDyNombre(id, fechaInicio);
     }
 
     //------------------------------------------------------------------------------------------
