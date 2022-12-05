@@ -1,13 +1,17 @@
 package com.gestiondepublicidad.servicios;
 
 import com.gestiondepublicidad.entidades.Foto;
+import com.gestiondepublicidad.entidades.Nota;
 import com.gestiondepublicidad.entidades.Proyecto;
 import com.gestiondepublicidad.entidades.Usuario;
+import com.gestiondepublicidad.enumeraciones.PuestoEmpresa;
 import com.gestiondepublicidad.enumeraciones.Rol;
 import com.gestiondepublicidad.excepciones.MiException;
 import com.gestiondepublicidad.repositorios.FotoRepositorio;
+import com.gestiondepublicidad.repositorios.NotaRepositorio;
 import com.gestiondepublicidad.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -33,6 +37,9 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private FotoServicio fotoServicio;
+
+    @Autowired
+    NotaRepositorio notaRepositorio;
 
     @Autowired
     private FotoRepositorio fotoRepositorio;
@@ -128,18 +135,18 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     //DEVUELVE UN USUARIO BUSCADO POR SU EMAIL ///NO BORRAR
-    public Usuario BusquedaPorEmail(String email, String rol) {
+    public Usuario BusquedaPorEmail(String email, Rol rol) {
         return usuarioRepositorio.buscarUsuarioPorEmail(email, rol);
     }
     
     //DEVUELVE UN USUARIO BUSCADO POR PUESTO EN LA EMPRESA ///NO BORRAR
-    public List<Usuario> BusquedaPorPuesto(String puesto_empresa, String rol) {
+    public List<Usuario> BusquedaPorPuesto(PuestoEmpresa puesto_empresa, Rol rol) {
         return usuarioRepositorio.buscarUsuarioPorPuesto(puesto_empresa, rol);
     }
     //DEVUELVE LOS USUARIOS CONECTADOS AL MISMO PROYECTO
-    public List<Usuario> usuariosPorProyecto(Proyecto proyecto) {
+    public List<Usuario> usuariosPorProyecto(String proyecto, Rol rol) {
 
-        return usuarioRepositorio.buscarPorProyecto(proyecto);
+        return usuarioRepositorio.buscarPorProyecto(proyecto, rol);
     }
 
     //DEVUELVE UNA LISTA DE TODOS LOS USUARIOS
@@ -196,6 +203,11 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
 
+    public List<Usuario> buscarPorRol(Rol rol) {
+        return usuarioRepositorio.buscarPorRol(rol);
+    }
+
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
@@ -205,7 +217,7 @@ public class UsuarioServicio implements UserDetailsService {
 
             List<GrantedAuthority> permisos = new ArrayList();
 
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_USER" + usuario.getRol().toString());
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
 
             permisos.add(p);
 
@@ -222,4 +234,33 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
 
+    //AGENDA DE USUARIOS DE UN PROYECTO
+    public List<Usuario> agendaProyecto(String id_proyecto){
+        return usuarioRepositorio.agendaProyecto(id_proyecto);
+    }
+
+    @Transactional
+    public void agregarNotaUsuario(Usuario usuario, Nota nota){
+        List<Nota> notas = usuario.getNotas();
+        notas.add(nota);
+
+        usuario.setNotas(notas);
+        usuarioRepositorio.save(usuario);
+
+    }
+
+    @Transactional
+    public void eliminarNotaUsuario(String id_usuario, Nota nota){
+        Usuario usuario = usuarioRepositorio.getOne(id_usuario);
+        List<Nota> notas = notaRepositorio.notasUsuario(id_usuario);
+        Iterator itr = notas.iterator();
+
+        while (itr.hasNext()) {
+            Nota notab = (Nota)itr.next();
+            if (notab.getId_nota().equals(nota.getId_nota()) ){
+                itr.remove();
+            }
+        }
+        usuarioRepositorio.saveAndFlush(usuario);
+    }
 }

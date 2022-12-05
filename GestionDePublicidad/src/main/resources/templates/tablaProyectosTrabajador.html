@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WeThink-Busqueda</title>
+  <title>WeThink</title>
   <!-- CSS BOOTSTRAP -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <!-- ICONOS  -->
+  <!-- ICONOS BOOTSTRAP -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
   <!-- CSS -->
   <link rel="stylesheet" href="/tablaProyectos.css">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600&family=Titillium+Web&display=swap"
@@ -21,7 +20,7 @@
 </head>
 
 <body>
-     <!-- INICIO NAVBAR -->
+   <!-- INICIO NAVBAR -->
     <nav class="navbar navbar-expand-sm bdn">
     
       <div class="container-fluid">
@@ -40,73 +39,84 @@
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0 py-2">
-            <li class="nav-item">
-                <a th:href="@{/inicio}"><img src="https://see.fontimg.com/api/renderfont4/vmpKZ/eyJyIjoiZnMiLCJoIjo0MSwidyI6MTAwMCwiZnMiOjQxLCJmZ2MiOiIjMzNFMkRDIiwiYmdjIjoiIzAxMDEwMSIsInQiOjF9/ZGFzaGJvYXJk/ceceps-handwriting.png" alt="dashboard"></a>
-            </li>
+            <li><a th:href="@{/proyecto/registro}" class="nav-link px-2 link-ul letrasNav">Crear Proyecto</a></li>
+            <li><a th:href="@{/inicio}" class="nav-link px-2 link-ul letrasNav">Atras</a></li>
           </ul>
     
-            <div class="">
           <div class="dropdown">
             <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser2"
               data-bs-toggle="dropdown" aria-expanded="false">
-              <img th:src="@{/imagen/perfil/__${session.usuariosession.id_usuario}__}" alt="" width="32" height="32" class="rounded-circle me-2">
-              <span th:text="${session.usuariosession.nombre}"></span>
+              <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+              <span>Nombre Apellido</span>
             </a>
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-              <li><a class="dropdown-item" th:href="@{/perfil}" >Perfil</a></li>
+              <li><a class="dropdown-item" href=#>Perfil</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar Sesion</a></li>
             </ul>
           </div>
-           </div>
     
         </div>
       </div>
     </nav>
     <!-- FIN NAVBAR -->
+  
+  
+   
 
-  <div class="container-fluid contenedorBody row">
+  <div class="container-fluid row contenedorBody">
+    <!--INICIO/BIENVENIDA-->
     <div class="col-6">
-      <!--INICIO/BIENVENIDA-->
       <section id="mensajeSuperior">
         <div id="burbuja">
-          <h1>Clientes</h1>
-          <p>A continuacion se listaran los clientes existentes y sus filtros</p>
+          <h1>Proyectos</h1>
+          <p>A continuacion se listaran los proyectos existentes puede filtrarlos o no. </p>
         </div>
       </section>
       <!-- FIN INICIO/BIENVENIDA-->
 
       <!-- INICIO FILTROS -->
       <section id="mensajeFiltros">
-        <form th:action="@{/admin/tablaClientes/nombre}" method="post">
+        <form th:action="@{/trabajador/tablaProyectos/nombre}"  method="post">
           <label for="nombre">
             <p>Filtro por nombre</p>
           </label>
-          <input type="text" id="nombre" name="nombre" placeholder="nombre" />
+          <input type="text" id="nombre" name="nombre" placeholder="" />
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
-        <form th:action="@{/admin/tablaClientes/email}" method="post">
-          <label for="email">
-            <p>Filtro por E-mail</p>
+        <form th:action="@{/trabajador/tablaProyectos/fechaInicio}"  method="post">
+          <label for="inicio">
+            <p>Filtro por fecha de inicio</p>
           </label>
-          <input type="text" id="mail" name="email" placeholder="mail" />
+          <input type="date" id="inicio" name="fechaInicio" placeholder="" />
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
-        <form th:action="@{/admin/tablaClientes/proyecto}" method="post">
-          <label for="proyecto">
-            <p>Filtro por proyecto</p>
+        <form th:action="@{/trabajador/tablaProyectos/fechaFin}"  method="post">
+          <label for="fin">
+            <p>Filtro por fecha de fin</p>
           </label>
-          <input type="text" id="proyecto" name="proyecto" placeholder="Nombre del Proyecto" />
+          <input type="date" id="fin" name="fechaFin" placeholder="" />
           <button type="submit" class="btn btn-light">Buscar</button>
         </form>
 
+        <form th:action="@{/trabajador/tablaProyectos/estado}"  method="post">
+          <label for="estado">
+            <p>Filtro por estado</p>
+          </label>
+          <select id="estado" name="estado">
+            <option></option>
+            <option value="FINALIZADO">Finalizado</option>
+            <option value="ENPROCESO">En Proceso</option>
+            <option value="INICIADO"> Iniciado</option>
+          </select>
+          <button type="submit" class="btn btn-light">Buscar</button>
+        </form>
       </section>
       <!-- FIN FILTROS -->
-
     </div>
     <div class="col-6">
       <!-- INICIO TABLA -->
@@ -115,29 +125,21 @@
           <thead>
             <tr id="filaTitulos">
               <th scope="col">Nombre</th>
-              <th scope="col">E-mail</th>
-              <th scope="col">ROL</th>
-              <th scope="col">Acciones</th>
+              <th scope="col">Fecha Inicio</th>
+              <th scope="col">Fecha Fin</th>
+              <th scope="col">Estado</th>
             </tr>
           </thead>
-          <tbody th:each="cliente:${clientes}">
+          <tbody th:each="proyecto:${proyectos}">
             <tr>
-              <td scope="row" th:text="${cliente.nombre}">
-                <a th:action="@{/perfil/__${cliente.id}__}"></a>  
-              </td>
-              <td th:text="${cliente.email}"> </td>
-              <td th:text="${cliente.rol}"></td>
-              <td>
-                <a th:href="@{admin/modificarCliente/__${cliente.id}__}">
-                  <button type="submit"><img
-                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Magic Wand_Lineal-coloured.png"></button>
-                </a>
-                <a th:href="@{admin/eliminarCliente/__${cliente.id}__}">
-                  <button type="submit"><img
-                      src="/GestionDePublicidad/src/main/resources/static/img/botones/Dustbin_Flat.png"></button>
-                </a>
+              <td scope="row" th:text="${proyecto.nombre}">
+                <a th:href="@{/proyecto/__${proyecto.id}__}"></a>
               </td>
               <!--VER CONTROLADOR-->
+              <td th:text="${proyecto.fechaInicio}"></td>
+              <td th:text="${proyecto.fechaFin}"></td>
+              <td th:text="${proyecto.estadoProyecto}"></td>
+              <!--VER y poner icono-->
             </tr>
           </tbody>
         </table>
@@ -145,11 +147,11 @@
       <!-- FIN TABLA -->
     </div>
   </div>
- <!-- JAVASCRIPT -->
- <script src="/script.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" 
-   integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" 
-   crossorigin="anonymous"></script>
+   <!-- JAVASCRIPT -->
+   <script src="/script.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" 
+     integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" 
+     crossorigin="anonymous"></script>
 </body>
 
 </html>

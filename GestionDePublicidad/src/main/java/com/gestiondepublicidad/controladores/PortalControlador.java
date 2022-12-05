@@ -8,6 +8,7 @@ import com.gestiondepublicidad.servicios.UsuarioServicio;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,12 +67,13 @@ public class PortalControlador {
         return "login.html";
     }
 
-    @Secured({"ROLE_USER","ROLE_ADMIN","ROLE_TRABAJADOR"})
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo, HttpSession session) {
 
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         Usuario usuario = usuarioServicio.usuariosPorEmail(logueado.getEmail());
+        modelo.put("usuario", usuario);
         if(usuario.getRol().toString().equals("ADMIN")) {
             return "dashboard.html";
         } else if (usuario.getRol().toString().equals("USER")) {
@@ -84,19 +86,21 @@ public class PortalControlador {
             return "index.html";
     }
 
-    @Secured({"ROLE_USER","ROLE_ADMIN","ROLE_TRABAJADOR"})
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
 
-        Usuario usuario1 = usuarioServicio.usuariosPorEmail(usuario.getEmail());
-        modelo.put("usuario", usuario1);
+       // Usuario usuario1 = usuarioServicio.usuariosPorEmail(usuario.getEmail());
+        modelo.put("usuario", usuario);
         return "perfil.html";
     }
 
     //ACTUALIZAR
-    @Secured({"ROLE_USER","ROLE_ADMIN","ROLE_TRABAJADOR"})
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TRABAJADOR', 'ROLE_ADMIN')")
     @PostMapping("/perfil/{id}")
+    
+    //REVISAR FOTO Y RETURN DEL TRY
     public String actualizar(@RequestParam MultipartFile archivo, @PathVariable String id,
             @RequestParam String nombre, @RequestParam String email,
             @RequestParam String password, @RequestParam String password2,
@@ -105,7 +109,7 @@ public class PortalControlador {
         try {
             usuarioServicio.actualizar(archivo, id, nombre, email, password, password2);
             modelo.put("exito", "Usuario actualizado correctamente!");
-            return "index.html";
+            return "perfil.html";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
@@ -115,5 +119,4 @@ public class PortalControlador {
         }
 
     }
-
 }

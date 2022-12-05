@@ -46,7 +46,7 @@
       </header>
     </div>
       <!-- FIN NAVBAR -->
-
+      
       <!-- INICIO SECCION PRINCIPAL -->
       <section class="container-fluid container-seccion-principal" >
 
@@ -55,6 +55,11 @@
             <img src="/img/logos/logo-negro.png"  class="pt-2" alt="" style="width: 250px; height: 60px;">
             <h1 id="typewriter" class="pt-2" style="font-size: 22px;"></h1>
           </div>
+          <!-- INICIO MENSAJE EXITO REGISTRARSE -->
+          <div th:if="${exito != null}" class="container-fluid contenedor-msj-exito text-center">
+              <span th:text="${exito}"></span>
+          </div>
+          <!-- FIN MENSAJE EXITO REGISTRARSE -->
       </div>
       
       <div class="row">
@@ -76,7 +81,7 @@
 
       </section>
       <!-- FIN SECCION PRINCIPAL -->
-
+      
       <!-- INICIO SECCION SERVICIOS -->
       <div class="container-fluid d-flex justify-content-center align-items-center seccion-servicio" id="servicios">
           <div class="row">
